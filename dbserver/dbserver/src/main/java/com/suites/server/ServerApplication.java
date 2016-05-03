@@ -34,6 +34,6 @@ public class ServerApplication extends Application<ServerConfiguration> {
         dao.createSuiteTable();
         dao.createUserTable();
         dao.createSuiteMembershipTable();
-        dao.createSuiteMembershipIndex();
+        // dao.createSuiteMembershipIndex(); // Maybe move database creation somewhere else
     }
 }
