@@ -38,6 +38,4 @@ public interface SuitesDAO {
     void addUser(@Bind("email") String email,
                  @Bind("name") String name,
                  @Bind("passhash") String passhash);
-
-    
 }

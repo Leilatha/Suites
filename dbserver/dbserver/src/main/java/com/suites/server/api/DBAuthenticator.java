@@ -1,6 +1,7 @@
 package com.suites.server.api;
 
-import com.suites.server.db.SuitesDAO;
+import com.suites.server.db.UserManager;
+import com.suites.server.db.UserException;
 import com.suites.server.core.User;
 
 import com.google.common.base.Optional;
@@ -13,29 +14,18 @@ import java.security.MessageDigest;
 import java.sql.SQLException;
 
 public class DBAuthenticator implements Authenticator<BasicCredentials, User> {
-    SuitesDAO dao;
+    UserManager um;
 
-    public DBAuthenticator(SuitesDAO dao) {
-        this.dao = dao;
+    public DBAuthenticator(UserManager manager) {
+        um = manager;
     }
     
     @Override
-    public Optional<User> authenticate(BasicCredentials creds) throws AuthenticationException {
-        String hash;
- 
+    public Optional<User> authenticate(BasicCredentials creds)
+        throws AuthenticationException {
         try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(creds.getPassword().getBytes("UTF-8"));
-            byte[] digest = md.digest();
-            hash = String.format("%064x", new java.math.BigInteger(1, digest));
-        } catch (Exception e) {
-            throw new AuthenticationException("Failed to hash password");
-        }
-
-
-        try {
-            return dao.authenticateUser(creds.getUsername(), hash);
-        } catch (Exception e) {
+            return um.authenticateUser(creds.getUsername(), creds.getPassword());
+        } catch (UserException e) {
             throw new AuthenticationException(e.getMessage());
         }
     }

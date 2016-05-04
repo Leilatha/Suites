@@ -35,13 +35,14 @@ public class ServerApplication extends Application<ServerConfiguration> {
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, config.getDataSourceFactory(), "postgresql");
         final SuitesDAO dao = jdbi.onDemand(SuitesDAO.class);
+        final UserManager um = new UserManager(dao);
 
         dao.createSuiteTable();
         dao.createUserTable();
         dao.createSuiteMembershipTable();
         // dao.createSuiteMembershipIndex(); // Maybe move database creation somewhere else
 
-        environment.jersey().register(new BasicAuthProvider<User>(new DBAuthenticator(dao),
+        environment.jersey().register(new BasicAuthProvider<User>(new DBAuthenticator(um),
                                                                   "User Authenticator"));
 
         environment.jersey().register(new IndexResource());
