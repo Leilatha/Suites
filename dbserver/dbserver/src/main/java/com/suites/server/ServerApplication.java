@@ -44,7 +44,6 @@ public class ServerApplication extends Application<ServerConfiguration> {
         environment.jersey().register(new BasicAuthProvider<User>(new DBAuthenticator(dao),
                                                                   "User Authenticator"));
 
-        final IndexResource indRes = new IndexResource();
-        environment.jersey().register(indRes);
+        environment.jersey().register(new IndexResource());
     }
 }
