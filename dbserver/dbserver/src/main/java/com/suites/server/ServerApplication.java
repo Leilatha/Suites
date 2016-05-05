@@ -44,7 +44,9 @@ public class ServerApplication extends Application<ServerConfiguration> {
 
         environment.jersey().register(new BasicAuthProvider<User>(new DBAuthenticator(um),
                                                                   "User Authenticator"));
-
         environment.jersey().register(new IndexResource());
+
+        final AccountResource accRes = new AccountResource(um);
+        environment.jersey().register(accRes);
     }
 }

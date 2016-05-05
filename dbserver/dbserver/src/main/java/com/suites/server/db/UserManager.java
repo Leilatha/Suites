@@ -10,7 +10,7 @@ import com.suites.server.core.User;
 
 public class UserManager {
 
-    SuitesDAO dao;
+    private final SuitesDAO dao;
 
     public UserManager(SuitesDAO dao) {
         this.dao = dao;
@@ -34,7 +34,8 @@ public class UserManager {
             throw new UserException("Failed to hash password: " + e.getMessage());
         }
 
-        return dao.authenticateUser(email, passhash);
+        User user = dao.authenticateUser(email, passhash);
+        return Optional.fromNullable(user);
     }
 
     public void registerUser(String email, String name, String password)
@@ -44,6 +45,12 @@ public class UserManager {
             passhash = hashPassword(password);
         } catch (Exception e) {
             throw new UserException("Failed to hash password: " + e.getMessage());
+        }
+
+        User existing = dao.getUserByEmail(email);
+
+        if (existing != null) {
+            throw new UserException("An account with that email already exists.");
         }
 
         dao.addUser(email, name, passhash);

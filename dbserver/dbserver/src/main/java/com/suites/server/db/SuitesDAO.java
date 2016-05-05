@@ -15,7 +15,7 @@ public interface SuitesDAO {
     void createSuiteTable();
 
     @SqlUpdate("CREATE TABLE IF NOT EXISTS Member (Id SERIAL primary key," +
-               " Email varchar(80) not null," +
+               " Email varchar(80) not null UNIQUE," +
                " Name varchar(80) not null," +
                " Password varchar(100) not null," +
                " ProfilePicture varchar(255))")
@@ -29,9 +29,13 @@ public interface SuitesDAO {
     @SqlUpdate("CREATE INDEX IF NOT EXISTS SuiteMembership_idx_1 ON SuiteMembership (UserId, SuiteId)")
     void createSuiteMembershipIndex();
 
+    @SqlQuery("Select Id, Email, Name, ProfilePicture FROM Member"
+              + " WHERE Email = :email")
+    User getUserByEmail(@Bind("email") String email);
+    
     @SqlQuery("SELECT Id, Email, Name, ProfilePicture FROM Member"
               + " WHERE Email = :email AND Password = :passhash")
-    Optional<User> authenticateUser(@Bind("email") String email, @Bind("passhash") String passhash);
+    User authenticateUser(@Bind("email") String email, @Bind("passhash") String passhash);
 
     @SqlUpdate("INSERT INTO Member (Email, Name, Password)"
                + " VALUES (:email, :name, :passhash)")
