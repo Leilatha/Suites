@@ -160,8 +160,6 @@ public class GroceryBasket extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_grocery_basket, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
     }
@@ -203,11 +201,16 @@ public class GroceryBasket extends AppCompatActivity {
         }
     }
 
+    /**
+     * Lexie Rochfort
+     * 5/7/2016
+     */
     private class dataHandler {
         //pull info from database
         //put into array of arrays
         //make array of arrays into list items
         //go through array and make list item out of
+
 
     }
 }
