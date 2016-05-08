@@ -8,7 +8,7 @@ to create one. This can be done like this:
 ```
 sudo su postgres
 
-createuser -sl --password somepassword myusername
+createuser -sl --password myusername
 ```
 
 You also need to create a database to use. This can be done with the command
