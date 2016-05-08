@@ -1,6 +1,9 @@
 package com.suites.server.db;
 
 import com.suites.server.core.User;
+import com.suites.server.core.Suite;
+
+import java.util.List;
 
 public class SuiteManager {
 
@@ -14,5 +17,9 @@ public class SuiteManager {
     public void makeSuite(User user, String suiteName) {
         int suiteid = dao.addSuite(suiteName);
         dao.addUserToSuite(user.getId(), suiteid);
+    }
+
+    public List<Suite> getUserSuites(User user) {
+        return dao.getUserSuites(user.getId());
     }
 }
