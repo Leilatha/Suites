@@ -54,11 +54,11 @@ public class GroceryBasket extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grocery_basket);
 
-        /*String [] groceryList;// = listMaker();
+        String [] groceryList = listMaker();
         ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
                 this,android.R.layout.simple_expandable_list_item_2, groceryList);
         ListView myList = (ListView) findViewById(R.id.listView);
-        myList.setAdapter(myAdapter);*/
+        myList.setAdapter(myAdapter);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -81,8 +81,9 @@ public class GroceryBasket extends AppCompatActivity {
      * 5/7/16
      * takes the data to put in list
      */
-    private void listMaker(){
-        return;
+    private String[] listMaker(){
+        String[] tempString = new String[10];
+        return tempString;
     }
 
     //makes menu bar
