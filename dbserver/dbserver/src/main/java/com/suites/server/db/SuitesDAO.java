@@ -41,5 +41,11 @@ public interface SuitesDAO {
                + " VALUES (:email, :name, :passhash)")
     void addUser(@Bind("email") String email,
                  @Bind("name") String name,
-                 @Bind("passhash") String passhash);
+                @Bind("passhash") String passhash);
+
+    @SqlQuery("INSERT INTO Suite (Name) VALUES (:name) RETURNING Id")
+    int addSuite(@Bind("name") String name);
+
+    @SqlUpdate("INSERT INTO SuiteMembership (SuiteId, MemberId) VALUES (:suiteid, :userid)")
+    void addUserToSuite(@Bind("userid") int userid, @Bind("suiteid") int suiteid);
 }
