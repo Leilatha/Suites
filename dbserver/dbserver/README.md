@@ -1,5 +1,8 @@
 # Running the Server
 
+Make sure that PostgreSQL and Maven are installed on your computer, and that you
+have an account capable of editing the database you would like to use.
+
 First, you need to make a config file for the server - ```example-config.yml```
 can be used for this. Make sure the database you point to exists.
 
