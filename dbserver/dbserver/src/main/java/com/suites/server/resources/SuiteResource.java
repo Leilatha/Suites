@@ -15,6 +15,9 @@ import com.suites.server.api.AddSuiteResult;
 
 import com.suites.server.db.SuiteManager;
 import com.suites.server.core.User;
+import com.suites.server.core.Suite;
+
+import java.util.List;
 
 @Path("/suite")
 @Produces(MediaType.APPLICATION_JSON)
@@ -30,5 +33,10 @@ public class SuiteResource {
     public AddSuiteResult makeSuite(@Auth User user, AddSuiteRequest req) {
         sm.makeSuite(user, req.getName());
         return new AddSuiteResult(true, "All good");
+    }
+
+    @GET
+    public List<Suite> getUserSuites(@Auth User user) {
+        return sm.getUserSuites(user);
     }
 }
