@@ -56,7 +56,7 @@ public class GroceryBasket extends AppCompatActivity {
 
         String [] groceryList = listMaker();
         ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
-                this,android.R.layout.simple_expandable_list_item_2, groceryList);
+                this,android.R.layout.simple_expandable_list_item_1, groceryList);
         ListView myList = (ListView) findViewById(R.id.listView);
         myList.setAdapter(myAdapter);
 
@@ -82,7 +82,7 @@ public class GroceryBasket extends AppCompatActivity {
      * takes the data to put in list
      */
     private String[] listMaker(){
-        String[] tempString = new String[10];
+        String[] tempString = {"a", "b", "c"};
         return tempString;
     }
 
