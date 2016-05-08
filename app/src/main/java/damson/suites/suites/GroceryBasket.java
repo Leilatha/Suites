@@ -19,6 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
@@ -52,6 +54,12 @@ public class GroceryBasket extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grocery_basket);
 
+        String [] groceryList = listMaker();
+        ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
+                this,android.R.layout.simple_expandable_list_item_1, groceryList);
+        ListView myList = (ListView) findViewById(R.id.listView);
+        myList.setAdapter(myAdapter);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -66,6 +74,16 @@ public class GroceryBasket extends AppCompatActivity {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    /**
+     * Lexie Rochfort
+     * 5/7/16
+     * takes the data to put in list
+     */
+    private String[] listMaker(){
+        String[] tempString = {"a", "b", "c"};
+        return tempString;
     }
 
     //makes menu bar
@@ -209,7 +227,7 @@ public class GroceryBasket extends AppCompatActivity {
         //pull info from database
         //put into array of arrays
         //make array of arrays into list items
-        //go through array and make list item out of
+        //go through array and make  list item out of
 
 
     }

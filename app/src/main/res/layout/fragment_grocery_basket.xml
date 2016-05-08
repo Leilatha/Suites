@@ -19,11 +19,11 @@
 
     </LinearLayout>
 
-    <ListView
+    xxxxxx<ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/listView"
-        tools:listitem="@android:layout/simple_list_item_checked"
+        tools:listitem="@android:layout/simple_expandable_list_item_2"
         android:layout_weight="0.56"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
