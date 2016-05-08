@@ -33,3 +33,22 @@ The response will also be encoded as JSON, with the following format:
 ```
 
 This request does not require authentication.
+
+Suite Management
+================
+
+Adding a Suite
+--------------
+Adding a suite will automatically add the authenticated user to the suite.
+The request takes the form
+```
+{ "name" : "suitename" }
+```
+
+The response is a JSON object of the form:
+```
+{
+  "success" : <a boolean>,
+  "message" : "A message only really relevant on failure"
+}
+```
