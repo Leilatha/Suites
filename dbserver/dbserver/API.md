@@ -37,10 +37,12 @@ This request does not require authentication.
 Suite Management
 ================
 
+Requests are at the path "/suite".
+
 Adding a Suite
 --------------
 Adding a suite will automatically add the authenticated user to the suite.
-The request takes the form
+The request is a POST request and takes the form
 ```
 { "name" : "suitename" }
 ```
@@ -52,3 +54,13 @@ The response is a JSON object of the form:
   "message" : "A message only really relevant on failure"
 }
 ```
+
+Get User Suites
+---------------
+This request is for getting a list of the authenticated user's suites. Send a
+GET request, and you will get as a response a JSON list of objects of the form:
+```
+{
+  "id" : 420,
+  "name" : "suitename"
+}
