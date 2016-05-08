@@ -4,8 +4,12 @@ import com.google.common.base.Optional;
 
 import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
+import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 
 import com.suites.server.core.User;
+import com.suites.server.core.Suite;
+
+import java.util.List;
 
 @RegisterMapper(UserMapper.class)
 public interface SuitesDAO {
@@ -22,11 +26,11 @@ public interface SuitesDAO {
     void createUserTable();
 
     @SqlUpdate("CREATE TABLE IF NOT EXISTS SuiteMembership " +
-               " (UserId int references Member(id)," +
+               " (MemberId int references Member(id)," +
                " SuiteId int references Suite(id))")
     void createSuiteMembershipTable();
 
-    @SqlUpdate("CREATE INDEX IF NOT EXISTS SuiteMembership_idx_1 ON SuiteMembership (UserId, SuiteId)")
+    @SqlUpdate("CREATE INDEX IF NOT EXISTS SuiteMembership_idx_1 ON SuiteMembership (MemberId, SuiteId)")
     void createSuiteMembershipIndex();
 
     @SqlQuery("Select Id, Email, Name, ProfilePicture FROM Member"
@@ -41,5 +45,17 @@ public interface SuitesDAO {
                + " VALUES (:email, :name, :passhash)")
     void addUser(@Bind("email") String email,
                  @Bind("name") String name,
-                 @Bind("passhash") String passhash);
+                @Bind("passhash") String passhash);
+
+    @SqlQuery("INSERT INTO Suite (Name) VALUES (:name) RETURNING Id")
+    int addSuite(@Bind("name") String name);
+
+    @SqlUpdate("INSERT INTO SuiteMembership (SuiteId, MemberId) VALUES (:suiteid, :userid)")
+    void addUserToSuite(@Bind("userid") int userid, @Bind("suiteid") int suiteid);
+
+    @SqlQuery("SELECT Id, Name FROM Suite WHERE"
+              + " Id IN ("
+              + "SELECT SuiteId FROM SuiteMembership WHERE MemberId = :memberid)")
+    @Mapper(SuiteMapper.class)
+    List<Suite> getUserSuites(@Bind("memberid") int id);
 }
