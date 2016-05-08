@@ -10,7 +10,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="damson.suites.suites.GroceryBasketAdd"
-    tools:showIn="@layout/activity_grocery_basket_add">
+    tools:showIn="@layout/activity_grocery_basket_add"
+    android:background="@android:color/background_light">
 
     <LinearLayout
         android:orientation="vertical"
@@ -37,7 +38,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/Item_Text"
                 android:layout_weight="1"
-                android:inputType="text" />
+                android:inputType="text"
+                android:editable="true" />
         </LinearLayout>
 
         <LinearLayout
@@ -58,7 +60,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/Quantity_Text"
                 android:layout_weight="1"
-                android:inputType="text" />
+                android:inputType="text"
+                android:editable="true" />
         </LinearLayout>
 
         <LinearLayout
@@ -78,7 +81,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/Price_Text"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:editable="true"
+                android:elegantTextHeight="false" />
 
         </LinearLayout>
 
@@ -92,17 +97,18 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/groceryBasketAddAdd_another_item"
-                android:id="@+id/Add_Another_Button"
-                android:layout_gravity="right"
-                android:onClick="addAnotherItem" />
+                android:text="@string/groceryBasketAddDone"
+                android:id="@+id/Done_Button"
+                android:onClick="addItem"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/groceryBasketAddDone"
-                android:id="@+id/Done_Button"
-                android:onClick="done"/>
+                android:text="@string/groceryBasketAddCancel"
+                android:id="@+id/Cancel_Button"
+                android:layout_gravity="right"
+                android:onClick="Cancel" />
+
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

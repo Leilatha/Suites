@@ -1,12 +1,15 @@
 package damson.suites.suites;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -27,18 +30,13 @@ public class GroceryBasketAdd extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+
     }
 
     @Override
@@ -81,15 +79,39 @@ public class GroceryBasketAdd extends AppCompatActivity {
         client.disconnect();
     }
 
-    public void addAnotherItem(View view) {
-
+    /**
+     * This method creates a GroceyItem object to be sent to GroceryBaseket. It should be able to
+     * upload the item to the structure holding the rest of the GroceryItem objects, and then
+     * display the list.
+     *
+     * Author: Michael Chin
+     */
+    public void addItem(View view) {
+        EditText editText = (EditText) findViewById(R.id.Item_Text); //item name
+        EditText editText2 = (EditText) findViewById(R.id.Quantity_Text); //item quantity
+        EditText editText3 = (EditText) findViewById(R.id.Price_Text); //item price
+        String name = editText.getText().toString();
+        String quantity = editText2.getText().toString();
+        double price = Double.parseDouble(editText3.getText().toString());
+        GroceryItem item = new GroceryItem(price, name, quantity);
+        Intent intent  = new Intent(this, GroceryBasket.class);
+        intent.putExtra("item_added", item); //sends new item
+        startActivity(intent);
+        /* In the GroceryBasket class, first check if the intent sent anything.
+         * Use the following lines in onStart():
+         * Intent NAME = getIntent();
+         * GroceryItem item;
+         * if(NAME.getSerializable() != null)[
+         *      item = (GroceryItem) i.getSerializable("item_added");
+         * }
+         *
+         * after, do null check on item. If it isn't null, send the item to the database to be
+         * added to the database, then display all grocery items available in database.
+         */
     }
 
-    public void done(View view){
-
-    }
-
-    public void createItem() {
-
+    public void cancel(View view){
+        Intent intent = new Intent(this, GroceryBasket.class);
+        startActivity(intent);
     }
 }
