@@ -202,4 +202,12 @@ public class GroceryBasket extends AppCompatActivity {
             return null;
         }
     }
+
+    private class dataHandler {
+        //pull info from database
+        //put into array of arrays
+        //make array of arrays into list items
+        //go through array and make list item out of
+
+    }
 }
