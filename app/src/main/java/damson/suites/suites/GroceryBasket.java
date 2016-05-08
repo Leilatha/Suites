@@ -19,6 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
@@ -52,6 +54,12 @@ public class GroceryBasket extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grocery_basket);
 
+        String [] groceryList = listMaker();
+        ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
+                this,android.R.layout.simple_expandable_list_item_2, groceryList);
+        ListView myList = (ListView) findViewById(R.id.listView);
+        myList.setAdapter(myAdapter);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -68,7 +76,17 @@ public class GroceryBasket extends AppCompatActivity {
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
+    /**
+     * Lexie Rochfort
+     * 5/7/16
+     * takes the data to put in list
+     */
+    private String[] listMaker(){
+        String[] tempString = new String[10];
+        return tempString;
+    }
 
+    //makes menu bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -160,8 +178,6 @@ public class GroceryBasket extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_grocery_basket, container, false);
-            //TextView textView = (TextView) rootView.findViewById(R.id.section label);
-            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
             return rootView;
         }
     }
@@ -201,5 +217,18 @@ public class GroceryBasket extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    /**
+     * Lexie Rochfort
+     * 5/7/2016
+     */
+    private class dataHandler {
+        //pull info from database
+        //put into array of arrays
+        //make array of arrays into list items
+        //go through array and make  list item out of
+
+
     }
 }
