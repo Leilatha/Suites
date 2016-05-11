@@ -64,3 +64,24 @@ GET request, and you will get as a response a JSON list of objects of the form:
   "id" : 420,
   "name" : "suitename"
 }
+```
+
+Suite Invitation
+================
+
+Requests are at the path "/invite".
+
+Get User Invites
+----------------
+Send a GET request. It will return a list of JSON objects in the same format as
+getting user suites.
+
+Make an Invitation
+------------------
+Send a POST request with a JSON body of the following format:
+```
+{
+  "invitee" : "invitee@email.com",
+  "suiteId" : 666
+}
+```
