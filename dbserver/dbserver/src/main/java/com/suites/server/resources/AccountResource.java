@@ -28,7 +28,7 @@ public class AccountResource {
         um = manager;
     }
 
-    @GET // Change to return a User once it is JSON-encodable.
+    @GET
     public User getUserInfo(@Auth User user) {
         return user;
     }

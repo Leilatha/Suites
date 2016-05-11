@@ -30,6 +30,12 @@ public interface SuitesDAO {
                " SuiteId int references Suite(id))")
     void createSuiteMembershipTable();
 
+    @SqlUpdate("CREATE TABLE IF NOT EXISTS Invitation " +
+               " (Email String," +
+               " SuiteId int references Suite(id))")
+    void createSuiteInvitationTable();
+
+
     @SqlUpdate("CREATE INDEX IF NOT EXISTS SuiteMembership_idx_1 ON SuiteMembership (MemberId, SuiteId)")
     void createSuiteMembershipIndex();
 
@@ -58,4 +64,21 @@ public interface SuitesDAO {
               + "SELECT SuiteId FROM SuiteMembership WHERE MemberId = :memberid)")
     @Mapper(SuiteMapper.class)
     List<Suite> getUserSuites(@Bind("memberid") int id);
+
+    @SqlUpdate("INSERT INTO Invitation (SuiteId, Email) VALUES (:suiteid, :email)")
+    void inviteUser(@Bind("email") String email, @Bind("suiteid") int suiteId);
+
+    @SqlQuery("SELECT Id, Name FROM Suite WHERE"
+              + " Id IN ("
+              + "SELECT SuiteId FROM Invitation WHERE Email = :email)")
+    @Mapper(SuiteMapper.class)
+    List<Suite> getUserInvites(@Bind("email") String email);
+
+    @SqlQuery("SELECT count(SuiteId) > 0 FROM Invitation"
+              + " WHERE SuiteId = :suiteid AND Email = :email LIMIT 1")
+    boolean isUserInvited(@Bind("suiteid") int suiteId, @Bind("email") String email);
+
+    @SqlQuery("SELECT count(SuiteId) > 0 FROM SuiteMembership"
+              + " WHERE UserId = :userid AND SuiteId = :suiteid LIMIT 1")
+    boolean isUserInSuite(@Bind("userid") int userId, @Bind("suiteid") int suiteId);
 }

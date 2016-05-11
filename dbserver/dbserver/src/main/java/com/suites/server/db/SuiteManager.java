@@ -22,4 +22,16 @@ public class SuiteManager {
     public List<Suite> getUserSuites(User user) {
         return dao.getUserSuites(user.getId());
     }
+
+    public boolean isUserInSuite(User user, int suiteId) {
+        return dao.isUserInSuite(user.getId(), suiteId);
+    }
+
+    public void inviteUser(String email, int suiteId) {
+        dao.inviteUser(email, suiteId);
+    }
+
+    public List<Suite> getUserInvites(User user) {
+        return dao.getUserInvites(user.getEmail());
+    }
 }
