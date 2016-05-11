@@ -85,3 +85,22 @@ Send a POST request with a JSON body of the following format:
   "suiteId" : 666
 }
 ```
+
+A response will come in the form
+```
+{
+  "success" : <a boolean>,
+  "message" : "A message only really relevant on failure"
+}
+```
+
+Joining a Suite
+===============
+To join a suite, send a POST request to "/join", with a JSON number matching the
+ID of the suite you would like to join. A response comes in the form
+```
+{
+  "success" : <a boolean>,
+  "message" : "A message only really relevant on failure"
+}
+```

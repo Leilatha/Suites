@@ -55,5 +55,8 @@ public class ServerApplication extends Application<ServerConfiguration> {
 
         final InviteResource invRes = new InviteResource(sm);
         environment.jersey().register(invRes);
+
+        final JoinResource joinRes = new JoinResource(sm);
+        environment.jersey().register(joinRes);
     }
 }

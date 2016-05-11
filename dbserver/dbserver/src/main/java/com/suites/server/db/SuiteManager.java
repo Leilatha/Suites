@@ -34,4 +34,12 @@ public class SuiteManager {
     public List<Suite> getUserInvites(User user) {
         return dao.getUserInvites(user.getEmail());
     }
+
+    public boolean isUserInvited(User user, int suiteId) {
+        return dao.isUserInvited(suiteId, user.getEmail());
+    }
+
+    public void addUserToSuite(User user, int suiteId) {
+        dao.addUserToSuite(user.getId(), suiteId);
+    }
 }
