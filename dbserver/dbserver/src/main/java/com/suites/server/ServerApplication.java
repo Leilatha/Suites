@@ -36,6 +36,7 @@ public class ServerApplication extends Application<ServerConfiguration> {
         final DBI jdbi = factory.build(environment, config.getDataSourceFactory(), "postgresql");
         final SuitesDAO dao = jdbi.onDemand(SuitesDAO.class);
         final UserManager um = new UserManager(dao);
+        final SuiteManager sm = new SuiteManager(dao);
 
         dao.createSuiteTable();
         dao.createUserTable();
@@ -48,5 +49,14 @@ public class ServerApplication extends Application<ServerConfiguration> {
 
         final AccountResource accRes = new AccountResource(um);
         environment.jersey().register(accRes);
+
+        final SuiteResource suiteRes = new SuiteResource(sm);
+        environment.jersey().register(suiteRes);
+
+        final InviteResource invRes = new InviteResource(sm);
+        environment.jersey().register(invRes);
+
+        final JoinResource joinRes = new JoinResource(sm);
+        environment.jersey().register(joinRes);
     }
 }

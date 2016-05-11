@@ -6,10 +6,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class User implements Principal {
-    int id;
-    String email;
-    String name;
-    String profilePicture;
+    private final int id;
+    private final String email;
+    private final String name;
+    private final String profilePicture;
 
     public boolean equals(Object another) {
         return another instanceof User && ((User)another).id == id;
