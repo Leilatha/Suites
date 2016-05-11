@@ -52,5 +52,8 @@ public class ServerApplication extends Application<ServerConfiguration> {
 
         final SuiteResource suiteRes = new SuiteResource(sm);
         environment.jersey().register(suiteRes);
+
+        final InviteResource invRes = new InviteResource(sm);
+        environment.jersey().register(invRes);
     }
 }
