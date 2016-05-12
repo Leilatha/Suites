@@ -11,3 +11,7 @@ Account Info
 Suite Creation
 ==============
 ```./mksuite address:port email password suitename```
+
+Account Suite List
+==================
+```./accsuites address:port email password```
