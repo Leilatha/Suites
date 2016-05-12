@@ -31,7 +31,7 @@ public interface SuitesDAO {
     void createSuiteMembershipTable();
 
     @SqlUpdate("CREATE TABLE IF NOT EXISTS Invitation " +
-               " (Email String," +
+               " (Email varchar(80)," +
                " SuiteId int references Suite(id))")
     void createSuiteInvitationTable();
 
@@ -79,6 +79,6 @@ public interface SuitesDAO {
     boolean isUserInvited(@Bind("suiteid") int suiteId, @Bind("email") String email);
 
     @SqlQuery("SELECT count(SuiteId) > 0 FROM SuiteMembership"
-              + " WHERE UserId = :userid AND SuiteId = :suiteid LIMIT 1")
+              + " WHERE MemberId = :userid AND SuiteId = :suiteid LIMIT 1")
     boolean isUserInSuite(@Bind("userid") int userId, @Bind("suiteid") int suiteId);
 }

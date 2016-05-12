@@ -41,6 +41,7 @@ public class ServerApplication extends Application<ServerConfiguration> {
         dao.createSuiteTable();
         dao.createUserTable();
         dao.createSuiteMembershipTable();
+        dao.createSuiteInvitationTable();
         // dao.createSuiteMembershipIndex(); // Maybe move database creation somewhere else
 
         environment.jersey().register(new BasicAuthProvider<User>(new DBAuthenticator(um),
