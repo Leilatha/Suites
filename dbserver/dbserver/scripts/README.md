@@ -7,3 +7,7 @@ Account Creation
 Account Info
 ============
 ```./accinfo address:port email password```
+
+Suite Creation
+==============
+```./mksuite address:port email password suitename```
