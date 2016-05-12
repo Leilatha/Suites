@@ -1,0 +1,2 @@
+#!/bin/sh
+curl -H "Content-Type: application/json" -i -d "{\"email\":\"$2\", \"password\":\"$3\", \"name\":\"$4\"}" $1/account
