@@ -15,7 +15,7 @@ You also need to create a database to use. This can be done with the command
 ```
 createdb dbname
 ```
-on an account with the ability to create databases.
+on an account with the ability to create databases. Log out of postgres (```exit```)
 
 Then you need to make a config file for the server - ```example-config.yml```
 can be used for this. Make sure the database you point to exists.
