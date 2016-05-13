@@ -81,4 +81,9 @@ public interface SuitesDAO {
     @SqlQuery("SELECT count(SuiteId) > 0 FROM SuiteMembership"
               + " WHERE MemberId = :userid AND SuiteId = :suiteid LIMIT 1")
     boolean isUserInSuite(@Bind("userid") int userId, @Bind("suiteid") int suiteId);
+
+    @SqlQuery("SELECT Id, Email, Name, ProfilePicture FROM Member WHERE"
+            + " Id IN ("
+            + " SELECT MemberId FROM SuiteMembership WHERE SuiteId = :suiteid)")
+    List<User> getSuiteUsers(@Bind("suiteid") int suiteId);
 }
