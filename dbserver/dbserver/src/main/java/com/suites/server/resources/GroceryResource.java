@@ -64,7 +64,7 @@ public class GroceryResource {
 
     @PUT
     public GenericResult editGrocery(@Auth User user,
-                                    @QueryParam("groceryid") IntParam groceryId,
+                                     @QueryParam("groceryid") IntParam groceryId,
                                     AddGroceryRequest request) {
         if(groceryId == null) {
 	    return new GenericResult(false, "You need to specify a grocery item.");
@@ -83,7 +83,7 @@ public class GroceryResource {
 
     @PUT
     public GenericResult deleteGrocery(@Auth User user,
-                                    @QueryParam("groceryid") IntParam groceryId) {
+                                       @QueryParam("groceryid") IntParam groceryId) {
         if(groceryId == null) {
 	    return new GenericResult(false, "You need to specify a grocery item.");
 	} else {
