@@ -122,8 +122,5 @@ public interface SuitesDAO {
                "WHERE Id = :id AND " +
                      "SuiteId IN (SELECT SuiteId FROM SuiteMembership WHERE MemberId = :userid)")
     int deleteGrocery(@Bind("id") int id,
-                      @Bind("userid") int userId,
-                      @Bind("name") String name,
-                      @Bind("price") double price,
-                      @Bind("quantity") int quantity);
+                      @Bind("userid") int userId);
 }
