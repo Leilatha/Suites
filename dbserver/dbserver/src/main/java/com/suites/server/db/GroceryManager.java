@@ -24,9 +24,9 @@ public class GroceryManager {
     }
     
     public void addGrocery(int suiteId,
-                                     String name,
-                                     double price, 
-                                     int quantity) {
+                           String name,
+                           double price, 
+                           int quantity) {
         dao.addGrocery(suiteId, name, price, quantity);
     }
     
