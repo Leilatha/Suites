@@ -42,8 +42,4 @@ public class SuiteManager {
     public void addUserToSuite(User user, int suiteId) {
         dao.addUserToSuite(user.getId(), suiteId);
     }
-
-    public List<User> getSuiteUsers(int suiteId) {
-        return dao.getSuiteUsers(suiteId);
-    }
 }

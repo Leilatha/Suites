@@ -35,14 +35,6 @@ public interface SuitesDAO {
                " SuiteId int references Suite(id))")
     void createSuiteInvitationTable();
 
-    @SqlUpdate("CREATE TABLE IF NOT EXISTS Grocery " +
-               " (Id SERIAL primary key," +
-               " SuiteId int references Suite(Id)," +
-               " Name varchar(80)," +
-               " Price decimal(10,2)," +
-               " Quantity int)")
-    void createGroceryTable();
-
 
     @SqlUpdate("CREATE INDEX IF NOT EXISTS SuiteMembership_idx_1 ON SuiteMembership (MemberId, SuiteId)")
     void createSuiteMembershipIndex();
@@ -89,9 +81,4 @@ public interface SuitesDAO {
     @SqlQuery("SELECT count(SuiteId) > 0 FROM SuiteMembership"
               + " WHERE MemberId = :userid AND SuiteId = :suiteid LIMIT 1")
     boolean isUserInSuite(@Bind("userid") int userId, @Bind("suiteid") int suiteId);
-
-    @SqlQuery("SELECT Id, Email, Name, ProfilePicture FROM Member WHERE"
-            + " Id IN ("
-            + " SELECT MemberId FROM SuiteMembership WHERE SuiteId = :suiteid)")
-    List<User> getSuiteUsers(@Bind("suiteid") int suiteId);
 }

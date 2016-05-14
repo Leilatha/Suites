@@ -59,8 +59,5 @@ public class ServerApplication extends Application<ServerConfiguration> {
 
         final JoinResource joinRes = new JoinResource(sm);
         environment.jersey().register(joinRes);
-
-	final SuiteUserResource userListRes = new SuiteUserResource(sm);
-	environment.jersey().register(userListRes);
     }
 }

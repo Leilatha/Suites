@@ -104,17 +104,3 @@ ID of the suite you would like to join. A response comes in the form
   "message" : "A message only really relevant on failure"
 }
 ```
-
-Listing Users in a Suite
-========================
-To list the users of a suite, send a GET request to "/suite/userlist?suiteid=x"
-where "x" is the id of the suite you want to list the users of. The response
-comes as a JSON list of objects of the form:
-```
-{
-  "id" : 42,
-  "email" : an@email.net,
-  "name" : "My name",
-  "profilePicture" : "pictureaddress"
-}
-```
