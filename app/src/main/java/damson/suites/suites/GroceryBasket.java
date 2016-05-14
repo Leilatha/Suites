@@ -160,7 +160,7 @@ public class GroceryBasket extends AppCompatActivity {
         if (requestCode == itemIdentifier) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                GroceryItem newItem = data.getData();
+                // GroceryItem newItem = data.getData();
 
                 // The user picked a contact.
                 // The Intent's data Uri identifies which contact was selected.
