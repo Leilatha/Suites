@@ -1,0 +1,2 @@
+#!/bin/sh
+curl -H "Content-Type: application/json" -i -u "$2:$3" -d "{\"name\":\"$4\"}" $1/suite

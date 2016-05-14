@@ -3,13 +3,13 @@ package com.suites.server.api;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
-public class InvitationResult {
+public class GenericResult {
     private final boolean success;
     private final String message;
 
     @JsonCreator
-    public InvitationResult(@JsonProperty("success") boolean success,
-                            @JsonProperty("message") String message) {
+    public GenericResult(@JsonProperty("success") boolean success,
+                              @JsonProperty("message") String message) {
         this.success = success;
         this.message = message;
     }
