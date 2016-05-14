@@ -27,13 +27,13 @@
         android:layout_weight="0.56"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/button" />
+        android:layout_below="@+id/add_button" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add Item"
-        android:id="@+id/button"
+        android:id="@+id/add_button"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
