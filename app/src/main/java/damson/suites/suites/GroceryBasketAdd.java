@@ -15,6 +15,8 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.net.URL;
+
 public class GroceryBasketAdd extends AppCompatActivity {
 
     /**
@@ -94,8 +96,13 @@ public class GroceryBasketAdd extends AppCompatActivity {
         String quantity = editText2.getText().toString();
         double price = Double.parseDouble(editText3.getText().toString());
         GroceryItem item = new GroceryItem(price, name, quantity);
+
+        //need to upload item to database
+        URL url = null;
+
+
         Intent intent  = new Intent();
-        intent.putExtra("item_added", item); //sends new item
+
         setResult(RESULT_OK, intent);
         /* In the GroceryBasket class, first check if the intent sent anything.
          * Use the following lines in onStart():

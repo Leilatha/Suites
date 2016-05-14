@@ -18,9 +18,7 @@ public class GroceryItem implements Serializable{
         this.quantity = quantity;
     }
 
-    public double getPrice(){
-        return price;
-    }
+    public double getPrice(){return price;}
 
     public String getItem(){
         return item;
