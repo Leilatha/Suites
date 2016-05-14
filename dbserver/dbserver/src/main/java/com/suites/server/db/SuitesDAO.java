@@ -35,6 +35,14 @@ public interface SuitesDAO {
                " SuiteId int references Suite(id))")
     void createSuiteInvitationTable();
 
+    @SqlUpdate("CREATE TABLE IF NOT EXISTS Grocery " +
+               " (Id SERIAL primary key," +
+               " SuiteId int references Suite(Id)," +
+               " Name varchar(80)," +
+               " Price decimal(10,2)," +
+               " Quantity int)")
+    void createGroceryTable();
+
 
     @SqlUpdate("CREATE INDEX IF NOT EXISTS SuiteMembership_idx_1 ON SuiteMembership (MemberId, SuiteId)")
     void createSuiteMembershipIndex();
