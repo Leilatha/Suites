@@ -41,6 +41,7 @@ public class ServerApplication extends Application<ServerConfiguration> {
         dao.createSuiteTable();
         dao.createUserTable();
         dao.createSuiteMembershipTable();
+        dao.createSuiteInvitationTable();
         // dao.createSuiteMembershipIndex(); // Maybe move database creation somewhere else
 
         environment.jersey().register(new BasicAuthProvider<User>(new DBAuthenticator(um),
@@ -52,5 +53,14 @@ public class ServerApplication extends Application<ServerConfiguration> {
 
         final SuiteResource suiteRes = new SuiteResource(sm);
         environment.jersey().register(suiteRes);
+
+        final InviteResource invRes = new InviteResource(sm);
+        environment.jersey().register(invRes);
+
+        final JoinResource joinRes = new JoinResource(sm);
+        environment.jersey().register(joinRes);
+
+	final SuiteUserResource userListRes = new SuiteUserResource(sm);
+	environment.jersey().register(userListRes);
     }
 }

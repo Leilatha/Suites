@@ -52,7 +52,7 @@ public class GroceryBasket extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_grocery_basket);
+        setContentView(R.layout.fragment_grocery_basket);
 
         String [] groceryList = listMaker();
         ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(

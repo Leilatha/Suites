@@ -64,3 +64,57 @@ GET request, and you will get as a response a JSON list of objects of the form:
   "id" : 420,
   "name" : "suitename"
 }
+```
+
+Suite Invitation
+================
+
+Requests are at the path "/invite".
+
+Get User Invites
+----------------
+Send a GET request. It will return a list of JSON objects in the same format as
+getting user suites.
+
+Make an Invitation
+------------------
+Send a POST request with a JSON body of the following format:
+```
+{
+  "invitee" : "invitee@email.com",
+  "suiteId" : 666
+}
+```
+
+A response will come in the form
+```
+{
+  "success" : <a boolean>,
+  "message" : "A message only really relevant on failure"
+}
+```
+
+Joining a Suite
+===============
+To join a suite, send a POST request to "/join", with a JSON number matching the
+ID of the suite you would like to join. A response comes in the form
+```
+{
+  "success" : <a boolean>,
+  "message" : "A message only really relevant on failure"
+}
+```
+
+Listing Users in a Suite
+========================
+To list the users of a suite, send a GET request to "/suite/userlist?suiteid=x"
+where "x" is the id of the suite you want to list the users of. The response
+comes as a JSON list of objects of the form:
+```
+{
+  "id" : 42,
+  "email" : an@email.net,
+  "name" : "My name",
+  "profilePicture" : "pictureaddress"
+}
+```
