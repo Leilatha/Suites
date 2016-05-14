@@ -8,6 +8,7 @@ import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 
 import com.suites.server.core.User;
 import com.suites.server.core.Suite;
+import com.suites.server.core.Grocery;
 
 import java.util.List;
 
@@ -34,6 +35,14 @@ public interface SuitesDAO {
                " (Email varchar(80)," +
                " SuiteId int references Suite(id))")
     void createSuiteInvitationTable();
+
+    @SqlUpdate("CREATE TABLE IF NOT EXISTS Grocery " +
+               " (Id SERIAL primary key," +
+               " SuiteId int references Suite(Id)," +
+               " Name varchar(80)," +
+               " Price decimal(10,2)," +
+               " Quantity int)")
+    void createGroceryTable();
 
 
     @SqlUpdate("CREATE INDEX IF NOT EXISTS SuiteMembership_idx_1 ON SuiteMembership (MemberId, SuiteId)")
@@ -81,4 +90,37 @@ public interface SuitesDAO {
     @SqlQuery("SELECT count(SuiteId) > 0 FROM SuiteMembership"
               + " WHERE MemberId = :userid AND SuiteId = :suiteid LIMIT 1")
     boolean isUserInSuite(@Bind("userid") int userId, @Bind("suiteid") int suiteId);
+
+    @SqlQuery("SELECT Id, Email, Name, ProfilePicture FROM Member WHERE"
+            + " Id IN ("
+            + " SELECT MemberId FROM SuiteMembership WHERE SuiteId = :suiteid)")
+    List<User> getSuiteUsers(@Bind("suiteid") int suiteId);
+
+    @SqlQuery("SELECT Id, Name, Quantity, Price FROM Grocery WHERE" +
+              " SuiteId = :suiteid")
+    @Mapper(GroceryMapper.class)
+    List<Grocery> getSuiteGroceries(@Bind("suiteid") int suiteId);
+
+    @SqlUpdate("INSERT INTO Grocery (SuiteId, Name, Price, Quantity)" +
+               " VALUES (:suiteid, :name, :price, :quantity)")
+    void addGrocery(@Bind("suiteid") int suiteId,
+                    @Bind("name") String name,
+                    @Bind("price") double price,
+                    @Bind("quantity") int quantity);
+
+    @SqlUpdate("UPDATE Grocery " +
+               "SET Name = :name, Quantity = :quantity, Price = :price " +
+               "WHERE Id = :id AND " +
+                     "SuiteId IN (SELECT SuiteId FROM SuiteMembership WHERE MemberId = :userid)")
+    int editGrocery(@Bind("id") int id,
+                    @Bind("userid") int userId,
+                    @Bind("name") String name,
+                    @Bind("price") double price,
+                    @Bind("quantity") int quantity);
+
+    @SqlUpdate("DELETE FROM Grocery " +
+               "WHERE Id = :id AND " +
+                     "SuiteId IN (SELECT SuiteId FROM SuiteMembership WHERE MemberId = :userid)")
+    int deleteGrocery(@Bind("id") int id,
+                      @Bind("userid") int userId);
 }
