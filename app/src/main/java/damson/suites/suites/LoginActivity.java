@@ -4,6 +4,7 @@ package damson.suites.suites;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -51,6 +52,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
     };
+
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -90,8 +92,26 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
+        Button mRegisterButton = (Button) findViewById(R.id.register_button);
+        mRegisterButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptRegistration();
+            }
+        });
+
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    private void attemptRegistration() {
+
+    }
+
+    public void gotoGroceryBasket(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, GroceryBasket.class);
+        startActivity(intent);
     }
 
     private void populateAutoComplete() {
@@ -160,8 +180,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!TextUtils.isEmpty(password) && !isPasswordShort(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+        if (!TextUtils.isEmpty(password) && !isPasswordLong(password)) {
+            mPasswordView.setError(getString(R.string.error_invalid_password_long));
             focusView = mPasswordView;
             cancel = true;
         }
@@ -187,6 +212,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+            if(!mAuthTask.isCancelled()) {
+                gotoGroceryBasket((View) null);
+            }
         }
     }
 
@@ -195,9 +223,20 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return email.contains("@");
     }
 
-    private boolean isPasswordValid(String password) {
+    private boolean isPasswordShort(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        if (password.length() < 6){
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isPasswordLong(String password) {
+        if(password.length() > 100){
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -332,7 +371,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                finish();
+                //IF THE LOGIN WORKED, GO TO GROCERY LIST
+                /*Intent intent = new Intent(this, GroceryBasket.class);
+                startActivity(intent);*/
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
