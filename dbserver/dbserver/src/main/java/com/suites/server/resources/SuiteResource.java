@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import io.dropwizard.auth.Auth;
 
 import com.suites.server.api.AddSuiteRequest;
-import com.suites.server.api.AddSuiteResult;
+import com.suites.server.api.GenericResult;
 
 import com.suites.server.db.SuiteManager;
 import com.suites.server.core.User;
@@ -30,9 +30,9 @@ public class SuiteResource {
     }
 
     @POST
-    public AddSuiteResult makeSuite(@Auth User user, AddSuiteRequest req) {
+    public GenericResult makeSuite(@Auth User user, AddSuiteRequest req) {
         sm.makeSuite(user, req.getName());
-        return new AddSuiteResult(true, "All good");
+        return new GenericResult(true, "All good");
     }
 
     @GET
