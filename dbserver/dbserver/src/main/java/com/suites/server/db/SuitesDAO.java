@@ -8,6 +8,7 @@ import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 
 import com.suites.server.core.User;
 import com.suites.server.core.Suite;
+import com.suites.server.core.Grocery;
 
 import java.util.List;
 
@@ -94,4 +95,35 @@ public interface SuitesDAO {
             + " Id IN ("
             + " SELECT MemberId FROM SuiteMembership WHERE SuiteId = :suiteid)")
     List<User> getSuiteUsers(@Bind("suiteid") int suiteId);
+
+    @SqlQuery("SELECT Id, Name, Quantity, Price FROM Grocery WHERE" +
+              " SuiteId = :suiteid")
+    @Mapper(GroceryMapper.class)
+    List<Grocery> getSuiteGroceries(@Bind("suiteid") int suiteId);
+
+    @SqlUpdate("INSERT INTO Grocery (SuiteId, Name, Price, Quantity)" +
+               " VALUES (:suiteid, :name, :price, :quantity)")
+    void addGrocery(@Bind("suiteid") int suiteId,
+                    @Bind("name") String name,
+                    @Bind("price") double price,
+                    @Bind("quantity") int quantity);
+
+    @SqlUpdate("UPDATE Grocery " +
+               "SET Name = :name, Quantity = :quantity, Price = :price " +
+               "WHERE Id = :id AND " +
+                     "SuiteId IN (SELECT SuiteId FROM SuiteMembership WHERE MemberId = :userid)")
+    int editGrocery(@Bind("id") int id,
+                    @Bind("userid") int userId,
+                    @Bind("name") String name,
+                    @Bind("price") double price,
+                    @Bind("quantity") int quantity);
+
+    @SqlUpdate("DELETE FROM Grocery " +
+               "WHERE Id = :id AND " +
+                     "SuiteId IN (SELECT SuiteId FROM SuiteMembership WHERE MemberId = :userid)")
+    int deleteGrocery(@Bind("id") int id,
+                      @Bind("userid") int userId,
+                      @Bind("name") String name,
+                      @Bind("price") double price,
+                      @Bind("quantity") int quantity);
 }
