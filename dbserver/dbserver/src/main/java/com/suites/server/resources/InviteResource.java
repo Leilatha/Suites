@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import io.dropwizard.auth.Auth;
 
 import com.suites.server.api.Invitation;
-import com.suites.server.api.InvitationResult;
+import com.suites.server.api.GenericResult;
 
 import com.suites.server.db.SuiteManager;
 import com.suites.server.core.User;
@@ -35,14 +35,14 @@ public class InviteResource {
     }
 
     @POST
-    public InvitationResult inviteUser(@Auth User user, Invitation invite) {
+    public GenericResult inviteUser(@Auth User user, Invitation invite) {
         int suiteId = invite.getSuiteId();
         
         if (sm.isUserInSuite(user, suiteId)) {
             sm.inviteUser(invite.getInvitee(), suiteId);
-            return new InvitationResult(true, "Happy Invitations");
+            return new GenericResult(true, "Happy Invitations");
         } else {
-            return new InvitationResult(false, "You are not in that suite.");
+            return new GenericResult(false, "You are not in that suite.");
         }
     }
 }
