@@ -1,5 +1,6 @@
 package damson.suites.suites;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -28,6 +29,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 public class GroceryBasket extends AppCompatActivity {
+    static final int itemIdentifier = 1;  // The request code
 
     /**
      * The {@link PagerAdapter} that will provide
@@ -74,6 +76,10 @@ public class GroceryBasket extends AppCompatActivity {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+
+
+
     }
 
     /**
@@ -127,6 +133,41 @@ public class GroceryBasket extends AppCompatActivity {
                 Uri.parse("android-app://damson.suites.suites/http/host/path")
         );
         AppIndex.AppIndexApi.start(client, viewAction);
+
+
+        /* Written by Marian
+         * This creates an intent to the GroceryBasketAdd.java
+         * It receives new items from that activity, and then
+         * displays it into the list.
+         */
+
+            Intent receiveItemIntent = new Intent(this, GroceryBasketAdd.class);
+            // receiveItemIntent.setType(GroceryItem);
+            startActivityForResult(receiveItemIntent, itemIdentifier);
+
+        // after, do null check on item. If it isn't null, send the item to the database to be
+        // added to the database, then display all grocery items available in database.
+    }
+
+    /* Written by Marian
+     * This is a continuation of the receiveItem method.
+     * This is where we know if the add was successful. If it returned a
+     * GroceryItem, then we can display its data to the list.
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == itemIdentifier) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                GroceryItem newItem = data.getData();
+
+                // The user picked a contact.
+                // The Intent's data Uri identifies which contact was selected.
+
+                // Do something with the contact here (bigger example below)
+            }
+        }
     }
 
     @Override

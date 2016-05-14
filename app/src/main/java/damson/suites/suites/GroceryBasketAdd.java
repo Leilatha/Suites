@@ -94,9 +94,9 @@ public class GroceryBasketAdd extends AppCompatActivity {
         String quantity = editText2.getText().toString();
         double price = Double.parseDouble(editText3.getText().toString());
         GroceryItem item = new GroceryItem(price, name, quantity);
-        Intent intent  = new Intent(this, GroceryBasket.class);
+        Intent intent  = new Intent();
         intent.putExtra("item_added", item); //sends new item
-        startActivity(intent);
+        setResult(RESULT_OK, intent);
         /* In the GroceryBasket class, first check if the intent sent anything.
          * Use the following lines in onStart():
          * Intent NAME = getIntent();
