@@ -38,4 +38,8 @@ public class GroceryManager {
         return dao.editGrocery(id, user.getId(), name, price, quantity) > 0;
     }
 
+    public boolean deleteGrocery(int id, User user) {
+        return dao.deleteGrocery(id, user.getId()) > 0;
+    }
+
 }
