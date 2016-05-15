@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.gms.appindexing.Action;
@@ -38,7 +39,13 @@ public class GroceryBasketAdd extends AppCompatActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
-
+        //Button listener
+        final Button button = (Button)findViewById(R.id.add_button);
+        button.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                addItem(v);
+            }
+        });
     }
 
     @Override
@@ -99,22 +106,12 @@ public class GroceryBasketAdd extends AppCompatActivity {
 
         //need to upload item to database
         URL url = null;
-
+        //get the information from Leon on how to add to database
 
         Intent intent  = new Intent();
 
         setResult(RESULT_OK, intent);
-        /* In the GroceryBasket class, first check if the intent sent anything.
-         * Use the following lines in onStart():
-         * Intent NAME = getIntent();
-         * GroceryItem item;
-         * if(NAME.getSerializable() != null)[
-         *      item = (GroceryItem) i.getSerializable("item_added");
-         * }
-         *
-         * after, do null check on item. If it isn't null, send the item to the database to be
-         * added to the database, then display all grocery items available in database.
-         */
+
     }
 
     public void cancel(View view){
