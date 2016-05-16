@@ -57,6 +57,9 @@ public class GroceryBasket extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information. BAWLIN
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_grocery_basket);
 
@@ -92,10 +95,6 @@ public class GroceryBasket extends AppCompatActivity {
             System.out.println("ERROR");
             return;
         }
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
         /* Written by Marian
          * This creates an intent to the GroceryBasketAdd.java
