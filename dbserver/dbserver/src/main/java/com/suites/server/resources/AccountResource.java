@@ -14,7 +14,7 @@ import com.suites.server.db.UserManager;
 import com.suites.server.db.UserException;
 import com.suites.server.core.User;
 import com.suites.server.api.RegistrationRequest;
-import com.suites.server.api.RegistrationResult;
+import com.suites.server.api.GenericResult;
 
 import io.dropwizard.auth.Auth;
 
@@ -34,12 +34,12 @@ public class AccountResource {
     }
 
     @POST
-    public RegistrationResult registerUser(RegistrationRequest request) {
+    public GenericResult registerUser(RegistrationRequest request) {
         try {
             um.registerUser(request.getEmail(), request.getName(), request.getPassword());
-            return new RegistrationResult(true, "Ok");
+            return new GenericResult(true, "Ok");
         } catch (UserException e) {
-            return new RegistrationResult(false, e.getMessage());
+            return new GenericResult(false, e.getMessage());
         }
     }
 }

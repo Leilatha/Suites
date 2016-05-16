@@ -10,7 +10,7 @@ import javax.ws.rs.core.MediaType;
 
 import io.dropwizard.auth.Auth;
 
-import com.suites.server.api.JoinResult;
+import com.suites.server.api.GenericResult;
 
 import com.suites.server.db.SuiteManager;
 import com.suites.server.core.User;
@@ -27,12 +27,12 @@ public class JoinResource {
     }
 
     @POST
-    public JoinResult joinSuite(@Auth User user, int suiteId) {
+    public GenericResult joinSuite(@Auth User user, int suiteId) {
         if (sm.isUserInvited(user, suiteId)) {
             sm.addUserToSuite(user, suiteId);
-            return new JoinResult(true, "All good");
+            return new GenericResult(true, "All good");
         } else {
-            return new JoinResult(false, "You have not been invited to that suite..");
+            return new GenericResult(false, "You have not been invited to that suite..");
         }
     }
 }
