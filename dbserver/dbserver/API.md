@@ -118,3 +118,51 @@ comes as a JSON list of objects of the form:
   "profilePicture" : "pictureaddress"
 }
 ```
+
+Groceries
+=========
+All requests go to "/grocery".
+
+List Suite Groceries
+--------------------
+Send a GET request with the query parameter "suiteid" set to the id of the suite.
+The response will come in the form:
+```
+{
+  "success" : <a boolean>,
+  "message" : "Failure message, in case success is false",
+  "groceryList" : [{ "id" : 1, "name" : "Grocery Name", "quantity" : 300, "price" : 19.84 }]
+}
+```
+
+Add Grocery
+-----------
+Send a POST request with the query parameter "suiteid" set to the id of the
+suite, with content of the form:
+```
+{
+  "name" : "Grocery Name",
+  "quantity" : 400,
+  "price" : 5.22
+}
+```
+
+A response will come in the form
+```
+{
+  "success" : <a boolean>,
+  "message" : "Failure message, irrelevant if succeeded"
+}
+```
+
+Edit Grocery
+------------
+Send a PUT request with the query parameter "groceryid" set to the id of the
+grocery item to edit, and with content of the same form as adding groceries.
+The response will come in the same form too.
+
+Delete Grocery
+--------------
+Send a DELETE request with the query parameter "groceryid" set to the id of the
+grocery item to remove. The response comes in the same form as adding and editing
+groceries.
