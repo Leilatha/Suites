@@ -44,3 +44,16 @@ Suite Creation
 Account Suite List
 ==================
 ```./accsuites address:port email password```
+
+Listing Users in a Suite
+========================
+```./suiteusers address:port email password suiteId```
+
+Invitation
+==========
+```./invite address:port email password inviteeEmail suiteId```
+
+Joining a Suite
+===============
+```./joinsuite address:port email password suiteId```
+
