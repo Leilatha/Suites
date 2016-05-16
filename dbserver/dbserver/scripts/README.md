@@ -57,3 +57,18 @@ Joining a Suite
 ===============
 ```./joinsuite address:port email password suiteId```
 
+Listing Groceries
+=================
+```./suitegroceries address:port email password suiteId```
+
+Add Grocery
+===========
+```./addgrocery address:port email password suiteId name quantity price```
+
+Edit Grocery
+===========
+```./editgrocery address:port email password groceryId name quantity price```
+
+Delete Grocery
+==============
+```./deletegrocery address:port email password groceryId```
