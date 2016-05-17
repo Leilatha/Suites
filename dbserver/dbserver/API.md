@@ -15,7 +15,7 @@ no parameters.
 Account Registration
 --------------------
 To register an account, send a POST request with Content-Type application/json,
-and with a body with the following JSON encoding:
+and with a body with the following JSON encoding (RegistrationRequest.java):
 ```
 {
   "email" : "useremail@email.com",
@@ -24,7 +24,7 @@ and with a body with the following JSON encoding:
 }
 ```
 
-The response will also be encoded as JSON, with the following format:
+The response will also be encoded as JSON, with the following format (GenericResult.java):
 ```
 {
   "success" : <a boolean>,
@@ -42,12 +42,12 @@ Requests are at the path "/suite".
 Adding a Suite
 --------------
 Adding a suite will automatically add the authenticated user to the suite.
-The request is a POST request and takes the form
+The request is a POST request and takes the form (AddSuiteRequest.java):
 ```
 { "name" : "suitename" }
 ```
 
-The response is a JSON object of the form:
+The response is a JSON object of the form (GenericResult.java):
 ```
 {
   "success" : <a boolean>,
@@ -58,7 +58,8 @@ The response is a JSON object of the form:
 Get User Suites
 ---------------
 This request is for getting a list of the authenticated user's suites. Send a
-GET request, and you will get as a response a JSON list of objects of the form:
+GET request, and you will get as a response a JSON list of objects of the
+form (core/Suite.java):
 ```
 {
   "id" : 420,
@@ -78,7 +79,7 @@ getting user suites.
 
 Make an Invitation
 ------------------
-Send a POST request with a JSON body of the following format:
+Send a POST request with a JSON body of the following format (Invitation.java):
 ```
 {
   "invitee" : "invitee@email.com",
@@ -86,7 +87,7 @@ Send a POST request with a JSON body of the following format:
 }
 ```
 
-A response will come in the form
+A response will come in the form (GenericResult.java):
 ```
 {
   "success" : <a boolean>,
@@ -97,7 +98,7 @@ A response will come in the form
 Joining a Suite
 ===============
 To join a suite, send a POST request to "/join", with a JSON number matching the
-ID of the suite you would like to join. A response comes in the form
+ID of the suite you would like to join. A response comes in the form (GenericResult.java):
 ```
 {
   "success" : <a boolean>,
@@ -109,13 +110,15 @@ Listing Users in a Suite
 ========================
 To list the users of a suite, send a GET request to "/suite/userlist?suiteid=x"
 where "x" is the id of the suite you want to list the users of. The response
-comes as a JSON list of objects of the form:
+comes as a JSON object in the form (UserListResult.java):
 ```
 {
-  "id" : 42,
-  "email" : an@email.net,
-  "name" : "My name",
-  "profilePicture" : "pictureaddress"
+  "success" : true,
+  "message" : "Failure message in case of failure",
+  "userList" : [ { "id" : 42, "email" : an@email.net,
+                   "name" : "My name",
+                   "profilePicture" : "pictureaddress"
+               }]
 }
 ```
 
@@ -126,7 +129,7 @@ All requests go to "/grocery".
 List Suite Groceries
 --------------------
 Send a GET request with the query parameter "suiteid" set to the id of the suite.
-The response will come in the form:
+The response will come in the form (GroceryListResult.java):
 ```
 {
   "success" : <a boolean>,
@@ -138,7 +141,7 @@ The response will come in the form:
 Add Grocery
 -----------
 Send a POST request with the query parameter "suiteid" set to the id of the
-suite, with content of the form:
+suite, with content of the form (core/Grocery.java):
 ```
 {
   "name" : "Grocery Name",
@@ -147,7 +150,7 @@ suite, with content of the form:
 }
 ```
 
-A response will come in the form
+A response will come in the form (GenericResult.java):
 ```
 {
   "success" : <a boolean>,
