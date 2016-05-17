@@ -8,9 +8,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -24,8 +27,11 @@ public class GroceryBasketAdd extends AppCompatActivity {
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
-    private GoogleApiClient client;
-
+    //private GoogleApiClient client;
+    //UI references
+    private EditText item_field;
+    private EditText quantity_field;
+    private EditText price_field;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,17 +39,22 @@ public class GroceryBasketAdd extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        item_field = (EditText) findViewById(R.id.Item_Text);
+        quantity_field = (EditText) findViewById(R.id.Quantity_Text);
+        price_field = (EditText) findViewById(R.id.Price_Text);
 
         //Button listener
-        final Button button = (Button)findViewById(R.id.add_button);
-        button.setOnClickListener(new View.OnClickListener(){
+        Button addButton = (Button)findViewById(R.id.Add_Button);
+        addButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                addItem(v);
+                attemptAddItem();
+            }
+        });
+
+        Button cancelButton = (Button)findViewById(R.id.Cancel_Button);
+        addButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View view){
+                cancel();
             }
         });
     }
@@ -54,7 +65,7 @@ public class GroceryBasketAdd extends AppCompatActivity {
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
+        /*client.connect();
         Action viewAction = Action.newAction(
                 Action.TYPE_VIEW, // TODO: choose an action type.
                 "GroceryBasketAdd Page", // TODO: Define a title for the content shown.
@@ -66,6 +77,7 @@ public class GroceryBasketAdd extends AppCompatActivity {
                 Uri.parse("android-app://damson.suites.suites/http/host/path")
         );
         AppIndex.AppIndexApi.start(client, viewAction);
+        */
     }
 
     @Override
@@ -74,7 +86,7 @@ public class GroceryBasketAdd extends AppCompatActivity {
 
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
+        /*Action viewAction = Action.newAction(
                 Action.TYPE_VIEW, // TODO: choose an action type.
                 "GroceryBasketAdd Page", // TODO: Define a title for the content shown.
                 // TODO: If you have web page content that matches this app activity's content,
@@ -86,35 +98,68 @@ public class GroceryBasketAdd extends AppCompatActivity {
         );
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
+        */
     }
 
     /**
-     * This method creates a GroceyItem object to be sent to GroceryBaseket. It should be able to
-     * upload the item to the structure holding the rest of the GroceryItem objects, and then
-     * display the list.
+     * This method creates a GroceyItem object to be uploaded to the database.
      *
      * Author: Michael Chin
      */
-    public void addItem(View view) {
-        EditText editText = (EditText) findViewById(R.id.Item_Text); //item name
-        EditText editText2 = (EditText) findViewById(R.id.Quantity_Text); //item quantity
-        EditText editText3 = (EditText) findViewById(R.id.Price_Text); //item price
-        String name = editText.getText().toString();
-        String quantity = editText2.getText().toString();
-        double price = Double.parseDouble(editText3.getText().toString());
-        GroceryItem item = new GroceryItem(price, name, quantity);
+    public void attemptAddItem() {
+        //reset errors
+        item_field.setError(null);
+        quantity_field.setError(null);
+        price_field.setError(null);
 
-        //need to upload item to database
-        URL url = null;
-        //get the information from Leon on how to add to database
+        //Store values at time of add attempt
+        String name = item_field.getText().toString();
+        String quantity = quantity_field.getText().toString();
+        double price = Double.parseDouble(price_field.getText().toString());
 
-        Intent intent  = new Intent();
+        boolean cancel = false;
+        View focusView = null;
 
-        setResult(RESULT_OK, intent);
+        //Check for valid item name
+        //Assumes user puts in a name. Error only if empty
+        if(TextUtils.isEmpty(name)) {
+            item_field.setError("Please fill in the name of the item");
+            focusView = item_field;
+            cancel = true;
+        }
+
+        //Check for valid quantity
+        //Assumes user provides quantity in the correct format. Error only if empty
+        if(TextUtils.isEmpty(quantity)) {
+            quantity_field.setError("Please fill in a quantity for the item");
+            focusView = quantity_field;
+            cancel = true;
+        }
+
+        //Check for valid price
+        if(price < 0.0) {
+            price_field.setError("This price is invalid. Please provide a positive value.");
+            focusView = price_field;
+            cancel = true;
+        }
+
+        if(cancel){
+            focusView.requestFocus();
+        }
+        else {
+            GroceryItem item = new GroceryItem(price, name, quantity);
+
+            //need to upload item to database
+            URL url = null;
+            //get the information from Leon on how to add to database
+
+            Intent intent = new Intent();
+            setResult(RESULT_OK, intent);
+        }
 
     }
 
-    public void cancel(View view){
+    public void cancel(){
         Intent intent = new Intent(this, GroceryBasket.class);
         startActivity(intent);
     }
