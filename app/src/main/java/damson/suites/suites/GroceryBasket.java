@@ -57,10 +57,18 @@ public class GroceryBasket extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information. BAWLIN
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_grocery_basket);
 
+        //TODO: fix with database stuff
         String [] groceryList = listMaker();
+        if(groceryList[0] == ""){
+            System.out.println("ERROR");
+            return;
+        }
         ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
                 this,android.R.layout.simple_expandable_list_item_1, groceryList);
         ListView myList = (ListView) findViewById(R.id.listView);
@@ -92,10 +100,6 @@ public class GroceryBasket extends AppCompatActivity {
             System.out.println("ERROR");
             return;
         }
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
         /* Written by Marian
          * This creates an intent to the GroceryBasketAdd.java
@@ -290,10 +294,6 @@ public class GroceryBasket extends AppCompatActivity {
         }
     }
 
-
-
-
-
     /**
      * Lexie Rochfort
      * 5/7/2016
@@ -303,7 +303,6 @@ public class GroceryBasket extends AppCompatActivity {
         //put into array of arrays
         //make array of arrays into list items
         //go through array and make  list item out of
-
 
     }
 }
