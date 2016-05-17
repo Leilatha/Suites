@@ -97,8 +97,8 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/groceryBasketAddDone"
-                android:id="@+id/Done_Button"
+                android:text="@string/Add"
+                android:id="@+id/Add_Button"
                 android:onClick="addItem"/>
 
             <Button
