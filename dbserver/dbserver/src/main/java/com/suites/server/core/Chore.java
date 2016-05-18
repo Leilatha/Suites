@@ -10,7 +10,7 @@ public class Chore {
 
     @JsonCreator
     public Chore(@JsonProperty("id") int id,
-                 @JsonProperty("name") String name.
+                 @JsonProperty("name") String name,
                  @JsonProperty("description") String descript) {
         this.id = id;
         this.name = name;
@@ -31,3 +31,4 @@ public class Chore {
     public String getDescript() {
         return descript;
     }
+}
