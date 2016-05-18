@@ -11,7 +11,8 @@ import com.suites.server.core.Chore;
 public class ChoreMapper implements ResultSetMapper<Chore> {
     public Chore map(int index, ResultSet r, StatementContext ctx) throws SQLException {
         return new Chore(r.getInt("Id"),
-                        r.getString("Name"),
-                        r.getString("Description"));
+                         r.getString("Name"),
+                         r.getString("Description"),
+                         r.getInt("currentTurn"));
     }
 }
