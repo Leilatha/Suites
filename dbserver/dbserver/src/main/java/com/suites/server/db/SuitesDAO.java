@@ -9,6 +9,7 @@ import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 import com.suites.server.core.User;
 import com.suites.server.core.Suite;
 import com.suites.server.core.Grocery;
+import com.suites.server.core.Chore;
 
 import java.util.List;
 
@@ -44,6 +45,18 @@ public interface SuitesDAO {
                " Quantity int)")
     void createGroceryTable();
 
+    @SqlUpdate("CREATE TABLE IF NOT EXISTS Chore " +
+               " (Id SERIAL primary key, " +
+               " SuiteId int references Suite(Id)," +
+               " Name varchar(80)," +
+               " Description varchar(255))")
+    void createChoreTable();
+
+    @SqlUpdate("CREATE TABLE IF NOT EXISTS ChoreAssignment" +
+               " (MemberId int references Member(Id)," +
+               " SuiteId int references Suite(Id)," +
+               " Turn int")
+    void createChoreAssignmentTable();
 
     @SqlUpdate("CREATE INDEX IF NOT EXISTS SuiteMembership_idx_1 ON SuiteMembership (MemberId, SuiteId)")
     void createSuiteMembershipIndex();
@@ -123,4 +136,35 @@ public interface SuitesDAO {
                      "SuiteId IN (SELECT SuiteId FROM SuiteMembership WHERE MemberId = :userid)")
     int deleteGrocery(@Bind("id") int id,
                       @Bind("userid") int userId);
+
+    @SqlQuery("SELECT Id, Name, Description FROM Chore WHERE" +
+              " SuiteId = :suiteid")
+    @Mapper(ChoreMapper.class)
+    List<Chore> getSuiteChores(@Bind("suiteid") int suiteId);
+
+    @SqlQuery("SELECT Id, Name, Description FROM Chore WHERE" +
+              " SuiteId = :suiteid AND Id IN"+
+              " (SELECT SuiteId FROM ChoreAssignment WHERE MemberId = :userid)")
+    List<Chore> getSuiteUserChores(@Bind("suiteid") int suiteId, @Bind("userid") int userId);
+    
+    @SqlUpdate("INSERT INTO Chore (SuiteId, Name, Description) " +
+               "VALUES (:suiteid, :name, :description)")
+    void addChore(@Bind("suiteid") int suiteId,
+                  @Bind("name") String name,
+                  @Bind("description") String description);
+
+    @SqlUpdate("UPDATE Chore " +
+               "SET Name = :name, Description = :description " +
+               "WHERE Id = :id AND " +
+                     "SuiteId IN (SELECT SuiteId FROM SuiteMembership WHERE MemberId = :userid)")
+    int editChore(@Bind("id") int id,
+                  @Bind("userid") int userId,
+                  @Bind("name") String name,
+                  @Bind("description") String description);
+
+    @SqlUpdate("DELETE FROM  Chore " +
+               "WHERE Id = :id AND " +
+                     "SuiteId IN (SELECT SuiteId FROM SuiteMembership WHERE MemberId = :userid)")
+    int deleteChore(@Bind("id") int id,
+                    @Bind("userid") int userId);
 }
