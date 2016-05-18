@@ -10,7 +10,7 @@ import com.suites.server.core.Chore;
 
 public class ChoreMapper implements ResultSetMapper<Chore> {
     public Chore map(int index, ResultSet r, StatementContext ctx) throws SQLException {
-        return new Grocery(r.getInt("Id"),
+        return new Chore(r.getInt("Id"),
                         r.getString("Name"),
                         r.getString("Description"));
     }
