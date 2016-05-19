@@ -6,14 +6,11 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.LoaderManager.LoaderCallbacks;
-import android.content.Context;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,6 +31,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -71,7 +69,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
-    //User user = mapper.readValue(new File("user.json"), User.class);
     public static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 
@@ -241,22 +238,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // perform the user login attempt.
             showProgress(true);
             DBHelper helper = new DBHelper();
-            helper.login(email, password, new AsyncResponseHandler<DBGenericResult>() {
+            helper.login(email, password, new AsyncResponseHandler<User>() {
                 @Override
-                public void onSuccess(DBGenericResult response, int statusCode, Header[] headers,
+                public void onSuccess(User response, int statusCode, Header[] headers,
                                       byte[] errorResponse) {
-                    if(response.getSuccess()) {
-                        //IF THE LOGIN WORKED, GO TO GROCERY LIST
-                        Intent intent = new Intent(LoginActivity.this, GroceryBasket.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                    else {
-                        Snackbar mySnackbar = Snackbar.make(findViewById(R.id.login_coordinator),
-                                R.string.error_incorrect_password, Snackbar.LENGTH_SHORT);
-                        mySnackbar.show();
-
-                    }
+                    User.user = response;
+                    //IF THE LOGIN WORKED, GO TO GROCERY LIST
+                    Intent intent = new Intent(LoginActivity.this, GroceryBasket.class);
+                    startActivity(intent);
+                    finish();
                 }
 
                 @Override
@@ -268,9 +258,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
 
                 @Override
-                public void onLoginFailure() {
-                    mPasswordView.setError(getString(R.string.error_incorrect_password));
-                    mPasswordView.requestFocus();
+                public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+                    try {
+                        Log.d("onLoginFailure", new String(errorResponse, "UTF-8"));
+                    } catch (UnsupportedEncodingException e1) {
+                        e1.printStackTrace();
+                    }
+                    Snackbar mySnackbar = Snackbar.make(findViewById(R.id.login_coordinator),
+                            R.string.error_login_failed, Snackbar.LENGTH_LONG);
+                    mySnackbar.show();
                 }
 
                 @Override

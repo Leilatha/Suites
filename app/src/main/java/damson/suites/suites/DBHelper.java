@@ -3,11 +3,8 @@ package damson.suites.suites;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -27,6 +24,7 @@ public class DBHelper {
     String path = "";
     String account = "";
     String password = "";
+    User user;
     int port = 8080;
     AsyncHttpClient client;
     URL url;
@@ -60,9 +58,13 @@ public class DBHelper {
         }
 
         client = new AsyncHttpClient();
-        if(account != null && password != null) {
+        if(user != null) {
+
+        }
+        else if(account != null && password != null) {
             client.setBasicAuth(account, password);
         }
+
 
         /*client.setReadTimeout(7000);
         client.setConnectTimeout(7000);
@@ -94,7 +96,7 @@ public class DBHelper {
                 new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
     }
 
-    public void login(String mEmail, String mPassword, AsyncResponseHandler<DBGenericResult> arh) {
+    public void login(String mEmail, String mPassword, AsyncResponseHandler<User> arh) {
         account = mEmail;
         password = mPassword;
         setup("/account");
@@ -102,6 +104,10 @@ public class DBHelper {
         // Get info
         client.get(null, url.toExternalForm(),
                 new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
+    }
+
+    protected void setUser(User u) {
+        user = u;
     }
 
     public void login() {

@@ -11,7 +11,7 @@ public abstract class AsyncResponseHandler<B>  {
                                    byte[] errorResponse); // Handle response
     public abstract void onFailure(int statusCode, Header[] headers,
                                    byte[] errorResponse, Throwable e);
-    public abstract void onLoginFailure();  // Called by onFailure
+    public abstract void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e);  // Called by onFailure
     public void onStart() {}
     public void onRetry() {}
     public void onFinish() {}

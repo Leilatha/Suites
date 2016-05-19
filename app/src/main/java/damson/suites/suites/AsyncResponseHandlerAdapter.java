@@ -1,6 +1,5 @@
 package damson.suites.suites;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import java.io.IOException;
@@ -25,7 +24,6 @@ public class AsyncResponseHandlerAdapter<B> extends AsyncHttpResponseHandler {
     public void onSuccess(int statusCode, Header[] headers, byte[] response) {
         B res = null;
         try {
-            String str = new String(response, "UTF-8");
             res = DBHelper.mapper.readValue(response, DBHelper.mapper.constructType(bb));
             //res.toString();
         } catch (IOException e) {
@@ -37,7 +35,7 @@ public class AsyncResponseHandlerAdapter<B> extends AsyncHttpResponseHandler {
     @Override
     public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
         if (statusCode == 401) {
-            cc.onLoginFailure(); // i.e. validation failed
+            cc.onLoginFailure(headers, errorResponse, e); // i.e. validation failed
         } else {
             cc.onFailure(statusCode, headers, errorResponse, e);
         }
