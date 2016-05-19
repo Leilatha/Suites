@@ -106,11 +106,43 @@ public class DBHelper {
                 new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
     }
 
-    protected void setUser(User u) {
-        user = u;
+    public void addSuite() {
+
     }
 
-    public void login() {
+    public void getUserSuites() {
 
+    }
+
+    public void getUserInvites() {
+
+    }
+
+    public void makeInvitation() {
+
+    }
+
+    public void joinSuite() {
+
+    }
+
+    public void listUsersInASuite() {
+
+    }
+
+    public void listSuiteGroceries() {
+
+    }
+
+    public void addGroceryToSuite() {
+
+    }
+
+    public void editGrocery() {
+
+    }
+
+    public void deleteGrocery() {
+        
     }
 }
