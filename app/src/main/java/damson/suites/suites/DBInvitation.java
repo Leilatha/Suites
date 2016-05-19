@@ -1,15 +1,15 @@
-package com.suites.server.api;
+package damson.suites.suites;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Invitation {
+public class DBInvitation {
     private final String invitee; // Email
     private final int suiteId;
 
     @JsonCreator
-    public Invitation(@JsonProperty("invitee") String invitee,
-                      @JsonProperty("suiteId") int suiteId) {
+    public DBInvitation(@JsonProperty("invitee") String invitee,
+                        @JsonProperty("suiteId") int suiteId) {
         this.invitee = invitee;
         this.suiteId = suiteId;
     }

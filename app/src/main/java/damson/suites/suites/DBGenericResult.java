@@ -1,15 +1,15 @@
-package com.suites.server.api;
+package damson.suites.suites;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class GenericResult {
+public class DBGenericResult {
     private final boolean success;
     private final String message;
 
     @JsonCreator
-    public GenericResult(@JsonProperty("success") boolean success,
-                              @JsonProperty("message") String message) {
+    public DBGenericResult(@JsonProperty("success") boolean success,
+                           @JsonProperty("message") String message) {
         this.success = success;
         this.message = message;
     }

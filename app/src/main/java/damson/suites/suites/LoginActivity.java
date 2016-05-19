@@ -1,29 +1,28 @@
 package damson.suites.suites;
 
 //imports here
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,24 +34,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.deser.std.StringArrayDeserializer;
-import com.loopj.android.http.JsonStreamerEntity;
-
-import java.io.BufferedOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.SocketTimeoutException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import cz.msebera.android.httpclient.Header;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -77,7 +64,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -116,17 +102,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Check for network connectivity
-                ConnectivityManager connMgr = (ConnectivityManager)
-                        getSystemService(Context.CONNECTIVITY_SERVICE);
-                NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-                if (networkInfo != null && networkInfo.isConnected()) {
-                    // fetch data
-                    attemptLogin();
-                } else {
-                    // display error
-                    mEmailSignInButton.setError(getString(R.string.error_network_connection));
-                }
+                // fetch data
+                attemptLogin();
             }
         });
 
@@ -134,7 +111,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mRegisterButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                    attemptRegistration();
+                attemptRegistration();
             }
         });
 
@@ -220,9 +197,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
 
         // Reset errors.
         mEmailView.setError(null);
@@ -266,11 +240,44 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void[]) null);
-            /*if(!mAuthTask.isCancelled()) {
-                gotoGroceryBasket(null);
-            }*/
+            DBHelper helper = new DBHelper();
+            helper.login(email, password, new AsyncResponseHandler<DBGenericResult>() {
+                @Override
+                public void onSuccess(DBGenericResult response, int statusCode, Header[] headers,
+                                      byte[] errorResponse) {
+                    if(response.getSuccess()) {
+                        //IF THE LOGIN WORKED, GO TO GROCERY LIST
+                        Intent intent = new Intent(LoginActivity.this, GroceryBasket.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else {
+                        Snackbar mySnackbar = Snackbar.make(findViewById(R.id.login_coordinator),
+                                R.string.error_incorrect_password, Snackbar.LENGTH_SHORT);
+                        mySnackbar.show();
+
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                    Snackbar mySnackbar = Snackbar.make(findViewById(R.id.login_coordinator),
+                            R.string.error_registration_failed, Snackbar.LENGTH_SHORT);
+                    mySnackbar.show();
+                    Log.e("LoginActivity", "Failed to connect to server.");
+                }
+
+                @Override
+                public void onLoginFailure() {
+                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.requestFocus();
+                }
+
+                @Override
+                public void onFinish() {
+                    showProgress(false);
+                }
+            });
         }
     }
 
@@ -286,18 +293,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isPasswordShort(String password) {
         //TODO: Password Verification
-        if (password.length() < 6){
-            return false;
-        }
-
-        return true;
+        return !(password.length() < 6);
     }
 
     private boolean isPasswordLong(String password) {
-        if(password.length() > 100){
-            return false;
-        }
-        return true;
+        return !(password.length() > 100);
     }
 
     /**
@@ -390,84 +390,5 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
 
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String mEmail;
-        private final String mPassword;
-
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-            String memberJSON = "";
-            //mapper.writeValue(memberJSON, user);
-
-            URL url = null;
-            HttpURLConnection client = null;
-            try {
-                url = new URL("http://104.236.61.10:8080/accounts");
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-            try {
-                client = (HttpURLConnection) url.openConnection();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-            // ACTUALLY logging in
-            try {
-                client.setRequestMethod("POST");
-                //client.
-
-            } catch (ProtocolException e) {
-                e.printStackTrace();
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                finish();
-                //IF THE LOGIN WORKED, GO TO GROCERY LIST
-                Intent intent = new Intent(LoginActivity.this, GroceryBasket.class);
-                startActivity(intent);
-                //TODO: Add ObjectMapper from Jackson, in order to JSON
-                //TODO: loopj http client
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
-    }
 }
 

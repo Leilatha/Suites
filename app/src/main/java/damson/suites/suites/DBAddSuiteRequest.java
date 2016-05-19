@@ -1,13 +1,13 @@
-package com.suites.server.api;
+package damson.suites.suites;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class AddSuiteRequest {
+public class DBAddSuiteRequest {
     private final String name;
 
     @JsonCreator
-    public AddSuiteRequest(@JsonProperty("name") String name) {
+    public DBAddSuiteRequest(@JsonProperty("name") String name) {
         this.name = name;
     }
 

@@ -1,17 +1,17 @@
-package com.suites.server.api;
+package damson.suites.suites;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class AddGroceryRequest {
+public class DBAddGroceryRequest {
     private final String name;
     private final int quantity;
     private final double price;
 
     @JsonCreator
-    public AddGroceryRequest(@JsonProperty("name") String name,
-                             @JsonProperty("quantity") int quantity,
-                             @JsonProperty("price") double price) {
+    public DBAddGroceryRequest(@JsonProperty("name") String name,
+                               @JsonProperty("quantity") int quantity,
+                               @JsonProperty("price") double price) {
         this.name = name;
         this.quantity = quantity;
         this.price = price;
