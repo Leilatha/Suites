@@ -201,7 +201,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        final String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -243,6 +243,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 public void onSuccess(User response, int statusCode, Header[] headers,
                                       byte[] errorResponse) {
                     User.user = response;
+                    User.user.setPassword(password);
                     //IF THE LOGIN WORKED, GO TO GROCERY LIST
                     Intent intent = new Intent(LoginActivity.this, GroceryBasket.class);
                     startActivity(intent);
