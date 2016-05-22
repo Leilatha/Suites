@@ -63,5 +63,37 @@ public class ChoreResource {
             return new GenericResult(false, "You are not in that suite.");
         }
     }
-}
 
+    @PUT
+    public GenericResult editChore(@Auth User user,
+                                   @QueryParam("choreid") IntParam choreId,
+                                   AddChoreRequest acr) {
+        if(choreId == null) {
+            return new GenericResult(false, "You need to specify a chore.");
+        } else {
+            boolean check = cm.editChore(choreId.get(),
+                                         user,
+                                         acr.getName(),
+                                         acr.getDescription(),
+                                         acr.getAssignees());
+            if(!check)
+                return new GenericResult(false, "Could not edit a chore.");
+            else
+                return new GenericResult(true, "");
+        }
+    }
+
+    @DELETE
+    public GenericResult deleteChore(@Auth User user,
+                                     @QueryParam("choreid") IntParam choreId) {
+        if(choreId == null) {
+            return new GenericResult(false, "You need to specify a chore.");
+        } else {
+            boolean check = cm.deleteChore(choreId.get(), user);
+            if(!check)
+                return new GenericResult(false, "Could not delete a chore.");
+            else
+                return new GenericResult(true, "");
+        }
+    }
+}
