@@ -79,7 +79,6 @@ public class GroceryBasket extends AppCompatActivity {
             return;
         }
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if(toolbar == null){
             System.out.println("THIS IS NULL PLZ FIX***********************");
