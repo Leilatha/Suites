@@ -15,6 +15,8 @@ import com.suites.server.core.PSA;
 import java.util.List;
 import java.util.Iterator;
 
+import java.sql.Timestamp;
+
 @RegisterMapper(UserMapper.class)
 public interface SuitesDAO {
 
@@ -220,4 +222,25 @@ public interface SuitesDAO {
               "WHERE SuiteId = :suiteid")
     @Mapper(PSAMapper.class)
     List<PSA> getSuitePSAs(@Bind("suiteid") int suiteId);
+
+    @SqlUpdate("INSERT INTO PSA (SuiteId, AuthorId, Title, Description, Timestamp) " +
+               "VALUES(:suiteid, :authorid, :title, :description, :timestamp)")
+    void addPSA(@Bind("suiteid") int suiteId,
+                @Bind("authorid") int authorId,
+                @Bind("title") String title,
+                @Bind("description") String description,
+                @Bind("timestamp") Timestamp timestamp);
+
+    @SqlUpdate("UPDATE PSA " +
+               "SET Title = :title, Description = :description " +
+               "WHERE Id = :id AND AuthorId = :userid")
+    int editPSA(@Bind("id") int id,
+                @Bind("userid") int userId,
+                @Bind("title") String title,
+                @Bind("description") String description);
+
+    @SqlUpdate("DELETE FROM PSA " +
+               "WHERE Id = :id AND AuthorId = :userid")
+    int deletePSA(@Bind("id") int id,
+                  @Bind("userid") int userId);
 }
