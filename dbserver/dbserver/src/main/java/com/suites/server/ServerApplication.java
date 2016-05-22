@@ -37,11 +37,13 @@ public class ServerApplication extends Application<ServerConfiguration> {
         final SuitesDAO dao = jdbi.onDemand(SuitesDAO.class);
         final UserManager um = new UserManager(dao);
         final SuiteManager sm = new SuiteManager(dao);
+        final GroceryManager gm = new GroceryManager(dao);
 
         dao.createSuiteTable();
         dao.createUserTable();
         dao.createSuiteMembershipTable();
         dao.createSuiteInvitationTable();
+        dao.createGroceryTable();
         // dao.createSuiteMembershipIndex(); // Maybe move database creation somewhere else
 
         environment.jersey().register(new BasicAuthProvider<User>(new DBAuthenticator(um),
@@ -62,5 +64,8 @@ public class ServerApplication extends Application<ServerConfiguration> {
 
 	final SuiteUserResource userListRes = new SuiteUserResource(sm);
 	environment.jersey().register(userListRes);
+
+        final GroceryResource groceryRes = new GroceryResource(gm, sm);
+        environment.jersey().register(groceryRes);
     }
 }

@@ -1,29 +1,29 @@
 package damson.suites.suites;
 
 //imports here
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
-
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -31,8 +31,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import cz.msebera.android.httpclient.Header;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -56,7 +62,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -64,10 +69,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
 
+    public static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -84,10 +95,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        final Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                // fetch data
                 attemptLogin();
             }
         });
@@ -105,14 +117,32 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private void attemptRegistration() {
+        //TODO: Registration
+        Intent intent = new Intent(this, RegistrationActivity.class);
+        // Sends any existing email and password to registration screen
+        intent.putExtra("email", mEmailView.getText().toString());
+        intent.putExtra("password", mPasswordView.getText().toString());
 
+        //TODO: send back email used to sign up
+        startActivityForResult(intent, 1);
     }
 
-    public void gotoGroceryBasket(View view) {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK){
+                mEmailView.setText(data.getStringExtra("email"));
+                mPasswordView.setText("");
+            }
+        }
+    }
+
+    /*public static void gotoGroceryBasket(View view) {
         // Do something in response to button
         Intent intent = new Intent(this, GroceryBasket.class);
         startActivity(intent);
-    }
+    }*/
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
@@ -164,9 +194,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
 
         // Reset errors.
         mEmailView.setError(null);
@@ -174,7 +201,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        final String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
@@ -210,33 +237,64 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
-            if(!mAuthTask.isCancelled()) {
-                gotoGroceryBasket((View) null);
-            }
+            DBHelper helper = new DBHelper();
+            helper.login(email, password, new AsyncResponseHandler<User>() {
+                @Override
+                public void onSuccess(User response, int statusCode, Header[] headers,
+                                      byte[] errorResponse) {
+                    User.user = response;
+                    User.user.setPassword(password);
+                    //IF THE LOGIN WORKED, GO TO GROCERY LIST
+                    Intent intent = new Intent(LoginActivity.this, GroceryBasket.class);
+                    startActivity(intent);
+                    finish();
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                    Snackbar mySnackbar = Snackbar.make(findViewById(R.id.login_coordinator),
+                            R.string.error_registration_failed, Snackbar.LENGTH_SHORT);
+                    mySnackbar.show();
+                    Log.e("LoginActivity", "Failed to connect to server.");
+                }
+
+                @Override
+                public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+                    try {
+                        Log.d("onLoginFailure", new String(errorResponse, "UTF-8"));
+                    } catch (UnsupportedEncodingException e1) {
+                        e1.printStackTrace();
+                    }
+                    Snackbar mySnackbar = Snackbar.make(findViewById(R.id.login_coordinator),
+                            R.string.error_login_failed, Snackbar.LENGTH_LONG);
+                    mySnackbar.show();
+                }
+
+                @Override
+                public void onFinish() {
+                    showProgress(false);
+                }
+            });
         }
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
+        //TODO: Email Validation
+        Pattern pattern;
+        Matcher matcher;
+
+        pattern = Pattern.compile(EMAIL_PATTERN);
+        matcher = pattern.matcher(email);
+        return matcher.matches();
     }
 
     private boolean isPasswordShort(String password) {
-        //TODO: Replace this with your own logic
-        if (password.length() < 6){
-            return false;
-        }
-
-        return true;
+        //TODO: Password Verification
+        return !(password.length() < 6);
     }
 
     private boolean isPasswordLong(String password) {
-        if(password.length() > 100){
-            return false;
-        }
-        return true;
+        return !(password.length() > 100);
     }
 
     /**
@@ -328,63 +386,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int IS_PRIMARY = 1;
     }
 
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
-        private final String mPassword;
-
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                //IF THE LOGIN WORKED, GO TO GROCERY LIST
-                /*Intent intent = new Intent(this, GroceryBasket.class);
-                startActivity(intent);*/
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
-    }
 }
 

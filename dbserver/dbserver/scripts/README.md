@@ -44,3 +44,31 @@ Suite Creation
 Account Suite List
 ==================
 ```./accsuites address:port email password```
+
+Listing Users in a Suite
+========================
+```./suiteusers address:port email password suiteId```
+
+Invitation
+==========
+```./invite address:port email password inviteeEmail suiteId```
+
+Joining a Suite
+===============
+```./joinsuite address:port email password suiteId```
+
+Listing Groceries
+=================
+```./suitegroceries address:port email password suiteId```
+
+Add Grocery
+===========
+```./addgrocery address:port email password suiteId name quantity price```
+
+Edit Grocery
+===========
+```./editgrocery address:port email password groceryId name quantity price```
+
+Delete Grocery
+==============
+```./deletegrocery address:port email password groceryId```
