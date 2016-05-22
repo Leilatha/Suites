@@ -107,8 +107,8 @@ public interface SuitesDAO {
     @SqlUpdate("DELETE FROM SuiteMembership WHERE SuiteId = :suiteid AND MemberId = :userid")
     void removeUserFromSuite(@Bind("userid") int userId, @Bind("suiteid") int suiteId);
 
-    @SqlUpdate("DELETE FROM SuiteMembership WHERE " +
-               "SuiteId = :suiteid " +
+    @SqlUpdate("DELETE FROM Suite WHERE " +
+               "Id = :suiteid " +
                "AND NOT EXISTS (SELECT * FROM SuiteMembership WHERE SuiteId = :suiteid)")
     void removeSuiteIfEmpty(@Bind("suiteid") int suiteId);
 

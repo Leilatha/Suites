@@ -49,6 +49,7 @@ public class SuiteManager {
 
     public void leaveSuite(User user, int suiteId) {
         dao.removeUserFromSuite(user.getId(), suiteId);
-        dao.removeSuiteIfEmpty(suiteId);
+        // Currently fails constraint checks b/c of FKs in Chore/Grocery
+        // dao.removeSuiteIfEmpty(suiteId);
     }
 }

@@ -2,6 +2,7 @@ package com.suites.server.resources;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
@@ -38,5 +39,10 @@ public class SuiteResource {
     @GET
     public List<Suite> getUserSuites(@Auth User user) {
         return sm.getUserSuites(user);
+    }
+
+    @PUT @Path("/leave")
+    public void leaveSuite(@Auth User user, int suiteId) {
+        sm.leaveSuite(user, suiteId);
     }
 }
