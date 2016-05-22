@@ -3,9 +3,12 @@ package com.suites.server.db;
 import com.suites.server.core.User;
 import com.suites.server.core.Suite;
 import com.suites.server.core.Chore;
+import com.suites.server.api.ChoreView;
 
 import java.util.List;
 import java.util.Iterator;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
 public class ChoreManager {
 
@@ -27,16 +30,25 @@ public class ChoreManager {
         this.dao = dao;
     }
 
-    public List<Chore> getSuiteChores(int suiteId) {
-        return dao.getSuiteChores(suiteId);
+    public List<ChoreView> getSuiteChores(int suiteId) {
+        return pairUserList(dao.getSuiteChores(suiteId));
     }
 
-    public List<Chore> getSuiteUserChores(int suiteId, User user) {
-        return dao.getSuiteUserChores(suiteId, user.getId());
+    public List<ChoreView> getSuiteUserChores(int suiteId, User user) {
+        return pairUserList(dao.getSuiteUserChores(suiteId, user.getId()));
     }
 
-    public List<User> getChoreAssignees(int choreId, User user) {
+    private List<User> getChoreAssignees(int choreId) {
         return dao.getChoreAssignees(choreId);
+    }
+
+    private List<ChoreView> pairUserList(List<Chore> cList) {
+
+        Stream<Chore> cStream = cList.stream();
+        Stream<ChoreView> cvStream = cStream.map(c -> new ChoreView(c, getChoreAssignees(c.getId())));
+        ChoreView [] cvArr = cvStream.toArray(ChoreView[]::new);
+        
+        return Arrays.asList(cvArr);
     }
 
     public void addChore(int suiteId,
@@ -44,7 +56,7 @@ public class ChoreManager {
                          String description,
                          List<Integer> assignments) {
         int choreId = dao.addChore(suiteId, name, description);
-        dao.assignChore(assignments.iterator(), choreId, new NatIterator());
+        dao.assignChore(assignments, choreId, new NatIterator());
     }
 
     public boolean editChore(int id,
@@ -56,7 +68,7 @@ public class ChoreManager {
             return false;
         } else {
             dao.deleteChoreAssignments(id);
-            dao.assignChore(assignments.iterator(), id, new NatIterator());
+            dao.assignChore(assignments, id, new NatIterator());
             dao.fixChore(id);
             return true;
         }

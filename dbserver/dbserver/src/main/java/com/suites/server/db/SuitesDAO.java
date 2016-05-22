@@ -50,25 +50,25 @@ public interface SuitesDAO {
                " (Id SERIAL primary key, " +
                " SuiteId int references Suite(Id)," +
                " Name varchar(80)," +
-               " Description varchar(255))," +
-               " CurrentTurn int")
+               " Description varchar(255)," +
+               " CurrentTurn int)")
     void createChoreTable();
 
     @SqlUpdate("CREATE TABLE IF NOT EXISTS ChoreAssignment" +
                " (MemberId int references Member(Id)," +
                " ChoreId int references Chore(Id)," +
-               " Turn int")
+               " Turn int)")
     void createChoreAssignmentTable();
 
     @SqlUpdate("CREATE INDEX IF NOT EXISTS SuiteMembership_idx_1 ON SuiteMembership (MemberId, SuiteId)")
     void createSuiteMembershipIndex();
 
-    @SqlUpdate("CREATE FUNCTION assignee_cnt(int) RETURNS int AS $$"
-               + "SELECT count(Id) FROM ChoreAssignment WHERE Id = $1; $$"
+    @SqlUpdate("CREATE OR REPLACE FUNCTION assignee_cnt(int) RETURNS bigint AS $$"
+               + "SELECT count(ChoreId) FROM ChoreAssignment WHERE ChoreId = $1; $$"
                + " LANGUAGE SQL")
     void createAssigneeCountFunction();
 
-    @SqlUpdate("CREATE FUNCTION user_in_suite(int, int) RETURNS boolean AS $$"
+    @SqlUpdate("CREATE OR REPLACE FUNCTION user_in_suite(int, int) RETURNS boolean AS $$"
                + "SELECT (EXISTS (SELECT MemberId FROM SuiteMembership WHERE "
                + " SuiteId = $2 AND MemberId = $1)); $$"
                + " LANGUAGE SQL")
@@ -154,8 +154,8 @@ public interface SuitesDAO {
               " (SELECT SuiteId FROM ChoreAssignment WHERE MemberId = :userid)")
     List<Chore> getSuiteUserChores(@Bind("suiteid") int suiteId, @Bind("userid") int userId);
     
-    @SqlUpdate("INSERT INTO Chore (SuiteId, Name, Description, currentTurn) " +
-               "VALUES (:suiteid, :name, :description, 0) RETURNING Id")
+    @SqlQuery("INSERT INTO Chore (SuiteId, Name, Description, currentTurn) " +
+              "VALUES (:suiteid, :name, :description, 0) RETURNING Id")
     int addChore(@Bind("suiteid") int suiteId,
                  @Bind("name") String name,
                  @Bind("description") String description);
@@ -179,9 +179,9 @@ public interface SuitesDAO {
 
     @SqlBatch("INSERT INTO ChoreAssignment (MemberId, ChoreId, Turn)" +
               " VALUES (:memberid, :choreid, :turn)")
-    int assignChore(@Bind("memberid") Iterator<Integer> memberId,
-                    @Bind("choreid") int choreId,
-                    @Bind("turn") Iterator<Integer> turn);
+    void assignChore(@Bind("memberid") List<Integer> memberId,
+                     @Bind("choreid") int choreId,
+                     @Bind("turn") Iterator<Integer> turn);
 
     @SqlUpdate("UPDATE Chore " +
                "SET CurrentTurn = (CurrentTurn + 1) % assignee_cnt(:id) " +
