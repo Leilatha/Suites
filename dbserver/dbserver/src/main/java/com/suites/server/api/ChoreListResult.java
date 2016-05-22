@@ -9,15 +9,15 @@ import java.util.List;
 public class ChoreListResult {
     private final boolean success;
     private final String message;
-    private final List<Chore> choreList;
+    private final List<ChoreView> choreList;
 
     @JsonCreator
     public ChoreListResult(@JsonProperty("success") boolean success,
-                          @JsonProperty("message") String message,
-			                    @JsonProperty("choreList") List<Chore> choreList) {
+                           @JsonProperty("message") String message,
+			   @JsonProperty("choreList") List<ChoreView> choreList) {
         this.success = success;
         this.message = message;
-	      this.choreList = choreList;
+        this.choreList = choreList;
     }
 
     @JsonProperty("success")
@@ -31,7 +31,7 @@ public class ChoreListResult {
     }
 
     @JsonProperty("choreList")
-    public List<Chore> getChoreList() {
+    public List<ChoreView> getChoreList() {
         return choreList;
     }
 }
