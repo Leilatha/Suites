@@ -106,6 +106,12 @@ ID of the suite you would like to join. A response comes in the form (GenericRes
 }
 ```
 
+Leaving a Suite
+===============
+To leave a suite, send a PUT request to "/suite/leave", with a JSON number matching
+the ID of the suite you would like to leave. The response should be empty on
+success.
+
 Listing Users in a Suite
 ========================
 To list the users of a suite, send a GET request to "/suite/userlist?suiteid=x"
