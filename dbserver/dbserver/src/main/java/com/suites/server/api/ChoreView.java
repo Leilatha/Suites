@@ -24,4 +24,29 @@ public class ChoreView {
         this.chore = chore;
         this.assignees = assignees;
     }
+
+    @JsonProperty("id")
+    public int getId() {
+        return chore.getId();
+    }
+
+    @JsonProperty("name")
+    public String getName() {
+        return chore.getName();
+    }
+
+    @JsonProperty("description")
+    public String getDescription() {
+        return chore.getDescription();
+    }
+
+    @JsonProperty("currentTurn")
+    public int getCurrentTurn() {
+        return chore.getCurrentTurn();
+    }
+
+    @JsonProperty("assignees")
+    public List<Integer> getAssignees() {
+        return assignees;
+    }
 }
