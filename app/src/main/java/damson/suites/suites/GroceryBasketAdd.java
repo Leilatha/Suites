@@ -186,7 +186,7 @@ public class GroceryBasketAdd extends AppCompatActivity {
     }
 
     public void cancel(){
-        Intent intent = new Intent(this, GroceryBasket.class);
-        startActivity(intent);
+        Intent intent = new Intent();
+        setResult(RESULT_CANCELED, intent);
     }
 }
