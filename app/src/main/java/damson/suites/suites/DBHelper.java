@@ -113,7 +113,7 @@ public class DBHelper {
 
         // Get info
         client.get(null, url.toExternalForm(),
-                new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
+                new AsyncResponseHandlerAdapter<>(User.class, arh));
     }
 
     public void addSuite(String suitename, AsyncResponseHandler<DBGenericResult> arh) {
