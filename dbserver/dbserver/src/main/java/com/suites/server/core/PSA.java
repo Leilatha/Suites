@@ -7,7 +7,6 @@ import java.sql.Timestamp;
 
 public class PSA {
     private final int id;
-    private final int suiteId;
     private final int authorId;
     private final String title;
     private final String description;
@@ -15,13 +14,11 @@ public class PSA {
 
     @JsonCreator
     public PSA(@JsonProperty("id") int id,
-               @JsonProperty("suiteId") int suiteId,
                @JsonProperty("authorId") int authorId,
                @JsonProperty("title") String title,
                @JsonProperty("description") String description,
                @JsonProperty("timestamp") Timestamp timestamp) {
         this.id = id;
-        this.suiteId = suiteId;
         this.authorId = authorId;
         this.title = title;
         this.description = description;
@@ -31,11 +28,6 @@ public class PSA {
     @JsonProperty("id")
     public int getId() {
         return id;
-    }
-
-    @JsonProperty("suiteId")
-    public int getSuiteId() {
-        return suiteId;
     }
 
     @JsonProperty("authorId")
