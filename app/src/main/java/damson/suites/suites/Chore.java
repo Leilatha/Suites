@@ -2,8 +2,6 @@ package damson.suites.suites;
 
 import android.support.v4.util.CircularArray;
 
-import java.lang.String;
-import java.lang.Integer;
 import java.util.ArrayList;
 import java.util.Random;
 
