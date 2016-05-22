@@ -14,6 +14,7 @@
     <string name="error_invalid_password_long">This password is too long</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_login_failed">Email and password not recognized</string>
+    <string name="error_password_required">Password required</string>
 
     <string name="error_registration_failed_no_email">Email required for registration</string>
     <string name="error_registration_failed_invalid_email">Email already in use</string>
