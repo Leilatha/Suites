@@ -1,15 +1,26 @@
-package com.suites.;
+package damson.suites.suites;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.security.Principal;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-
 public class User implements Principal {
+    protected static User user;
+
     private final int id;
     private final String email;
     private final String name;
     private final String profilePicture;
+    private String password;
+
+    protected String getPassword() {
+        return password;
+    }
+
+    protected void setPassword(String pw) {
+        password =  pw;
+    }
 
     public boolean equals(Object another) {
         return another instanceof User && ((User)another).id == id;

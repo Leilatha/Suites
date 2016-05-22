@@ -1,9 +1,11 @@
 package damson.suites.suites;
 
+import java.io.Serializable;
+
 /**
  * Created by Michael Chin on 5/7/2016.
  */
-public class GroceryItem {
+public class GroceryItem implements Serializable{
 
     private double price;
     private String item;
@@ -16,9 +18,7 @@ public class GroceryItem {
         this.quantity = quantity;
     }
 
-    public double getPrice(){
-        return price;
-    }
+    public double getPrice(){return price;}
 
     public String getItem(){
         return item;
