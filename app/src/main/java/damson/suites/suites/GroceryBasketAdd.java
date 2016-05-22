@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.net.URL;
 
+import cz.msebera.android.httpclient.Header;
+
 public class GroceryBasketAdd extends AppCompatActivity {
 
     /**
@@ -32,12 +35,14 @@ public class GroceryBasketAdd extends AppCompatActivity {
     private EditText item_field;
     private EditText quantity_field;
     private EditText price_field;
+    GroceryItem groceryitem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grocery_basket_add);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.grocery_basket_add_toolbar);
+        //setSupportActionBar(toolbar);
 
         item_field = (EditText) findViewById(R.id.Item_Text);
         quantity_field = (EditText) findViewById(R.id.Quantity_Text);
@@ -147,14 +152,35 @@ public class GroceryBasketAdd extends AppCompatActivity {
             focusView.requestFocus();
         }
         else {
-            GroceryItem item = new GroceryItem(price, name, quantity);
+            groceryitem = new GroceryItem(price, name, Integer.parseInt(quantity));
+            DBAddGroceryRequest item = new DBAddGroceryRequest(name, Integer.parseInt(quantity), price);
 
-            //need to upload item to database
-            URL url = null;
+            // Upload item to grocery basket
+            DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
+            helper.addGroceryToSuite(Suite.suite.getId(), item, new AsyncResponseHandler<DBGenericResult>() {
+                @Override
+                public void onSuccess(DBGenericResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                    Intent intent = new Intent();
+                    intent.putExtra("item_added", groceryitem);
+                    setResult(RESULT_OK, intent);
+
+                    finish();
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                    Snackbar mySnackbar = Snackbar.make(findViewById(R.id.grocery_basket_add_coordinator),
+                            R.string.error_grocery_add_failed_no_permission, Snackbar.LENGTH_SHORT);
+                    mySnackbar.show();
+                    Log.e("GroceryBasketAdd", "Not in suite.");
+                }
+
+                @Override
+                public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+                    // TODO: Set up a "please login again" page
+                }
+            });
             //get the information from Leon on how to add to database
-
-            Intent intent = new Intent();
-            setResult(RESULT_OK, intent);
         }
 
     }
