@@ -32,6 +32,8 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import cz.msebera.android.httpclient.Header;
+
 public class GroceryBasket extends AppCompatActivity {
     static final int itemIdentifier = 1;  // The request code
 
@@ -64,9 +66,10 @@ public class GroceryBasket extends AppCompatActivity {
         setContentView(R.layout.fragment_grocery_basket);
 
         //TODO: fix with database stuff
+
         String [] groceryList = listMaker();
         if(groceryList[0] == ""){
-            System.out.println("ERROR");
+            System.out.println("ERROR: groceryList not initialized");
             return;
         }
         ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
@@ -75,21 +78,15 @@ public class GroceryBasket extends AppCompatActivity {
         if(myList != null)
             myList.setAdapter(myAdapter);
         else {
-            System.out.println("ERROR");
+            System.out.println("ERROR: myList not initialized");
             return;
         }
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if(toolbar == null){
-            System.out.println("THIS IS NULL PLZ FIX***********************");
-            return;
-        }
-        setSupportActionBar(toolbar);
         if(getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         else {
-            System.out.println("ERROR");
+            System.out.println("ERROR: getSupportActionBar does not exist");
             return;
         }
         // Create the adapter that will return a fragment for each of the three
@@ -127,6 +124,7 @@ public class GroceryBasket extends AppCompatActivity {
     /* Written by Marian
      */
     public void buttonPress() {
+        System.out.println("I MADE IT TO BUTTON PRESSSSSSSSSSSS");
         Intent receiveItemIntent = new Intent(this, GroceryBasketAdd.class);
         setContentView(R.layout.activity_grocery_basket_add);
         startActivityForResult(receiveItemIntent, itemIdentifier);
@@ -160,6 +158,23 @@ public class GroceryBasket extends AppCompatActivity {
      * takes the data to put in list
      */
     private String[] listMaker(){
+        DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
+        helper.listSuiteGroceries(Suite.suite.getId(), new AsyncResponseHandler<DBGroceryListResult>() {
+            @Override
+            public void onSuccess(DBGroceryListResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+
+            }
+
+            @Override
+            public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+
+            }
+        });
         String[] tempString = {"a", "b", "c"};
         return tempString;
     }
