@@ -46,4 +46,9 @@ public class SuiteManager {
     public List<User> getSuiteUsers(int suiteId) {
         return dao.getSuiteUsers(suiteId);
     }
+
+    public void leaveSuite(User user, int suiteId) {
+        dao.removeUserFromSuite(user.getId(), suiteId);
+        dao.removeSuiteIfEmpty(suiteId);
+    }
 }
