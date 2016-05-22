@@ -186,6 +186,7 @@ public class GroceryBasket extends AppCompatActivity {
 
                 // Do something with the contact here (bigger example below)
             }
+            // if(resultCode == RESULT_CANCELED) then do nothing
         }
     }
 
