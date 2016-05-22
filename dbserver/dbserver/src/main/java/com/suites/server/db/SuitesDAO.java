@@ -10,6 +10,7 @@ import com.suites.server.core.User;
 import com.suites.server.core.Suite;
 import com.suites.server.core.Grocery;
 import com.suites.server.core.Chore;
+import com.suites.server.core.PSA;
 
 import java.util.List;
 import java.util.Iterator;
@@ -60,6 +61,15 @@ public interface SuitesDAO {
                " Turn int)")
     void createChoreAssignmentTable();
 
+    @SqlUpdate("CREATE TABLE IF NOT EXISTS PSA" +
+               " (Id SERIAL primary key," +
+               " SuiteId int references Suite(Id)," +
+               " AuthorId int references Member(Id)," +
+               " Title varchar(80)," +
+               " Description varchar(255)," +
+               " Timestamp timestamp")
+    void createPSATable();
+
     @SqlUpdate("CREATE INDEX IF NOT EXISTS SuiteMembership_idx_1 ON SuiteMembership (MemberId, SuiteId)")
     void createSuiteMembershipIndex();
 
@@ -93,6 +103,14 @@ public interface SuitesDAO {
 
     @SqlUpdate("INSERT INTO SuiteMembership (SuiteId, MemberId) VALUES (:suiteid, :userid)")
     void addUserToSuite(@Bind("userid") int userid, @Bind("suiteid") int suiteid);
+
+    @SqlUpdate("DELETE FROM SuiteMembership WHERE SuiteId = :suiteid AND MemberId = :userid")
+    void removeUserFromSuite(@Bind("userid") int userId, @Bind("suiteid") int suiteId);
+
+    @SqlUpdate("DELETE FROM SuiteMembership WHERE " +
+               "SuiteId = :suiteid " +
+               "AND NOT EXISTS (SELECT * FROM SuiteMembership WHERE SuiteId = :suiteid)")
+    void removeSuiteIfEmpty(@Bind("suiteid") int suiteId);
 
     @SqlQuery("SELECT Id, Name FROM Suite WHERE user_in_suite(:memberid, Id)")
     @Mapper(SuiteMapper.class)
@@ -197,4 +215,9 @@ public interface SuitesDAO {
     @SqlQuery("SELECT Id, Email, Name, ProfilePicture FROM ChoreAssignment JOIN Member " +
               "ON Id = MemberId AND ChoreId = :choreid")
     List<User> getChoreAssignees(@Bind("choreid") int choreId);
+
+    @SqlQuery("SELECT Id, AuthorId, Title, Description, Timestamp FROM PSA " +
+              "WHERE SuiteId = :suiteid")
+    @Mapper(PSAMapper.class)
+    List<PSA> getSuitePSAs(@Bind("suiteid") int suiteId);
 }
