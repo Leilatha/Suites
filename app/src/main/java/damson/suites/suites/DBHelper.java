@@ -17,6 +17,8 @@ import cz.msebera.android.httpclient.entity.StringEntity;
  * Usage:   Must first either call login() or use the constructor with account and password.
  *          Call each method using a child of the AsyncResponseHandler class. Add an inline class
  *          definition.
+ *          Android Studio can fill in the AsyncResponseHandler framework for you if you
+ *          press tab/enter to autofill the AysncResponseHandler, ie
  *          ex.
  *      new AsyncResponseHandler<ResponseClass>() {
  *          // fill in necessary methods
