@@ -31,6 +31,8 @@ import android.widget.TextView;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.roughike.bottombar.BottomBar;
+import android.support.design.widget.CoordinatorLayout;
 
 public class GroceryBasket extends AppCompatActivity {
     static final int itemIdentifier = 1;  // The request code
@@ -59,9 +61,12 @@ public class GroceryBasket extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information. BAWLIN
+
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_grocery_basket);
+
+        BottomBar mBottomBar = BottomBar.attach(findViewById(R.id.three_buttons_activity), savedInstanceState);
 
         //TODO: fix with database stuff
         String [] groceryList = listMaker();
@@ -78,7 +83,6 @@ public class GroceryBasket extends AppCompatActivity {
             System.out.println("ERROR");
             return;
         }
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         if(toolbar == null){
