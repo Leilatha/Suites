@@ -223,7 +223,7 @@ public class DBHelper {
                 new AsyncResponseHandlerAdapter<>(DBGroceryListResult.class, arh));
     }
 
-    public void addGroceryToSuite(int suiteID, Grocery grocery, AsyncResponseHandler<DBGenericResult> arh) {
+    public void addGroceryToSuite(int suiteID, DBAddGroceryRequest grocery, AsyncResponseHandler<DBGenericResult> arh) {
         setup("/grocery?suiteid="+suiteID);
 
         // Output stream to server

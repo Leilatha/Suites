@@ -20,6 +20,13 @@ public class Grocery {
         this.price = price;
     }
 
+    public Grocery(GroceryItem groc) {
+        id = groc.getId();
+        name = groc.getItem();
+        quant = groc.getQuantity();
+        price = groc.getPrice();
+    }
+
     @JsonProperty("id")
     public int getId() {
         return id;
