@@ -169,3 +169,35 @@ Delete Grocery
 Send a DELETE request with the query parameter "groceryid" set to the id of the
 grocery item to remove. The response comes in the same form as adding and editing
 groceries.
+
+Chores
+======
+
+Get Suite Chores
+----------------
+Send a GET request with the query parameter "suiteid" set to the id of the suite
+to the path /chore. The response will come in JSON-encoded ChoreListResult.
+
+Add Chore
+---------
+Send a POST request with the query parameter "suiteid" set to the id of the suite
+to the path /chore, with JSON-encoded AddChoreRequest as the body. The
+response will come in the form of JSON-encoded GenericResult.
+
+Edit Chore
+----------
+Send a PUT request with the query parameter "choreid" set to the id of the chore
+to the path /chore, with JSON-encoded AddChoreRequest as the body. The response
+will come in the form of JSON-encoded GenericResult.
+
+Delete Chore
+------------
+Send a DELETE request with the query parameter "choreid" set to the id of the chore
+to the path /chore. The response will come in the form of JSON-encoded
+GenericResult.
+
+Advance a Chore
+---------------
+This is to move the chore assignee to the next person. Send a POST request to the
+path /chore/advance with the query parameter "choreid" set to the id of the
+chore.
