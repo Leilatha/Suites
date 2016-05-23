@@ -207,3 +207,28 @@ Advance a Chore
 This is to move the chore assignee to the next person. Send a POST request to the
 path /chore/advance with the query parameter "choreid" set to the id of the
 chore.
+
+PSA
+===
+
+Get Suite PSAs
+--------------
+Send a GET request to /psa with the query parameter "suiteid" set to the suite ID.
+The response is a JSON-encoded PSAListResult.
+
+Add a PSA
+---------
+Send a POST request to /psa with the query parameter "suiteid" set to the suite ID,
+and with the content of a JSON-encoded AddPSARequest. The response is a
+JSON-encoded GenericResult.
+
+Edit a PSA
+----------
+Send a PUT request to /psa with the query parameter "psaid" set to the PSA ID,
+and with the content of a JSON-encoded AddPSARequest. The response is a
+JSON-encoded GenericResult.
+
+Delete a PSA
+------------
+Send a DELETE request to /psa with the query parameter "psaid" set to the PSA
+ID. The response is a JSON-encoded GenericResult.
