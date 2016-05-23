@@ -1,24 +1,41 @@
 package damson.suites.suites;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
+import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnMenuTabSelectedListener;
+
+import java.util.List;
 
 
 /**
@@ -38,17 +55,12 @@ public class PSA extends Fragment {
      * may be best to switch to a
      * {@link FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
+    //private SectionsPagerAdapter mSectionsPagerAdapter;
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-
-    /** ATTENTION: This was auto-generated to implement the App Indexing API.
-    * See https://g.co/AppIndexing/AndroidStudio for more information.
-    */
-    private GoogleApiClient client;
 
     private OnFragmentInteractionListener mListener;
 
@@ -70,34 +82,26 @@ public class PSA extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         super.onCreate(savedInstanceState);
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information. BAWLIN
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_psa);
+        //setContentView(R.layout.fragment_psa);
 
         //TODO: fix with database stuff
-        String [] psaList = {"a","b","c"};
-        ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
-                this,android.R.layout.simple_expandable_list_item_2, psaList);
-        ListView myList = (ListView) findViewById(R.id.listView);
-        if(myList != null)
-            myList.setAdapter(myAdapter);
-        else {
-            System.out.println("ERROR");
-            return;
-        }
-
+        List<String> psaList;
+        /**ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
+                this, android.R.layout.simple_expandable_list_item_2, psaList);*/
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_psa, container, false);
+        ListView myList = (ListView) view.findViewById(R.id.listView);
+        if (myList != null) {
+            //myList.setAdapter(myAdapter);
+        } else System.out.println("ERROR");
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_psa, container, false);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -138,35 +142,16 @@ public class PSA extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    /**public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
+     public SectionsPagerAdapter(FragmentManager fm) {
+     super(fm);
+     }
 
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
-        }
-
-        @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "SECTION 1";
-                case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-            }
-            return null;
-        }
-    }
+     @Override public Fragment getItem(int position) {
+     // getItem is called to instantiate the fragment for the given page.
+     // Return a PlaceholderFragment (defined as a static inner class below).
+     return PlaceholderFragment.newInstance(position + 1);
+     }
+     }*/
+}
