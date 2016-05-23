@@ -29,8 +29,12 @@ public class AccountResource {
     }
 
     @GET
-    public User getUserInfo(@Auth User user) {
-        return user;
+    public User getUserInfo(@Auth User user, @QueryParam("email") String email) {
+        if (email == null) {
+            return user;
+        } else {
+            return um.getUserByEmail(email);
+        }
     }
 
     @POST
