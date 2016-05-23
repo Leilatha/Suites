@@ -12,6 +12,7 @@ import com.suites.server.core.Grocery;
 import com.suites.server.core.Chore;
 
 import java.util.List;
+import java.util.Iterator;
 
 @RegisterMapper(UserMapper.class)
 public interface SuitesDAO {
@@ -49,17 +50,29 @@ public interface SuitesDAO {
                " (Id SERIAL primary key, " +
                " SuiteId int references Suite(Id)," +
                " Name varchar(80)," +
-               " Description varchar(255))")
+               " Description varchar(255)," +
+               " CurrentTurn int)")
     void createChoreTable();
 
     @SqlUpdate("CREATE TABLE IF NOT EXISTS ChoreAssignment" +
                " (MemberId int references Member(Id)," +
-               " SuiteId int references Suite(Id)," +
-               " Turn int")
+               " ChoreId int references Chore(Id)," +
+               " Turn int)")
     void createChoreAssignmentTable();
 
     @SqlUpdate("CREATE INDEX IF NOT EXISTS SuiteMembership_idx_1 ON SuiteMembership (MemberId, SuiteId)")
     void createSuiteMembershipIndex();
+
+    @SqlUpdate("CREATE OR REPLACE FUNCTION assignee_cnt(int) RETURNS bigint AS $$"
+               + "SELECT count(ChoreId) FROM ChoreAssignment WHERE ChoreId = $1; $$"
+               + " LANGUAGE SQL")
+    void createAssigneeCountFunction();
+
+    @SqlUpdate("CREATE OR REPLACE FUNCTION user_in_suite(int, int) RETURNS boolean AS $$"
+               + "SELECT (EXISTS (SELECT MemberId FROM SuiteMembership WHERE "
+               + " SuiteId = $2 AND MemberId = $1)); $$"
+               + " LANGUAGE SQL")
+    void createSuiteMembershipFunction();
 
     @SqlQuery("Select Id, Email, Name, ProfilePicture FROM Member"
               + " WHERE Email = :email")
@@ -81,9 +94,7 @@ public interface SuitesDAO {
     @SqlUpdate("INSERT INTO SuiteMembership (SuiteId, MemberId) VALUES (:suiteid, :userid)")
     void addUserToSuite(@Bind("userid") int userid, @Bind("suiteid") int suiteid);
 
-    @SqlQuery("SELECT Id, Name FROM Suite WHERE"
-              + " Id IN ("
-              + "SELECT SuiteId FROM SuiteMembership WHERE MemberId = :memberid)")
+    @SqlQuery("SELECT Id, Name FROM Suite WHERE user_in_suite(:memberid, Id)")
     @Mapper(SuiteMapper.class)
     List<Suite> getUserSuites(@Bind("memberid") int id);
 
@@ -100,13 +111,11 @@ public interface SuitesDAO {
               + " WHERE SuiteId = :suiteid AND Email = :email LIMIT 1")
     boolean isUserInvited(@Bind("suiteid") int suiteId, @Bind("email") String email);
 
-    @SqlQuery("SELECT count(SuiteId) > 0 FROM SuiteMembership"
-              + " WHERE MemberId = :userid AND SuiteId = :suiteid LIMIT 1")
+    @SqlQuery("SELECT user_in_suite(:userid, :suiteid)")
     boolean isUserInSuite(@Bind("userid") int userId, @Bind("suiteid") int suiteId);
 
-    @SqlQuery("SELECT Id, Email, Name, ProfilePicture FROM Member WHERE"
-            + " Id IN ("
-            + " SELECT MemberId FROM SuiteMembership WHERE SuiteId = :suiteid)")
+    @SqlQuery("SELECT Id, Email, Name, ProfilePicture FROM SuiteMembership JOIN Member" +
+              " ON Id = MemberId AND SuiteId = :suiteid")
     List<User> getSuiteUsers(@Bind("suiteid") int suiteId);
 
     @SqlQuery("SELECT Id, Name, Quantity, Price FROM Grocery WHERE" +
@@ -123,8 +132,7 @@ public interface SuitesDAO {
 
     @SqlUpdate("UPDATE Grocery " +
                "SET Name = :name, Quantity = :quantity, Price = :price " +
-               "WHERE Id = :id AND " +
-                     "SuiteId IN (SELECT SuiteId FROM SuiteMembership WHERE MemberId = :userid)")
+               "WHERE Id = :id AND user_in_suite(:userid, SuiteId)")
     int editGrocery(@Bind("id") int id,
                     @Bind("userid") int userId,
                     @Bind("name") String name,
@@ -132,12 +140,11 @@ public interface SuitesDAO {
                     @Bind("quantity") int quantity);
 
     @SqlUpdate("DELETE FROM Grocery " +
-               "WHERE Id = :id AND " +
-                     "SuiteId IN (SELECT SuiteId FROM SuiteMembership WHERE MemberId = :userid)")
+               "WHERE Id = :id AND user_in_suite(:userid, SuiteId)")
     int deleteGrocery(@Bind("id") int id,
                       @Bind("userid") int userId);
 
-    @SqlQuery("SELECT Id, Name, Description FROM Chore WHERE" +
+    @SqlQuery("SELECT Id, Name, Description, CurrentTurn FROM Chore WHERE" +
               " SuiteId = :suiteid")
     @Mapper(ChoreMapper.class)
     List<Chore> getSuiteChores(@Bind("suiteid") int suiteId);
@@ -147,24 +154,47 @@ public interface SuitesDAO {
               " (SELECT SuiteId FROM ChoreAssignment WHERE MemberId = :userid)")
     List<Chore> getSuiteUserChores(@Bind("suiteid") int suiteId, @Bind("userid") int userId);
     
-    @SqlUpdate("INSERT INTO Chore (SuiteId, Name, Description) " +
-               "VALUES (:suiteid, :name, :description)")
-    void addChore(@Bind("suiteid") int suiteId,
-                  @Bind("name") String name,
-                  @Bind("description") String description);
+    @SqlQuery("INSERT INTO Chore (SuiteId, Name, Description, currentTurn) " +
+              "VALUES (:suiteid, :name, :description, 0) RETURNING Id")
+    int addChore(@Bind("suiteid") int suiteId,
+                 @Bind("name") String name,
+                 @Bind("description") String description);
 
     @SqlUpdate("UPDATE Chore " +
                "SET Name = :name, Description = :description " +
-               "WHERE Id = :id AND " +
-                     "SuiteId IN (SELECT SuiteId FROM SuiteMembership WHERE MemberId = :userid)")
+               "WHERE Id = :id AND user_in_suite(:userid, SuiteId)")
     int editChore(@Bind("id") int id,
                   @Bind("userid") int userId,
                   @Bind("name") String name,
                   @Bind("description") String description);
 
     @SqlUpdate("DELETE FROM  Chore " +
-               "WHERE Id = :id AND " +
-                     "SuiteId IN (SELECT SuiteId FROM SuiteMembership WHERE MemberId = :userid)")
+               "WHERE Id = :id AND user_in_suite(:userid, SuiteId)")
     int deleteChore(@Bind("id") int id,
                     @Bind("userid") int userId);
+
+    @SqlUpdate("DELETE FROM ChoreAssignment" +
+               " WHERE Id = :id")
+    int deleteChoreAssignments(@Bind("id") int id);
+
+    @SqlBatch("INSERT INTO ChoreAssignment (MemberId, ChoreId, Turn)" +
+              " VALUES (:memberid, :choreid, :turn)")
+    void assignChore(@Bind("memberid") List<Integer> memberId,
+                     @Bind("choreid") int choreId,
+                     @Bind("turn") Iterator<Integer> turn);
+
+    @SqlUpdate("UPDATE Chore " +
+               "SET CurrentTurn = (CurrentTurn + 1) % assignee_cnt(:id) " +
+               "WHERE Id = :id AND " +
+               "user_in_suite(:userid, SuiteId)")
+    int advanceChore(@Bind("id") int id, @Bind("userid") int userId);
+
+    @SqlUpdate("UPDATE Chore " +
+               "SET CurrentTurn = CurrentTurn % assignee_cnt(ChoreId) " +
+               "WHERE Id = :id")
+    void fixChore(@Bind("id") int id);
+
+    @SqlQuery("SELECT Id, Email, Name, ProfilePicture FROM ChoreAssignment JOIN Member " +
+              "ON Id = MemberId AND ChoreId = :choreid")
+    List<User> getChoreAssignees(@Bind("choreid") int choreId);
 }
