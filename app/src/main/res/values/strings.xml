@@ -36,6 +36,8 @@
     <string name="groceryBasketAddAdd_another_item">Add Another Item</string>
     <string name="groceryBasketAddprice">Price</string>
     <string name="groceryBasketAddCancel">Cancel</string>
+    <string name="groceryBasketEdit">Edit</string>
+    <string name="groceryBasketDelete">Delete</string>
     <string name="Add">Add</string>
     <string name="chore_name">Chore Name</string>
     <string name="description">Description</string>
