@@ -150,22 +150,25 @@ public class GroceryBasket extends AppCompatActivity {
         helper.listSuiteGroceries(Suite.suite.getId(), new AsyncResponseHandler<DBGroceryListResult>() {
             @Override
             public void onSuccess(DBGroceryListResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                ListView myList = (ListView) findViewById(R.id.grocery_basket_listView);
+
+                if (response.getGroceryList() == null) {
+                    String[] message = {"No items."};
+                    ArrayAdapter myAdapter = new ArrayAdapter(
+                            getApplicationContext(), android.R.layout.simple_list_item_1, message);
+                    if (myList != null)
+                        myList.setAdapter(myAdapter);
+                    System.out.println("NOTE: no items in myList");
+                    return;
+                }
+
                 myAdapter = new GroceryAdapter(
                         getApplicationContext(), (ArrayList<Grocery>) response.getGroceryList());
-                ListView myList = (ListView) findViewById(R.id.grocery_basket_listView);
                 if (myList != null)
                     myList.setAdapter(myAdapter);
                 else {
                     System.out.println("ERROR: myList not initialized");
                     return;
-                }
-                if (myAdapter.isEmpty()) {
-                    String[] message = {"No items."};
-                    ArrayAdapter myAdapter = new ArrayAdapter(
-                            getApplicationContext(), android.R.layout.simple_expandable_list_item_1, message);
-                    if (myList != null)
-                        myList.setAdapter(myAdapter);
-                    System.out.println("NOTE: no items in myList");
                 }
             }
 
