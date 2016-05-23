@@ -71,7 +71,7 @@ public interface SuitesDAO {
                " AuthorId int references Member(Id)," +
                " Title varchar(80)," +
                " Description varchar(255)," +
-               " Timestamp timestamp")
+               " Timestamp timestamp)")
     void createPSATable();
 
     @SqlUpdate("CREATE INDEX IF NOT EXISTS SuiteMembership_idx_1 ON SuiteMembership (MemberId, SuiteId)")
@@ -220,8 +220,8 @@ public interface SuitesDAO {
               "ON Id = MemberId AND ChoreId = :choreid")
     List<User> getChoreAssignees(@Bind("choreid") int choreId);
 
-    @SqlQuery("SELECT PSA.Id, PSA.Title, PSA.Description, PSA.Timestamp, " +
-              "Member.Id, Member.Email, Member.Name, Member.ProfilePicture " +
+    @SqlQuery("SELECT PSA.Id AS pid, PSA.Title AS ptit, PSA.Description AS pdesc, PSA.Timestamp AS ptime, " +
+              "Member.Id AS mid, Member.Email AS memail, Member.Name AS mname, Member.ProfilePicture AS mpic " +
               "FROM PSA JOIN Member ON PSA.AuthorId = Member.Id AND SuiteId = :suiteid")
     @Mapper(PSAViewMapper.class)
     List<PSAView> getSuitePSAs(@Bind("suiteid") int suiteId);
