@@ -10,7 +10,9 @@ All account requests are to the path ```/accounts```.
 Account Info
 ------------
 To get information on the authenticated account, send a plain GET request with
-no parameters.
+no parameters. Optionally, you can add the query parameter "email" set to the
+email of a user you want to search. If there is no user with that email, the
+response will be empty (and have response code 204).
 
 Account Registration
 --------------------
