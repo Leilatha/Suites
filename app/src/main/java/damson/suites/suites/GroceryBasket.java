@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -33,6 +34,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.roughike.bottombar.BottomBar;
 import android.support.design.widget.CoordinatorLayout;
+import com.roughike.bottombar.OnMenuTabSelectedListener;
 
 public class GroceryBasket extends AppCompatActivity {
     static final int itemIdentifier = 1;  // The request code
@@ -57,16 +59,37 @@ public class GroceryBasket extends AppCompatActivity {
      */
     private GoogleApiClient client;
 
+    private CoordinatorLayout coordinatorLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information. BAWLIN
-
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_grocery_basket);
 
-        BottomBar mBottomBar = BottomBar.attach(findViewById(R.id.three_buttons_activity), savedInstanceState);
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.three_buttons_activity);
+
+        BottomBar mBottomBar = BottomBar.attach(this, savedInstanceState);
+        mBottomBar.setItemsFromMenu(R.menu.three_buttons_menu, new OnMenuTabSelectedListener() {
+            @Override
+            public void onMenuItemSelected(int itemId) {
+                switch (itemId) {
+                    case R.id.recent_item:
+                        Snackbar.make(coordinatorLayout, "Recent Item Selected", Snackbar.LENGTH_LONG).show();
+                        break;
+                    case R.id.favorite_item:
+                        Snackbar.make(coordinatorLayout, "Favorite Item Selected", Snackbar.LENGTH_LONG).show();
+                        break;
+                    case R.id.location_item:
+                        Snackbar.make(coordinatorLayout, "Location Item Selected", Snackbar.LENGTH_LONG).show();
+                        break;
+                }
+            }
+        });
+
+        mBottomBar.setActiveTabColor("#C2185B");
 
         //TODO: fix with database stuff
         String [] groceryList = listMaker();
