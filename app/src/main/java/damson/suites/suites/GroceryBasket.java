@@ -197,11 +197,12 @@ public class GroceryBasket extends AppCompatActivity {
                 System.out.println("ERROR: Not logged in.");
             }
 
-            public void onSuccess(){
+            @Override
+            public void onFinish(){
                 final ListView myList = (ListView) findViewById(R.id.grocery_basket_listView);
                 String [] message = {"yay"};
                 myAdapter = new ArrayAdapter(
-                        getApplicationContext(), android.R.layout.simple_expandable_list_item_1, message);
+                        getApplicationContext(), android.R.layout.simple_expandable_list_item_2, message);
 
                 if(myList != null)
                     myList.setAdapter(myAdapter);
