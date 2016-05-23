@@ -8,6 +8,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+/* The majority of this is written by Marian Crofts, adapted from
+ * the code from Grocery List. This file sets up buttons and
+ * button listeners for the Chores List.
+ */
 public class ChoresList extends AppCompatActivity {
     static final int itemIdentifier = 1;  // The request code
 

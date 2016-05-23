@@ -52,7 +52,7 @@
         </activity>
         <activity android:name=".ChoresAdd" />
         <activity android:name=".RegistrationActivity" />
-        <activity android:name=".ChoresList"></activity>
+        <activity android:name=".GroceryBasketEdit"></activity>
     </application>
 
 </manifest>
