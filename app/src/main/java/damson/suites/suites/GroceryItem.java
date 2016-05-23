@@ -9,13 +9,19 @@ public class GroceryItem implements Serializable{
 
     private double price;
     private String item;
-    private String quantity;
+    private int quantity;
 
 
-    public GroceryItem(double price, String item, String quantity) {
+    public GroceryItem(double price, String item, int quantity) {
         this.price = price;
         this.item = item;
         this.quantity = quantity;
+    }
+
+    public GroceryItem(Grocery g){
+        this.price = g.getPrice();
+        this.item = g.getName();
+        this.quantity = g.getQuant();
     }
 
     public double getPrice(){return price;}
@@ -24,7 +30,7 @@ public class GroceryItem implements Serializable{
         return item;
     }
 
-    public String getQuantity(){
+    public int getQuantity(){
         return quantity;
     }
 
@@ -36,7 +42,7 @@ public class GroceryItem implements Serializable{
         this.item = item;
     }
 
-    public void setQuantity(String quantity){
+    public void setQuantity(int quantity){
         this.quantity = quantity;
     }
 }

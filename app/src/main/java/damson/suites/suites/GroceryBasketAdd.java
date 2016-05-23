@@ -114,7 +114,7 @@ public class GroceryBasketAdd extends AppCompatActivity {
 
         //Store values at time of add attempt
         String name = item_field.getText().toString();
-        String quantity = quantity_field.getText().toString();
+        int quantity = Integer.parseInt(quantity_field.getText().toString());
         double price = Double.parseDouble(price_field.getText().toString());
 
         boolean cancel = false;
@@ -129,8 +129,7 @@ public class GroceryBasketAdd extends AppCompatActivity {
         }
 
         //Check for valid quantity
-        //Assumes user provides quantity in the correct format. Error only if empty
-        if(TextUtils.isEmpty(quantity)) {
+        if(quantity <= 0) {
             quantity_field.setError("Please fill in a quantity for the item");
             focusView = quantity_field;
             cancel = true;
@@ -153,8 +152,9 @@ public class GroceryBasketAdd extends AppCompatActivity {
             URL url = null;
             //get the information from Leon on how to add to database
 
-            Intent intent = new Intent();
+            Intent intent = new Intent(this, GroceryBasket.class);
             setResult(RESULT_OK, intent);
+            startActivity(intent);
         }
 
     }

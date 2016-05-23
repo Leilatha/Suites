@@ -22,7 +22,7 @@ public class ThreeButtonsActivity extends AppCompatActivity {
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.three_buttons_activity);
 
         BottomBar bottomBar = BottomBar.attach(this, savedInstanceState);
-        bottomBar.setItemsFromMenu(R.menu.three_buttons_test, new OnMenuTabSelectedListener() {
+        bottomBar.setItemsFromMenu(R.menu.three_buttons_menu, new OnMenuTabSelectedListener() {
             @Override
             public void onMenuItemSelected(int itemId) {
                 switch (itemId) {
