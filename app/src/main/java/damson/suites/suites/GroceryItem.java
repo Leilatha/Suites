@@ -13,8 +13,8 @@ public class GroceryItem implements Serializable{
     private int quantity;
 
 
-    public GroceryItem(int id, double price, String item, int quantity) {
-        this.id = id;
+    public GroceryItem(double price, String item, int quantity) {
+        id = -1;
         this.price = price;
         this.item = item;
         this.quantity = quantity;
@@ -26,6 +26,8 @@ public class GroceryItem implements Serializable{
         this.item = item.getName();
         this.quantity = item.getQuant();
     }
+
+    public GroceryItem()
 
     public int getId() {
         return id;
