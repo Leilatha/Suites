@@ -31,7 +31,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class GroceryBasket extends AppCompatActivity {
     static final int itemIdentifier = 1;  // The request code
-    GroceryAdapter myAdapter;
+    ArrayAdapter myAdapter;
 
     /**
      * The {@link PagerAdapter} that will provide
@@ -154,7 +154,7 @@ public class GroceryBasket extends AppCompatActivity {
 
                 if (response.getGroceryList() == null) {
                     String[] message = {"No items."};
-                    ArrayAdapter myAdapter = new ArrayAdapter(
+                    myAdapter = new ArrayAdapter(
                             getApplicationContext(), android.R.layout.simple_list_item_2, message);
                     if (myList != null)
                         myList.setAdapter(myAdapter);
@@ -175,7 +175,7 @@ public class GroceryBasket extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
                 String[] message = {"No items."};
-                ArrayAdapter myAdapter = new ArrayAdapter(
+                myAdapter = new ArrayAdapter(
                         getApplicationContext(), android.R.layout.simple_expandable_list_item_1, message);
                 ListView myList = (ListView) findViewById(R.id.grocery_basket_listView);
                 if (myList != null)
@@ -187,7 +187,7 @@ public class GroceryBasket extends AppCompatActivity {
             public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
                 // TODO: Add "please log in again" code
                 String[] message = {"No items."};
-                ArrayAdapter myAdapter = new ArrayAdapter(
+                myAdapter = new ArrayAdapter(
                         getApplicationContext(), android.R.layout.simple_expandable_list_item_1, message);
                 ListView myList = (ListView) findViewById(R.id.grocery_basket_listView);
                 if (myList != null)
