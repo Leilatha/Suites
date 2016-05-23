@@ -157,7 +157,7 @@ public class GroceryBasket extends AppCompatActivity {
                 if (response.getGroceryList() == null) {
                     String[] message = {"No items."};
                     myAdapter = new ArrayAdapter(
-                            getApplicationContext(), android.R.layout.simple_expandable_list_item_2, message);
+                            getApplicationContext(), R.layout.simple_text, R.id.simple_text_field, message);
                     if (myList != null)
                         myList.setAdapter(myAdapter);
                     System.out.println("NOTE: no items in myList");
@@ -178,7 +178,7 @@ public class GroceryBasket extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
                 String[] message = {"No items."};
                 myAdapter = new ArrayAdapter(
-                        getApplicationContext(), android.R.layout.simple_expandable_list_item_1, message);
+                        getApplicationContext(), R.layout.simple_text, R.id.simple_text_field, message);
                 ListView myList = (ListView) findViewById(R.id.grocery_basket_listView);
                 if (myList != null)
                     myList.setAdapter(myAdapter);
@@ -190,7 +190,7 @@ public class GroceryBasket extends AppCompatActivity {
                 // TODO: Add "please log in again" code
                 String[] message = {"No items."};
                 myAdapter = new ArrayAdapter(
-                        getApplicationContext(), android.R.layout.simple_expandable_list_item_1, message);
+                        getApplicationContext(), R.layout.simple_text, R.id.simple_text_field, message);
                 ListView myList = (ListView) findViewById(R.id.grocery_basket_listView);
                 if (myList != null)
                     myList.setAdapter(myAdapter);
@@ -200,12 +200,6 @@ public class GroceryBasket extends AppCompatActivity {
             @Override
             public void onFinish(){
                 final ListView myList = (ListView) findViewById(R.id.grocery_basket_listView);
-                String [] message = {"yay"};
-                myAdapter = new ArrayAdapter(
-                        getApplicationContext(), android.R.layout.simple_expandable_list_item_2, message);
-
-                if(myList != null)
-                    myList.setAdapter(myAdapter);
 
                 myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
