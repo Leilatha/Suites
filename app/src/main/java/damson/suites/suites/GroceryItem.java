@@ -20,10 +20,11 @@ public class GroceryItem implements Serializable{
         this.quantity = quantity;
     }
 
-    public GroceryItem(double price, String item, int quantity) {
-        this.price = price;
-        this.item = item;
-        this.quantity = quantity;
+    public GroceryItem(Grocery item) {
+        this.id = item.getId();
+        this.price = item.getPrice();
+        this.item = item.getName();
+        this.quantity = item.getQuant();
     }
 
     public int getId() {
