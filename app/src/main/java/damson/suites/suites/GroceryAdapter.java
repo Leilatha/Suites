@@ -1,6 +1,7 @@
 package damson.suites.suites;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ public class GroceryAdapter extends ArrayAdapter<Grocery> {
     }
 
     public GroceryAdapter(Context context, ArrayList<Grocery> groceries) {
-        super(context, 0, groceries);
+        super(context, R.layout.grocery_layout, R.id.GroceryName, groceries);
     }
 
     @Override
@@ -45,6 +46,9 @@ public class GroceryAdapter extends ArrayAdapter<Grocery> {
         viewHolder.GroceryName.setText(grocery.getName());
         viewHolder.GroceryPrice.setText((int) grocery.getPrice());
         viewHolder.GroceryQuantity.setText(grocery.getQuant());
+        viewHolder.GroceryName.setTextColor(Color.BLACK);
+        viewHolder.GroceryPrice.setTextColor(Color.BLACK);
+        viewHolder.GroceryQuantity.setTextColor(Color.BLACK);
         // Return the completed view to render on screen
         return convertView;
     }
