@@ -1,16 +1,10 @@
 package damson.suites.suites;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -26,16 +20,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.util.ArrayList;
+
 import cz.msebera.android.httpclient.Header;
 
 public class GroceryBasket extends AppCompatActivity {
     static final int itemIdentifier = 1;  // The request code
+    GroceryAdapter myAdapter;
 
     /**
      * The {@link PagerAdapter} that will provide
@@ -67,20 +63,7 @@ public class GroceryBasket extends AppCompatActivity {
 
         //TODO: fix with database stuff
 
-        String [] groceryList = listMaker();
-        if(groceryList[0] == ""){
-            System.out.println("ERROR: groceryList not initialized");
-            return;
-        }
-        ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
-                this,android.R.layout.simple_expandable_list_item_1, groceryList);
-        ListView myList = (ListView) findViewById(R.id.listView);
-        if(myList != null)
-            myList.setAdapter(myAdapter);
-        else {
-            System.out.println("ERROR: myList not initialized");
-            return;
-        }
+        listMaker();
 
 
         if(getSupportActionBar() != null)
@@ -107,7 +90,7 @@ public class GroceryBasket extends AppCompatActivity {
          * It receives new items from that activity, and then
          * displays it into the list.
          */
-        final Button addButton = (Button) findViewById(R.id.add_button);
+        final Button addButton = (Button) findViewById(R.id.grocery_basket_add_button);
         if(addButton == null){
             System.out.println("ERROR");
             return;
@@ -158,26 +141,57 @@ public class GroceryBasket extends AppCompatActivity {
      * 5/7/16
      * takes the data to put in list
      */
-    private String[] listMaker(){
+    private void listMaker() {
+        //TODO: Remove this. It is for testing
+        User.user = new User(123, "qwerty@qwer.ty", "Qwerty", "/qwerty");
+        User.user.setPassword("qwerty");
+
         DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
         helper.listSuiteGroceries(Suite.suite.getId(), new AsyncResponseHandler<DBGroceryListResult>() {
             @Override
             public void onSuccess(DBGroceryListResult response, int statusCode, Header[] headers, byte[] errorResponse) {
-
+                myAdapter = new GroceryAdapter(
+                        getApplicationContext(), (ArrayList<Grocery>) response.getGroceryList());
+                ListView myList = (ListView) findViewById(R.id.grocery_basket_listView);
+                if (myList != null)
+                    myList.setAdapter(myAdapter);
+                else {
+                    System.out.println("ERROR: myList not initialized");
+                    return;
+                }
+                if (myAdapter.isEmpty()) {
+                    String[] message = {"No items."};
+                    ArrayAdapter myAdapter = new ArrayAdapter(
+                            getApplicationContext(), android.R.layout.simple_expandable_list_item_1, message);
+                    if (myList != null)
+                        myList.setAdapter(myAdapter);
+                    System.out.println("NOTE: no items in myList");
+                }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-
+                String[] message = {"No items."};
+                ArrayAdapter myAdapter = new ArrayAdapter(
+                        getApplicationContext(), android.R.layout.simple_expandable_list_item_1, message);
+                ListView myList = (ListView) findViewById(R.id.grocery_basket_listView);
+                if (myList != null)
+                    myList.setAdapter(myAdapter);
+                System.out.println("ERROR: myList not initialized");
             }
 
             @Override
             public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
-
+                // TODO: Add "please log in again" code
+                String[] message = {"No items."};
+                ArrayAdapter myAdapter = new ArrayAdapter(
+                        getApplicationContext(), android.R.layout.simple_expandable_list_item_1, message);
+                ListView myList = (ListView) findViewById(R.id.grocery_basket_listView);
+                if (myList != null)
+                    myList.setAdapter(myAdapter);
+                System.out.println("ERROR: Not logged in.");
             }
         });
-        String[] tempString = {"a", "b", "c"};
-        return tempString;
     }
 
     //makes menu bar
