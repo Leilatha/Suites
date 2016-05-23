@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -25,6 +26,7 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
@@ -193,6 +195,25 @@ public class GroceryBasket extends AppCompatActivity {
                 if (myList != null)
                     myList.setAdapter(myAdapter);
                 System.out.println("ERROR: Not logged in.");
+            }
+
+            public void onSuccess(){
+                final ListView myList = (ListView) findViewById(R.id.grocery_basket_listView);
+                String [] message = {"yay"};
+                myAdapter = new ArrayAdapter(
+                        getApplicationContext(), android.R.layout.simple_expandable_list_item_1, message);
+
+                if(myList != null)
+                    myList.setAdapter(myAdapter);
+
+                myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent i = new Intent(myList.getContext(), GroceryBasketEdit.class);
+                        i.putExtra("item", (Serializable)myAdapter.getItem(position));
+                        startActivity(i);
+                    }
+                });
             }
         });
     }
