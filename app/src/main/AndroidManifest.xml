@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -46,6 +48,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="damson.suites.suites.GroceryBasket" />
         </activity>
+        <activity android:name=".ChoresAdd"></activity>
+        <activity android:name=".RegistrationActivity"></activity>
     </application>
 
 </manifest>

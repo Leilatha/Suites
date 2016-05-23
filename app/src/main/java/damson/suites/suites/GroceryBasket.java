@@ -1,6 +1,11 @@
 package damson.suites.suites;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -20,14 +25,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.roughike.bottombar.BottomBar;
+import android.support.design.widget.CoordinatorLayout;
+import com.roughike.bottombar.OnMenuTabSelectedListener;
 
 public class GroceryBasket extends AppCompatActivity {
+    static final int itemIdentifier = 1;  // The request code
 
     /**
      * The {@link PagerAdapter} that will provide
@@ -49,31 +59,126 @@ public class GroceryBasket extends AppCompatActivity {
      */
     private GoogleApiClient client;
 
+    private CoordinatorLayout coordinatorLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information. BAWLIN
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_grocery_basket);
+        setContentView(R.layout.fragment_grocery_basket);
 
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.three_buttons_activity);
+
+        BottomBar mBottomBar = BottomBar.attach(this, savedInstanceState);
+        mBottomBar.setItemsFromMenu(R.menu.three_buttons_menu, new OnMenuTabSelectedListener() {
+            @Override
+            public void onMenuItemSelected(int itemId) {
+                switch (itemId) {
+                    case R.id.recent_item:
+                        Snackbar.make(coordinatorLayout, "Recent Item Selected", Snackbar.LENGTH_LONG).show();
+                        break;
+                    case R.id.favorite_item:
+                        Snackbar.make(coordinatorLayout, "Favorite Item Selected", Snackbar.LENGTH_LONG).show();
+                        break;
+                    case R.id.location_item:
+                        Snackbar.make(coordinatorLayout, "Location Item Selected", Snackbar.LENGTH_LONG).show();
+                        break;
+                }
+            }
+        });
+
+        mBottomBar.setActiveTabColor("#C2185B");
+
+        //TODO: fix with database stuff
         String [] groceryList = listMaker();
+        if(groceryList[0] == ""){
+            System.out.println("ERROR");
+            return;
+        }
         ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
-                this,android.R.layout.simple_expandable_list_item_2, groceryList);
+                this,android.R.layout.simple_expandable_list_item_1, groceryList);
         ListView myList = (ListView) findViewById(R.id.listView);
-        myList.setAdapter(myAdapter);
+        if(myList != null)
+            myList.setAdapter(myAdapter);
+        else {
+            System.out.println("ERROR");
+            return;
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        if(toolbar == null){
+            System.out.println("THIS IS NULL PLZ FIX***********************");
+            return;
+        }
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        else {
+            System.out.println("ERROR");
+            return;
+        }
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+        if(mViewPager != null)
+            mViewPager.setAdapter(mSectionsPagerAdapter);
+        else {
+            System.out.println("ERROR");
+            return;
+        }
 
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+        /* Written by Marian
+         * This creates an intent to the GroceryBasketAdd.java
+         * It receives new items from that activity, and then
+         * displays it into the list.
+         */
+        final Button addButton = (Button) findViewById(R.id.add_button);
+        if(addButton == null){
+            System.out.println("ERROR");
+            return;
+        }
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                buttonPress();
+            }
+        });
+
+    }
+
+    /* Written by Marian
+     */
+    public void buttonPress() {
+        Intent receiveItemIntent = new Intent(this, GroceryBasketAdd.class);
+        setContentView(R.layout.activity_grocery_basket_add);
+        startActivityForResult(receiveItemIntent, itemIdentifier);
+    }
+
+    /* Written by Marian
+     * This is a continuation of the receiveItem method.
+     * This is where we know if the add was successful. If it returned a
+     * GroceryItem, then we can display its data to the list.
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Check which request we're responding to
+        if (requestCode == itemIdentifier) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                //  HOPEFULLY THIS ISNT A RUNTIME ERROR 8D
+                GroceryItem newItem = (GroceryItem) data.getSerializableExtra("item_added");
+
+                // The user picked a contact.
+                // The Intent's data Uri identifies which contact was selected.
+
+                // Do something with the contact here (bigger example below)
+            }
+        }
     }
 
     /**
@@ -82,7 +187,7 @@ public class GroceryBasket extends AppCompatActivity {
      * takes the data to put in list
      */
     private String[] listMaker(){
-        String[] tempString = new String[10];
+        String[] tempString = {"a", "b", "c"};
         return tempString;
     }
 
@@ -128,6 +233,7 @@ public class GroceryBasket extends AppCompatActivity {
         );
         AppIndex.AppIndexApi.start(client, viewAction);
     }
+
 
     @Override
     public void onStop() {
@@ -228,7 +334,6 @@ public class GroceryBasket extends AppCompatActivity {
         //put into array of arrays
         //make array of arrays into list items
         //go through array and make  list item out of
-
 
     }
 }
