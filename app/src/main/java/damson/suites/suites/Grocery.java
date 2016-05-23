@@ -3,7 +3,9 @@ package damson.suites.suites;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Grocery {
+import java.io.Serializable;
+
+public class Grocery implements Serializable {
     private final int id;
     private final String name;
     private final int quant;
@@ -45,5 +47,10 @@ public class Grocery {
     @JsonProperty("price")
     public double getPrice() {
         return price;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
