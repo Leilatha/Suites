@@ -27,7 +27,6 @@ public class GroceryItem implements Serializable{
         this.quantity = item.getQuant();
     }
 
-    public GroceryItem()
 
     public int getId() {
         return id;
