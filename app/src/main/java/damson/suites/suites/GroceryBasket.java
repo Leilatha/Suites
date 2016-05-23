@@ -155,7 +155,7 @@ public class GroceryBasket extends AppCompatActivity {
                 if (response.getGroceryList() == null) {
                     String[] message = {"No items."};
                     myAdapter = new ArrayAdapter(
-                            getApplicationContext(), android.R.layout.simple_list_item_2, message);
+                            getApplicationContext(), android.R.layout.simple_expandable_list_item_2, message);
                     if (myList != null)
                         myList.setAdapter(myAdapter);
                     System.out.println("NOTE: no items in myList");
