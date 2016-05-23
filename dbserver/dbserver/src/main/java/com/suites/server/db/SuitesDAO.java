@@ -12,6 +12,8 @@ import com.suites.server.core.Grocery;
 import com.suites.server.core.Chore;
 import com.suites.server.core.PSA;
 
+import com.suites.server.api.PSAView;
+
 import java.util.List;
 import java.util.Iterator;
 
@@ -218,10 +220,11 @@ public interface SuitesDAO {
               "ON Id = MemberId AND ChoreId = :choreid")
     List<User> getChoreAssignees(@Bind("choreid") int choreId);
 
-    @SqlQuery("SELECT Id, AuthorId, Title, Description, Timestamp FROM PSA " +
-              "WHERE SuiteId = :suiteid")
-    @Mapper(PSAMapper.class)
-    List<PSA> getSuitePSAs(@Bind("suiteid") int suiteId);
+    @SqlQuery("SELECT PSA.Id, PSA.Title, PSA.Description, PSA.Timestamp, " +
+              "Member.Id, Member.Email, Member.Name, Member.ProfilePicture " +
+              "FROM PSA JOIN Member ON PSA.AuthorId = Member.Id AND SuiteId = :suiteid")
+    @Mapper(PSAViewMapper.class)
+    List<PSAView> getSuitePSAs(@Bind("suiteid") int suiteId);
 
     @SqlUpdate("INSERT INTO PSA (SuiteId, AuthorId, Title, Description, Timestamp) " +
                "VALUES(:suiteid, :authorid, :title, :description, :timestamp)")

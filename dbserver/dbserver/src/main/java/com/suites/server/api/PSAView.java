@@ -1,4 +1,4 @@
-package com.suites.server.core;
+package com.suites.server.api;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
