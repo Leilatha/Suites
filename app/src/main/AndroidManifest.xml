@@ -33,6 +33,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="damson.suites.suites.LoginActivity" />
         </activity>
+
+        <activity android:name=".ThreeButtonsActivity"
+            android:label="ThreeButtonsActivity"
+            android:parentActivityName=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data

@@ -20,17 +20,30 @@ public class ThreeButtonsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_three_buttons);
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new GroceryBasket.PlaceholderFragment()).commit();
-        }
-
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.three_buttons_activity);
 
         BottomBar mBottomBar = BottomBar.attach(this, savedInstanceState);
         mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
-                new BottomBarFragment(PSA.newInstance(), R.drawable.psa, "PSA")
+                new BottomBarFragment(MoneyFragment.newInstance(), R.drawable.money_management, "Money Manager")
         );
+        /*mBottomBar.setItemsFromMenu(R.menu.three_buttons_menu, new OnMenuTabSelectedListener() {
+            @Override
+            public void onMenuItemSelected(int itemId) {
+                switch (itemId) {
+                    case R.id.chores:
+                        //Snackbar.make(coordinatorLayout, "Recent Item Selected", Snackbar.LENGTH_LONG).show();
+                        break;
+                    case R.id.money:
+                        //Snackbar.make(coordinatorLayout, "Favorite Item Selected", Snackbar.LENGTH_LONG).show();
+                        break;
+                    case R.id.groceries_list:
+                        //Snackbar.make(coordinatorLayout, "Location Item Selected", Snackbar.LENGTH_LONG).show();
+                        break;
+                    case R.id.psa:
+                        //public static PSA newInstance();
+                }
+            }
+        }); */
 
         // Set the color for the active tab. Ignored on mobile when there are more than three tabs.
         mBottomBar.setActiveTabColor("#C2185B");

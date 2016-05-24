@@ -17,20 +17,14 @@ public class MoneyFragment extends Fragment{
     public MoneyFragment() {
     }
 
-    public static MoneyFragment newInstance(String text) {
-        Bundle args = new Bundle();
-        args.putString(STARTING_TEXT, text);
-
-        MoneyFragment moneyFragment = new MoneyFragment();
-        moneyFragment.setArguments(args);
-        return moneyFragment;
+    public static MoneyFragment newInstance() {
+        MoneyFragment fragment = new MoneyFragment();
+        return fragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        TextView textView = new TextView(getActivity());
-        textView.setText(getArguments().getString(STARTING_TEXT));
-        return textView;
+        return inflater.inflate(R.layout.money_management, container, false);
     }
 }
