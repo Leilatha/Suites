@@ -55,4 +55,8 @@ public class UserManager {
 
         dao.addUser(email, name, passhash);
     }
+
+    public User getUserByEmail(String email) {
+        return dao.getUserByEmail(email);
+    }
 }

@@ -38,12 +38,20 @@ public class ServerApplication extends Application<ServerConfiguration> {
         final UserManager um = new UserManager(dao);
         final SuiteManager sm = new SuiteManager(dao);
         final GroceryManager gm = new GroceryManager(dao);
+        final ChoreManager cm = new ChoreManager(dao);
+        final PSAManager pm = new PSAManager(dao);
 
         dao.createSuiteTable();
         dao.createUserTable();
         dao.createSuiteMembershipTable();
         dao.createSuiteInvitationTable();
         dao.createGroceryTable();
+        dao.createChoreTable();
+        dao.createChoreAssignmentTable();
+        dao.createPSATable();
+
+        dao.createAssigneeCountFunction();
+        dao.createSuiteMembershipFunction();
         // dao.createSuiteMembershipIndex(); // Maybe move database creation somewhere else
 
         environment.jersey().register(new BasicAuthProvider<User>(new DBAuthenticator(um),
@@ -67,5 +75,11 @@ public class ServerApplication extends Application<ServerConfiguration> {
 
         final GroceryResource groceryRes = new GroceryResource(gm, sm);
         environment.jersey().register(groceryRes);
+
+        final ChoreResource choreRes = new ChoreResource(cm, sm);
+        environment.jersey().register(choreRes);
+
+        final PSAResource psaRes = new PSAResource(pm, sm);
+        environment.jersey().register(psaRes);
     }
 }

@@ -6,12 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ThreeButtonsActivity">
 
-    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/fragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Three Buttons Bar"
+            android:text="Four Buttons Bar"
             android:id="@+id/textView"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
@@ -30,3 +24,4 @@
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>
+

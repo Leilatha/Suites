@@ -33,6 +33,9 @@ import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.roughike.bottombar.BottomBar;
+import android.support.design.widget.CoordinatorLayout;
+
+import com.roughike.bottombar.BottomBarFragment;
 import com.roughike.bottombar.OnMenuTabSelectedListener;
 
 public class GroceryBasket extends AppCompatActivity {
@@ -60,13 +63,10 @@ public class GroceryBasket extends AppCompatActivity {
 
     private CoordinatorLayout coordinatorLayout;
 
-    //Code starting ~74 is written by Matthew. Code is used for bottom bar
-    //TODO: Need to attach fragments to the bottom bar buttons.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information. BAWLIN
-
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_grocery_basket);
@@ -74,22 +74,28 @@ public class GroceryBasket extends AppCompatActivity {
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.three_buttons_activity);
 
         BottomBar mBottomBar = BottomBar.attach(this, savedInstanceState);
-        mBottomBar.setItemsFromMenu(R.menu.three_buttons_menu, new OnMenuTabSelectedListener() {
+        mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
+            new BottomBarFragment(PSA.newInstance(), R.drawable.psa, "PSA")
+        );
+
+        /*mBottomBar.setItemsFromMenu(R.menu.three_buttons_menu, new OnMenuTabSelectedListener() {
             @Override
             public void onMenuItemSelected(int itemId) {
                 switch (itemId) {
-                    case R.id.recent_item:
+                    case R.id.chores:
                         //Snackbar.make(coordinatorLayout, "Recent Item Selected", Snackbar.LENGTH_LONG).show();
                         break;
-                    case R.id.favorite_item:
+                    case R.id.money:
                         //Snackbar.make(coordinatorLayout, "Favorite Item Selected", Snackbar.LENGTH_LONG).show();
                         break;
-                    case R.id.location_item:
+                    case R.id.groceries_list:
                         //Snackbar.make(coordinatorLayout, "Location Item Selected", Snackbar.LENGTH_LONG).show();
                         break;
+                    case R.id.psa:
+                        public static PSA newInstance();
                 }
             }
-        });
+        });*/
 
         mBottomBar.setActiveTabColor("#C2185B");
 

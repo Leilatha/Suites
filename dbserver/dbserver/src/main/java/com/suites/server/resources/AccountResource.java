@@ -28,9 +28,13 @@ public class AccountResource {
         um = manager;
     }
 
-    @GET // Change to return a User once it is JSON-encodable.
-    public User getUserInfo(@Auth User user) {
-        return user;
+    @GET
+    public User getUserInfo(@Auth User user, @QueryParam("email") String email) {
+        if (email == null) {
+            return user;
+        } else {
+            return um.getUserByEmail(email);
+        }
     }
 
     @POST
