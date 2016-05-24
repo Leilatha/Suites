@@ -1,0 +1,5 @@
+app/src/main/AndroidManifest.xml: needs merge
+app/src/main/java/damson/suites/suites/ChoresAdd.java: needs merge
+app/src/main/java/damson/suites/suites/GroceryBasket.java: needs merge
+app/src/main/res/values/strings.xml: needs merge
+dbserver/dbserver/src/main/java/com/suites/server/core/User.java: needs merge
