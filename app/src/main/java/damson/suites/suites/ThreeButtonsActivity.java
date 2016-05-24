@@ -3,17 +3,20 @@ package damson.suites.suites;
 
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarFragment;
 import com.roughike.bottombar.OnMenuTabSelectedListener;
+import com.roughike.bottombar.OnTabSelectedListener;
 
 /**
  * Created by Matthew on 5/21/2016.
  */
-public class ThreeButtonsActivity extends AppCompatActivity {
+public class ThreeButtonsActivity extends FragmentActivity {
     private CoordinatorLayout coordinatorLayout;
+    private BottomBar mBottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +25,10 @@ public class ThreeButtonsActivity extends AppCompatActivity {
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.three_buttons_activity);
 
-        BottomBar mBottomBar = BottomBar.attach(this, savedInstanceState);
+        mBottomBar = BottomBar.attach(this, savedInstanceState);
         mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
-                new BottomBarFragment(MoneyFragment.newInstance(), R.drawable.money_management, "Money Manager")
+                new BottomBarFragment(MoneyFragment.newInstance(), R.drawable.money_management, "Money Manager"),
+                new BottomBarFragment(PSA.newInstance(), R.drawable.psa, "PSA")
         );
         /*mBottomBar.setItemsFromMenu(R.menu.three_buttons_menu, new OnMenuTabSelectedListener() {
             @Override
@@ -44,6 +48,16 @@ public class ThreeButtonsActivity extends AppCompatActivity {
                 }
             }
         }); */
+
+        mBottomBar.setOnItemSelectedListener(new OnTabSelectedListener() {
+            @Override
+            public void onItemSelected(int position) {
+                switch (position) {
+                    case 0:
+                        // Item 1 Selected
+                }
+            }
+        });
 
         // Set the color for the active tab. Ignored on mobile when there are more than three tabs.
         mBottomBar.setActiveTabColor("#C2185B");
