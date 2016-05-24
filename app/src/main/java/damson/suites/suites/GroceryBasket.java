@@ -25,11 +25,19 @@ import android.widget.ListView;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+<<<<<<< .merge_file_a11384
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
+=======
+import com.roughike.bottombar.BottomBar;
+import android.support.design.widget.CoordinatorLayout;
+
+import com.roughike.bottombar.BottomBarFragment;
+import com.roughike.bottombar.OnMenuTabSelectedListener;
+>>>>>>> .merge_file_a11368
 
 public class GroceryBasket extends AppCompatActivity {
     static final int itemIdentifier = 1;  // The request code
@@ -65,7 +73,33 @@ public class GroceryBasket extends AppCompatActivity {
 
         //TODO: fix with database stuff
 
+<<<<<<< .merge_file_a11384
         listMaker();
+=======
+        BottomBar mBottomBar = BottomBar.attach(this, savedInstanceState);
+        mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
+            new BottomBarFragment(PSA.newInstance(), R.drawable.psa, "PSA")
+        );
+
+        /*mBottomBar.setItemsFromMenu(R.menu.three_buttons_menu, new OnMenuTabSelectedListener() {
+            @Override
+            public void onMenuItemSelected(int itemId) {
+                switch (itemId) {
+                    case R.id.chores:
+                        //Snackbar.make(coordinatorLayout, "Recent Item Selected", Snackbar.LENGTH_LONG).show();
+                        break;
+                    case R.id.money:
+                        //Snackbar.make(coordinatorLayout, "Favorite Item Selected", Snackbar.LENGTH_LONG).show();
+                        break;
+                    case R.id.groceries_list:
+                        //Snackbar.make(coordinatorLayout, "Location Item Selected", Snackbar.LENGTH_LONG).show();
+                        break;
+                    case R.id.psa:
+                        public static PSA newInstance();
+                }
+            }
+        });*/
+>>>>>>> .merge_file_a11368
 
 
         if(getSupportActionBar() != null)

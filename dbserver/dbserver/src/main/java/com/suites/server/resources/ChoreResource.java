@@ -96,4 +96,14 @@ public class ChoreResource {
                 return new GenericResult(true, "");
         }
     }
+
+    @POST @Path("/advance")
+    public GenericResult advanceChore(@Auth User user,
+                                      @QueryParam("choreid") IntParam choreId) {
+        if (cm.advanceChore(choreId.get(), user)) {
+            return new GenericResult(true, "");
+        } else {
+            return new GenericResult(false, "Could not advance chore.");
+        }
+    }
 }
