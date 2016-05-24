@@ -196,7 +196,7 @@ public interface SuitesDAO {
                     @Bind("userid") int userId);
 
     @SqlUpdate("DELETE FROM ChoreAssignment" +
-               " WHERE Id = :id")
+               " WHERE ChoreId = :id")
     int deleteChoreAssignments(@Bind("id") int id);
 
     @SqlBatch("INSERT INTO ChoreAssignment (MemberId, ChoreId, Turn)" +
@@ -212,7 +212,7 @@ public interface SuitesDAO {
     int advanceChore(@Bind("id") int id, @Bind("userid") int userId);
 
     @SqlUpdate("UPDATE Chore " +
-               "SET CurrentTurn = CurrentTurn % assignee_cnt(ChoreId) " +
+               "SET CurrentTurn = CurrentTurn % assignee_cnt(Id) " +
                "WHERE Id = :id")
     void fixChore(@Bind("id") int id);
 
