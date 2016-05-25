@@ -202,9 +202,10 @@ public class GroceryBasket extends AppCompatActivity {
                 // There are items
                 myAdapter = new GroceryAdapter(
                         getApplicationContext(), (ArrayList<Grocery>) response.getGroceryList());
-                if (myList != null)
+                if (myList != null) {
                     myList.setVisibility(View.VISIBLE);
-                myList.setAdapter(myAdapter);
+                    myList.setAdapter(myAdapter);
+                }
                 else {
                     System.out.println("ERROR: myList not initialized");
                     return;
@@ -215,7 +216,6 @@ public class GroceryBasket extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
                 Snackbar
                         .make(this, R.string.error_network_connection, Snackbar.LENGTH_LONG)
-                        .setAction(R.string.snackbar_action, myOnClickListener)
                         .show();
                 System.out.println("ERROR: myList not initialized");
             }
