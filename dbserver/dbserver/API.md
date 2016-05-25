@@ -36,6 +36,10 @@ The response will also be encoded as JSON, with the following format (GenericRes
 
 This request does not require authentication.
 
+Account Editing
+---------------
+The same as registration, except you must authenticate.
+
 Suite Management
 ================
 

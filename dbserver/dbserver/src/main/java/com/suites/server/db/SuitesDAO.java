@@ -102,6 +102,14 @@ public interface SuitesDAO {
                  @Bind("name") String name,
                 @Bind("passhash") String passhash);
 
+    @SqlUpdate("UPDATE Member " +
+               "SET Email = :email, Name = :name, Password = :passhash " +
+               "WHERE Id = :id")
+    void editUser(@Bind("id") int id,
+                  @Bind("email") String email,
+                  @Bind("name") String name,
+                  @Bind("passhash") String passhash);
+
     @SqlQuery("INSERT INTO Suite (Name) VALUES (:name) RETURNING Id")
     int addSuite(@Bind("name") String name);
 
@@ -132,6 +140,11 @@ public interface SuitesDAO {
     @SqlQuery("SELECT count(SuiteId) > 0 FROM Invitation"
               + " WHERE SuiteId = :suiteid AND Email = :email LIMIT 1")
     boolean isUserInvited(@Bind("suiteid") int suiteId, @Bind("email") String email);
+
+    @SqlUpdate("UPDATE Invitation " +
+               "SET Email = :newemail " +
+               "WHERE Email = :oldemail")
+    void switchInvitations(@Bind("oldemail") String oldEmail, @Bind("newemail") String newEmail);
 
     @SqlQuery("SELECT user_in_suite(:userid, :suiteid)")
     boolean isUserInSuite(@Bind("userid") int userId, @Bind("suiteid") int suiteId);
@@ -196,7 +209,7 @@ public interface SuitesDAO {
                     @Bind("userid") int userId);
 
     @SqlUpdate("DELETE FROM ChoreAssignment" +
-               " WHERE Id = :id")
+               " WHERE ChoreId = :id")
     int deleteChoreAssignments(@Bind("id") int id);
 
     @SqlBatch("INSERT INTO ChoreAssignment (MemberId, ChoreId, Turn)" +
@@ -212,7 +225,7 @@ public interface SuitesDAO {
     int advanceChore(@Bind("id") int id, @Bind("userid") int userId);
 
     @SqlUpdate("UPDATE Chore " +
-               "SET CurrentTurn = CurrentTurn % assignee_cnt(ChoreId) " +
+               "SET CurrentTurn = CurrentTurn % assignee_cnt(Id) " +
                "WHERE Id = :id")
     void fixChore(@Bind("id") int id);
 
