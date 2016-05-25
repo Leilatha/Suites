@@ -10,9 +10,14 @@ import com.suites.server.core.User;
 import com.suites.server.core.Suite;
 import com.suites.server.core.Grocery;
 import com.suites.server.core.Chore;
+import com.suites.server.core.PSA;
+
+import com.suites.server.api.PSAView;
 
 import java.util.List;
 import java.util.Iterator;
+
+import java.sql.Timestamp;
 
 @RegisterMapper(UserMapper.class)
 public interface SuitesDAO {
@@ -60,6 +65,15 @@ public interface SuitesDAO {
                " Turn int)")
     void createChoreAssignmentTable();
 
+    @SqlUpdate("CREATE TABLE IF NOT EXISTS PSA" +
+               " (Id SERIAL primary key," +
+               " SuiteId int references Suite(Id)," +
+               " AuthorId int references Member(Id)," +
+               " Title varchar(80)," +
+               " Description varchar(255)," +
+               " Timestamp timestamp)")
+    void createPSATable();
+
     @SqlUpdate("CREATE INDEX IF NOT EXISTS SuiteMembership_idx_1 ON SuiteMembership (MemberId, SuiteId)")
     void createSuiteMembershipIndex();
 
@@ -93,6 +107,14 @@ public interface SuitesDAO {
 
     @SqlUpdate("INSERT INTO SuiteMembership (SuiteId, MemberId) VALUES (:suiteid, :userid)")
     void addUserToSuite(@Bind("userid") int userid, @Bind("suiteid") int suiteid);
+
+    @SqlUpdate("DELETE FROM SuiteMembership WHERE SuiteId = :suiteid AND MemberId = :userid")
+    void removeUserFromSuite(@Bind("userid") int userId, @Bind("suiteid") int suiteId);
+
+    @SqlUpdate("DELETE FROM Suite WHERE " +
+               "Id = :suiteid " +
+               "AND NOT EXISTS (SELECT * FROM SuiteMembership WHERE SuiteId = :suiteid)")
+    void removeSuiteIfEmpty(@Bind("suiteid") int suiteId);
 
     @SqlQuery("SELECT Id, Name FROM Suite WHERE user_in_suite(:memberid, Id)")
     @Mapper(SuiteMapper.class)
@@ -197,4 +219,31 @@ public interface SuitesDAO {
     @SqlQuery("SELECT Id, Email, Name, ProfilePicture FROM ChoreAssignment JOIN Member " +
               "ON Id = MemberId AND ChoreId = :choreid")
     List<User> getChoreAssignees(@Bind("choreid") int choreId);
+
+    @SqlQuery("SELECT PSA.Id AS pid, PSA.Title AS ptit, PSA.Description AS pdesc, PSA.Timestamp AS ptime, " +
+              "Member.Id AS mid, Member.Email AS memail, Member.Name AS mname, Member.ProfilePicture AS mpic " +
+              "FROM PSA JOIN Member ON PSA.AuthorId = Member.Id AND SuiteId = :suiteid")
+    @Mapper(PSAViewMapper.class)
+    List<PSAView> getSuitePSAs(@Bind("suiteid") int suiteId);
+
+    @SqlUpdate("INSERT INTO PSA (SuiteId, AuthorId, Title, Description, Timestamp) " +
+               "VALUES(:suiteid, :authorid, :title, :description, :timestamp)")
+    void addPSA(@Bind("suiteid") int suiteId,
+                @Bind("authorid") int authorId,
+                @Bind("title") String title,
+                @Bind("description") String description,
+                @Bind("timestamp") Timestamp timestamp);
+
+    @SqlUpdate("UPDATE PSA " +
+               "SET Title = :title, Description = :description " +
+               "WHERE Id = :id AND AuthorId = :userid")
+    int editPSA(@Bind("id") int id,
+                @Bind("userid") int userId,
+                @Bind("title") String title,
+                @Bind("description") String description);
+
+    @SqlUpdate("DELETE FROM PSA " +
+               "WHERE Id = :id AND AuthorId = :userid")
+    int deletePSA(@Bind("id") int id,
+                  @Bind("userid") int userId);
 }
