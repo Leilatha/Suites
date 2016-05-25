@@ -41,7 +41,6 @@
     <string name="Add">Add</string>
     <string name="chore_name">Chore Name</string>
     <string name="description">Description</string>
-<<<<<<< .merge_file_a09808
     <string name="error_grocery_add_failed_no_permission">You are not in the Suite you are putting items into</string>
 =======
 
