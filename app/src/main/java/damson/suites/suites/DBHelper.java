@@ -232,11 +232,13 @@ public class DBHelper {
 
     public void editGrocery(Grocery grocery, AsyncResponseHandler<DBGenericResult> arh) {
         setup("/grocery?groceryid="+grocery.getId());
+        DBAddGroceryRequest req =
+                new DBAddGroceryRequest(grocery.getName(), grocery.getQuant(), grocery.getPrice());
 
         // Output stream to server
         String jsonrequest = null;
         try {
-            jsonrequest = DBHelper.mapper.writeValueAsString(grocery);
+            jsonrequest = DBHelper.mapper.writeValueAsString(req);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }

@@ -29,7 +29,6 @@ public class Grocery implements Serializable {
         price = groc.getPrice();
     }
 
-    @JsonProperty("id")
     public int getId() {
         return id;
     }
