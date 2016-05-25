@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/money"
-        android:icon="@drawable/money_management"
+        android:icon="@drawable/moneymanagement"
         android:title="Money" />
     <item
         android:id="@+id/chores"
@@ -18,6 +18,6 @@
         android:title="Calendar" />
     <item
         android:id="@+id/groceries_list"
-        android:icon="@drawable/groceries_list"
+        android:icon="@drawable/grocerieslist"
         android:title="Groceries" />
 </menu>
