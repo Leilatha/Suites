@@ -67,9 +67,6 @@ public class GroceryBasket extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information. BAWLIN
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_grocery_basket);
 
@@ -148,29 +145,6 @@ public class GroceryBasket extends AppCompatActivity {
         startActivityForResult(receiveItemIntent, itemIdentifier);
     }
 
-    /* Written by Marian
-     * This is a continuation of the receiveItem method.
-     * This is where we know if the add was successful. If it returned a
-     * GroceryItem, then we can display its data to the list.
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
-        if (requestCode == itemIdentifier) {
-            // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-                //  HOPEFULLY THIS ISNT A RUNTIME ERROR 8D
-                GroceryItem newItem = (GroceryItem) data.getSerializableExtra("item_added");
-
-                // The user picked a contact.
-                // The Intent's data Uri identifies which contact was selected.
-
-                // Do something with the contact here (bigger example below)
-            }
-            // if(resultCode == RESULT_CANCELED) then do nothing
-        }
-    }
-
     /**
      * Lexie Rochfort
      * 5/7/16
@@ -178,8 +152,9 @@ public class GroceryBasket extends AppCompatActivity {
      */
     private void listMaker() {
         //TODO: Remove this. It is for testing
-        User.user = new User(123, "qwerty@qwer.ty", "Qwerty", "qwerty");
-        User.user.setPassword("qwerty");
+        User.user = new User(123, "user", "Qwerty", "qwerty");
+        User.user.setPassword("pass");
+        Suite.suite = new Suite(2, "qwert");
 
         DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
         helper.listSuiteGroceries(Suite.suite.getId(), new AsyncResponseHandler<DBGroceryListResult>() {
@@ -249,68 +224,16 @@ public class GroceryBasket extends AppCompatActivity {
         });
     }
 
-    //makes menu bar
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_grocery_basket, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Grocery Basket",
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://damson.suites.suites/http/host/path")
-        );
-        AppIndex.AppIndexApi.start(client, viewAction);
+    public void onRestart() {
+        super.onRestart();
+        listMaker();
     }
 
 
     @Override
     public void onStop() {
         super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        Action viewAction = Action.newAction(
-                Action.TYPE_VIEW, // TODO: choose an action type.
-                "Grocery Basket",
-                // TODO: If you have web page content that matches this app activity's content,
-                // make sure this auto-generated web page URL is correct.
-                // Otherwise, set the URL to null.
-                Uri.parse("http://host/path"),
-                // TODO: Make sure this auto-generated app URL is correct.
-                Uri.parse("android-app://damson.suites.suites/http/host/path")
-        );
-        AppIndex.AppIndexApi.end(client, viewAction);
-        client.disconnect();
     }
 
     /**
