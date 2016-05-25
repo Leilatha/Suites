@@ -34,6 +34,8 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.roughike.bottombar.BottomBar;
 import android.support.design.widget.CoordinatorLayout;
+
+import com.roughike.bottombar.BottomBarFragment;
 import com.roughike.bottombar.OnMenuTabSelectedListener;
 
 public class GroceryBasket extends AppCompatActivity {
@@ -72,22 +74,28 @@ public class GroceryBasket extends AppCompatActivity {
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.three_buttons_activity);
 
         BottomBar mBottomBar = BottomBar.attach(this, savedInstanceState);
-        mBottomBar.setItemsFromMenu(R.menu.three_buttons_menu, new OnMenuTabSelectedListener() {
+        mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
+            new BottomBarFragment(PSA.newInstance(), R.drawable.psa, "PSA")
+        );
+
+        /*mBottomBar.setItemsFromMenu(R.menu.three_buttons_menu, new OnMenuTabSelectedListener() {
             @Override
             public void onMenuItemSelected(int itemId) {
                 switch (itemId) {
-                    case R.id.recent_item:
-                        Snackbar.make(coordinatorLayout, "Recent Item Selected", Snackbar.LENGTH_LONG).show();
+                    case R.id.chores:
+                        //Snackbar.make(coordinatorLayout, "Recent Item Selected", Snackbar.LENGTH_LONG).show();
                         break;
-                    case R.id.favorite_item:
-                        Snackbar.make(coordinatorLayout, "Favorite Item Selected", Snackbar.LENGTH_LONG).show();
+                    case R.id.money:
+                        //Snackbar.make(coordinatorLayout, "Favorite Item Selected", Snackbar.LENGTH_LONG).show();
                         break;
-                    case R.id.location_item:
-                        Snackbar.make(coordinatorLayout, "Location Item Selected", Snackbar.LENGTH_LONG).show();
+                    case R.id.groceries_list:
+                        //Snackbar.make(coordinatorLayout, "Location Item Selected", Snackbar.LENGTH_LONG).show();
                         break;
+                    case R.id.psa:
+                        public static PSA newInstance();
                 }
             }
-        });
+        });*/
 
         mBottomBar.setActiveTabColor("#C2185B");
 
