@@ -81,7 +81,7 @@ public class GroceryBasket extends AppCompatActivity {
             new BottomBarFragment(PSA.newInstance(), R.drawable.psa, "PSA")
         );
 
-        /*mBottomBar.setItemsFromMenu(R.menu.three_buttons_menu, new OnMenuTabSelectedListener() {
+        /* mBottomBar.setItemsFromMenu(R.menu.three_buttons_menu, new OnMenuTabSelectedListener() {
             @Override
             public void onMenuItemSelected(int itemId) {
                 switch (itemId) {
@@ -98,27 +98,27 @@ public class GroceryBasket extends AppCompatActivity {
                         public static PSA newInstance();
                 }
             }
-        });*/
+        }); */
 
 
-        if(getSupportActionBar() != null)
+        /* if(getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         else {
             System.out.println("ERROR: getSupportActionBar does not exist");
             return;
-        }
+        } */
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
+        /*mViewPager = (ViewPager) findViewById(R.id.container);
         if(mViewPager != null)
             mViewPager.setAdapter(mSectionsPagerAdapter);
         else {
             System.out.println("ERROR");
             return;
-        }
+        } */
 
         /* Written by Marian
          * This creates an intent to the GroceryBasketAdd.java
@@ -144,7 +144,7 @@ public class GroceryBasket extends AppCompatActivity {
     public void buttonPress() {
         System.out.println("I MADE IT TO BUTTON PRESSSSSSSSSSSS");
         Intent receiveItemIntent = new Intent(this, GroceryBasketAdd.class);
-        setContentView(R.layout.activity_grocery_basket_add);
+        //setContentView(R.layout.activity_grocery_basket_add);
         startActivityForResult(receiveItemIntent, itemIdentifier);
     }
 
@@ -178,7 +178,7 @@ public class GroceryBasket extends AppCompatActivity {
      */
     private void listMaker() {
         //TODO: Remove this. It is for testing
-        User.user = new User(123, "qwerty@qwer.ty", "Qwerty", "/qwerty");
+        User.user = new User(123, "qwerty@qwer.ty", "Qwerty", "qwerty");
         User.user.setPassword("qwerty");
 
         DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
