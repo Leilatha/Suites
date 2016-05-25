@@ -57,7 +57,7 @@ public class GroceryBasketAdd extends AppCompatActivity {
         });
 
         Button cancelButton = (Button)findViewById(R.id.Cancel_Button);
-        addButton.setOnClickListener(new View.OnClickListener(){
+        cancelButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 cancel();
             }
@@ -117,10 +117,29 @@ public class GroceryBasketAdd extends AppCompatActivity {
         quantity_field.setError(null);
         price_field.setError(null);
 
+        String name;
+        String quantity;
+        double price;
+
         //Store values at time of add attempt
-        String name = item_field.getText().toString();
-        String quantity = quantity_field.getText().toString();
-        double price = Double.parseDouble(price_field.getText().toString());
+        if(item_field.getText().toString().length() != 0) {
+            name = item_field.getText().toString();
+        }
+        else{
+            name = "";
+        }
+        if(quantity_field.getText().toString().length() != 0) {
+            quantity = quantity_field.getText().toString();
+        }
+        else{
+            quantity = "";
+        }
+        if(quantity_field.getText().toString().length() != 0) {
+            price = Double.parseDouble(price_field.getText().toString());
+        }
+        else{
+            price = 0.0;
+        }
 
         boolean cancel = false;
         View focusView = null;
@@ -142,8 +161,8 @@ public class GroceryBasketAdd extends AppCompatActivity {
         }
 
         //Check for valid price
-        if(price < 0.0) {
-            price_field.setError("This price is invalid. Please provide a positive value.");
+        if(price == 0.0) {
+            price_field.setError("Please fill in a price for the item.");
             focusView = price_field;
             cancel = true;
         }
@@ -160,10 +179,6 @@ public class GroceryBasketAdd extends AppCompatActivity {
             helper.addGroceryToSuite(Suite.suite.getId(), item, new AsyncResponseHandler<DBGenericResult>() {
                 @Override
                 public void onSuccess(DBGenericResult response, int statusCode, Header[] headers, byte[] errorResponse) {
-                    Intent intent = new Intent();
-                    intent.putExtra("item_added", groceryitem);
-                    setResult(RESULT_OK, intent);
-
                     finish();
                 }
 
@@ -186,7 +201,6 @@ public class GroceryBasketAdd extends AppCompatActivity {
     }
 
     public void cancel(){
-        Intent intent = new Intent();
-        setResult(RESULT_CANCELED, intent);
+        finish();
     }
 }

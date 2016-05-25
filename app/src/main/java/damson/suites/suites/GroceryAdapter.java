@@ -44,8 +44,8 @@ public class GroceryAdapter extends ArrayAdapter<Grocery> {
 
         // Populate the data into the template view using the data object
         viewHolder.GroceryName.setText(grocery.getName());
-        viewHolder.GroceryPrice.setText((int) grocery.getPrice());
-        viewHolder.GroceryQuantity.setText(grocery.getQuant());
+        viewHolder.GroceryPrice.setText(Double.toString(grocery.getPrice()));
+        viewHolder.GroceryQuantity.setText(Integer.toString(grocery.getQuant()));
         viewHolder.GroceryName.setTextColor(Color.BLACK);
         viewHolder.GroceryPrice.setTextColor(Color.BLACK);
         viewHolder.GroceryQuantity.setTextColor(Color.BLACK);
