@@ -39,7 +39,7 @@ public class UserManager {
     }
 
     public void registerUser(String email, String name, String password)
-        throws UserException{
+        throws UserException {
         String passhash;
         try {
             passhash = hashPassword(password);
@@ -58,5 +58,29 @@ public class UserManager {
 
     public User getUserByEmail(String email) {
         return dao.getUserByEmail(email);
+    }
+
+    public void editUser(User user, String email, String name, String password)
+        throws UserException {
+
+        int id = user.getId();
+        String oldEmail = user.getEmail();
+
+        String passhash;
+        try {
+            passhash = hashPassword(password);
+        } catch (Exception e) {
+            throw new UserException("Failed to hash password: " + e.getMessage());
+        }
+
+        User clashing = dao.getUserByEmail(email);
+
+        if (clashing != null && clashing.getId() != id) {
+            throw new UserException("Another account has that email.");
+        }
+
+        dao.editUser(id, email, name, passhash);
+
+        dao.switchInvitations(oldEmail, email);
     }
 }
