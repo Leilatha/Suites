@@ -18,7 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" >
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -97,9 +98,15 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/Add"
+                android:text="@string/groceryBasketEdit"
                 android:id="@+id/grocery_basket_edit_Edit_Button"
                 android:onClick="addItem"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/groceryBasketDelete"
+                android:id="@+id/grocery_basket_edit_Delete_Button" />
 
             <Button
                 android:layout_width="wrap_content"
