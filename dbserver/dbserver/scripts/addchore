@@ -1,0 +1,1 @@
+curl -H "Content-Type: application/json" -i -u "$2:$3" -d "{\"name\":\"$5\",\"description\":\"$6\",\"assignees\":$7}" $1/chore?suiteid=$4

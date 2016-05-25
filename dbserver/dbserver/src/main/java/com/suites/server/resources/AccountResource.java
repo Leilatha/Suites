@@ -4,6 +4,7 @@ import com.google.common.base.Optional;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
@@ -41,6 +42,19 @@ public class AccountResource {
     public GenericResult registerUser(RegistrationRequest request) {
         try {
             um.registerUser(request.getEmail(), request.getName(), request.getPassword());
+            return new GenericResult(true, "Ok");
+        } catch (UserException e) {
+            return new GenericResult(false, e.getMessage());
+        }
+    }
+
+    @PUT
+    public GenericResult editUser(@Auth User user, RegistrationRequest request) {
+        try {
+            um.editUser(user,
+                        request.getEmail(),
+                        request.getName(),
+                        request.getPassword());
             return new GenericResult(true, "Ok");
         } catch (UserException e) {
             return new GenericResult(false, e.getMessage());

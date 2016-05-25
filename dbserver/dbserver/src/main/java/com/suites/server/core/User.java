@@ -1,4 +1,4 @@
-package com.suites.;
+package com.suites.server.core;
 
 import java.security.Principal;
 
