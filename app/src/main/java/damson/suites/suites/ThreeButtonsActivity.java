@@ -24,7 +24,7 @@ public class ThreeButtonsActivity extends AppCompatActivity {
 
         BottomBar mBottomBar = BottomBar.attach(this, savedInstanceState);
         mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
-                new BottomBarFragment(MoneyFragment.newInstance(), R.drawable.money_management, "Money Manager")
+                new BottomBarFragment(MoneyFragment.newInstance(), R.drawable.moneymanagement, "Money Manager")
         );
         /*mBottomBar.setItemsFromMenu(R.menu.three_buttons_menu, new OnMenuTabSelectedListener() {
             @Override

@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -214,8 +215,9 @@ public class GroceryBasket extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                FrameLayout frame = (FrameLayout) findViewById(R.id.fragmentContainer);
                 Snackbar
-                        .make(this, R.string.error_network_connection, Snackbar.LENGTH_LONG)
+                        .make(frame, R.string.error_network_connection, Snackbar.LENGTH_LONG)
                         .show();
                 System.out.println("ERROR: myList not initialized");
             }
@@ -239,7 +241,7 @@ public class GroceryBasket extends AppCompatActivity {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent i = new Intent(myList.getContext(), GroceryBasketEdit.class);
-                        i.putExtra("item", (Serializable)myAdapter.getItem(position));
+                        i.putExtra("item", (Serializable) myAdapter.getItem(position));
                         startActivity(i);
                     }
                 });
