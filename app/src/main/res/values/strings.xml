@@ -44,6 +44,14 @@
     <string name="Add">Add</string>
     <string name="chore_name">Chore Name</string>
     <string name="description">Description</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="invite_new">Invite a new suite member</string>
+    <string name="post">Post!</string>
+    <string name="title_activity_official_bottom_bar">OfficialBottomBar</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="error_grocery_add_failed_no_permission">You are not in the Suite you are putting items into</string>
     <string name="no_grocery_items">No items.</string>
     <string name="add_new_item">Add New Item</string>
