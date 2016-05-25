@@ -56,17 +56,20 @@
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:id="@+id/imageView3"
-                    android:src="@drawable/group_copy" />
+                    android:src="@drawable/Group" />
 
-                <EditText
+                <AutoCompleteTextView
+                    android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
-                    android:id="@+id/email_login"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
                     android:textColorHint="#ffffff"
                     android:textColor="#ffffff"
-                    android:backgroundTint="#ffffff" />
-            </LinearLayout>
+                    android:backgroundTint="#ffffff"/>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -80,10 +83,14 @@
                     android:src="@drawable/group_copy" />
 
                 <EditText
+                    android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/prompt_password"
+                    android:imeActionId="@+id/login"
+                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
-                    android:id="@+id/password_registration"
                     android:textColorHint="#ffffff"
                     android:textColor="#ffffff"
                     android:backgroundTint="#ffffff" />
