@@ -24,14 +24,16 @@ public class GroceryBasketEdit extends AppCompatActivity {
     /*protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_grocery_basket_edit);
+
         //get fields from item we are editing
         Intent i = getIntent();
         itemDB = (Grocery)i.getSerializableExtra("item");
         item = new GroceryItem(itemDB);
 
-        name = (EditText) findViewById(R.id.Item_Text);
-        quantity = (EditText) findViewById(R.id.Quantity_Text);
-        price = (EditText) findViewById(R.id.Price_Text);
+        name = (EditText) findViewById(R.id.grocery_basket_edit_Item_Text);
+        quantity = (EditText) findViewById(R.id.grocery_basket_edit_Quantity_Text);
+        price = (EditText) findViewById(R.id.grocery_basket_edit_Price_Text);
 
         //store previous information
         prevName = item.getItem();
@@ -40,23 +42,16 @@ public class GroceryBasketEdit extends AppCompatActivity {
 
         //fill fields with information
         name.setText(prevName);
-        quantity.setText(prevQuantity);
+        quantity.setText(Integer.toString(prevQuantity));
         price.setText(Double.toString(prevPrice));
 
-        setContentView(R.layout.activity_grocery_basket_edit);
 
         //set button listeners
-        Button editButton = (Button)findViewById(R.id.Edit_Button);
-        Button deleteButton = (Button) findViewById(R.id.Delete_Button);
-        Button cancelButton = (Button) findViewById(R.id.Cancel_Button);
+        Button editButton = (Button)findViewById(R.id.grocery_basket_edit_Edit_Button);
+        Button cancelButton = (Button) findViewById(R.id.grocery_basket_edit_Cancel_Button);
         editButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 attemptEdit();
-            }
-        });
-        deleteButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                delete();
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener(){
@@ -133,7 +128,6 @@ public class GroceryBasketEdit extends AppCompatActivity {
     }
 
     private void cancel(){
-        Intent intent = new Intent (this, GroceryBasket.class);
-        startActivity(intent);
+        finish();
     }
 } */

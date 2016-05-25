@@ -14,7 +14,8 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 /**
  * Created by Andy on 5/13/2016.
  *
- * Usage:   Must first either call login() or use the constructor with account and password.
+ * Usage:   Must first either make new default constructor and call login() or use the
+ *          constructor with account and password.
  *          Call each method using a child of the AsyncResponseHandler class. Add an inline class
  *          definition.
  *          Android Studio can fill in the AsyncResponseHandler framework for you if you
@@ -139,25 +140,11 @@ public class DBHelper {
                 new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
     }
 
-    public void getUserSuites(String suitename, AsyncResponseHandler<Suite[]> arh) {
+    public void getUserSuites(AsyncResponseHandler<Suite[]> arh) {
         setup("/suite");
 
-        // Output stream to server
-        String jsonrequest = null;
-        DBAddSuiteRequest req = new DBAddSuiteRequest(suitename);
-        try {
-            jsonrequest = DBHelper.mapper.writeValueAsString(req);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        StringEntity entity = null;
-        try {
-            entity = new StringEntity(jsonrequest);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        client.post(null, url.toExternalForm(), entity, APPLICATION_JSON,
-                new AsyncResponseHandlerAdapter<>(Suite[].class, arh));
+        client.get(null, url.toExternalForm(),
+                new AsyncResponseHandlerAdapter<>(Suite[].class, arh)); //TODO: If crash check this line
     }
 
     public void getUserInvites(AsyncResponseHandler<DBInvitation[]> arh) {
