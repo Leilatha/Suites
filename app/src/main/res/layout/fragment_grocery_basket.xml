@@ -28,6 +28,16 @@
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/grocery_basket_add_button" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/no_grocery_items"
+        android:id="@+id/noItemsView"
+        android:enabled="true"
+        android:visibility="gone"
+        android:layout_centerInParent="true" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

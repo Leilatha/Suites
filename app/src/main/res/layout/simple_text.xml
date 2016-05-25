@@ -8,5 +8,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
-        android:id="@+id/simple_text_field" />
+        android:id="@+id/simple_text_field"
+        android:padding="15dp"
+        android:textColor="#000000" />
 </LinearLayout>

@@ -2,6 +2,7 @@ package damson.suites.suites;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
@@ -21,10 +22,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -154,20 +158,25 @@ public class GroceryBasket extends AppCompatActivity {
             public void onSuccess(DBGroceryListResult response, int statusCode, Header[] headers, byte[] errorResponse) {
                 ListView myList = (ListView) findViewById(R.id.grocery_basket_listView);
 
+                myList.setVisibility(View.VISIBLE);
+
+                // If no Items...
                 if (response.getGroceryList() == null) {
-                    String[] message = {"No items."};
-                    myAdapter = new ArrayAdapter(
-                            getApplicationContext(), R.layout.simple_text, R.id.simple_text_field, message);
+                    myAdapter = null;
                     if (myList != null)
-                        myList.setAdapter(myAdapter);
+                        myList.setVisibility(View.GONE);
+                    TextView tv = (TextView) findViewById(R.id.noItemsView);
+                    tv.setVisibility(View.VISIBLE);
                     System.out.println("NOTE: no items in myList");
                     return;
                 }
 
+                // There are items
                 myAdapter = new GroceryAdapter(
                         getApplicationContext(), (ArrayList<Grocery>) response.getGroceryList());
                 if (myList != null)
-                    myList.setAdapter(myAdapter);
+                    myList.setVisibility(View.VISIBLE);
+                myList.setAdapter(myAdapter);
                 else {
                     System.out.println("ERROR: myList not initialized");
                     return;
@@ -176,24 +185,21 @@ public class GroceryBasket extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                String[] message = {"No items."};
-                myAdapter = new ArrayAdapter(
-                        getApplicationContext(), R.layout.simple_text, R.id.simple_text_field, message);
-                ListView myList = (ListView) findViewById(R.id.grocery_basket_listView);
-                if (myList != null)
-                    myList.setAdapter(myAdapter);
+                Snackbar
+                        .make(this, R.string.error_network_connection, Snackbar.LENGTH_LONG)
+                        .setAction(R.string.snackbar_action, myOnClickListener)
+                        .show();
                 System.out.println("ERROR: myList not initialized");
             }
 
             @Override
             public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
                 // TODO: Add "please log in again" code
-                String[] message = {"No items."};
-                myAdapter = new ArrayAdapter(
-                        getApplicationContext(), R.layout.simple_text, R.id.simple_text_field, message);
                 ListView myList = (ListView) findViewById(R.id.grocery_basket_listView);
                 if (myList != null)
-                    myList.setAdapter(myAdapter);
+                    myList.setVisibility(View.GONE);
+                TextView tv = (TextView) findViewById(R.id.noItemsView);
+                tv.setVisibility(View.VISIBLE);
                 System.out.println("ERROR: Not logged in.");
             }
 
