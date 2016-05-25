@@ -18,8 +18,10 @@ public class GroceryBasketEdit extends AppCompatActivity {
     private Grocery itemDB;
     private GroceryItem item;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+}
+
+    //@Override
+    /*protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //get fields from item we are editing
@@ -134,4 +136,4 @@ public class GroceryBasketEdit extends AppCompatActivity {
         Intent intent = new Intent (this, GroceryBasket.class);
         startActivity(intent);
     }
-}
+} */
