@@ -45,6 +45,14 @@ public class GroceryBasket extends Fragment {
     static final int itemIdentifier = 1;  // The request code
     ArrayAdapter myAdapter;
 
+    public GroceryBasket()
+    {}
+
+    public static GroceryBasket newInstance() {
+        GroceryBasket fragment = new GroceryBasket();
+        return fragment;
+    }
+
     /**
      * The {@link PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -63,7 +71,8 @@ public class GroceryBasket extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_grocery_basket, container, false);
+        View view = inflater.inflate(R.layout.fragment_grocery_basket, container, false);
+        return view;
     }
 
     @Override
@@ -137,10 +146,15 @@ public class GroceryBasket extends Fragment {
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        listMaker();
+    }
+
     /* Written by Marian
      */
     public void buttonPress() {
-        System.out.println("I MADE IT TO BUTTON PRESSSSSSSSSSSS");
         Intent receiveItemIntent = new Intent(getActivity(), GroceryBasketAdd.class);
         //setContentView(R.layout.activity_grocery_basket_add);
         startActivityForResult(receiveItemIntent, itemIdentifier);
@@ -152,11 +166,7 @@ public class GroceryBasket extends Fragment {
      * takes the data to put in list
      */
     private void listMaker() {
-        //TODO: Remove this. It is for testing
-        User.user = new User(123, "user", "Qwerty", "qwerty");
-        User.user.setPassword("pass");
         Suite.suite = new Suite(2, "qwert");
-
         DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
         helper.listSuiteGroceries(Suite.suite.getId(), new AsyncResponseHandler<DBGroceryListResult>() {
             @Override
