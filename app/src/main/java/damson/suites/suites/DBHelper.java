@@ -8,6 +8,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import cz.msebera.android.httpclient.entity.StringEntity;
 
@@ -140,11 +141,11 @@ public class DBHelper {
                 new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
     }
 
-    public void getUserSuites(AsyncResponseHandler<Suite[]> arh) {
+    public void getUserSuites(AsyncResponseHandler<List<Suite>> arh) {
         setup("/suite");
 
         client.get(null, url.toExternalForm(),
-                new AsyncResponseHandlerAdapter<>(Suite[].class, arh)); //TODO: If crash check this line
+                new AsyncResponseHandlerAdapter<>(Suite.class, arh)); //TODO: If crash check this line
     }
 
     public void getUserInvites(AsyncResponseHandler<DBInvitation[]> arh) {

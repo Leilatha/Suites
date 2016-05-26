@@ -249,6 +249,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 public void onSuccess(User response, int statusCode, Header[] headers,
                                       byte[] errorResponse) {
                     User.user = response;
+                    getSuite(User.user);
                     if(User.user == null) {
                         System.out.println("Null error");
                         return;
