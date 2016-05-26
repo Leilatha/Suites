@@ -288,6 +288,36 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
+    private void getSuite(User user) {
+        DBHelper helper = new DBHelper(user);
+        helper.getUserSuites(new AsyncResponseHandler<List<Suite>>() {
+            @Override
+            public void onSuccess(List<Suite> response, int statusCode, Header[] headers, byte[] errorResponse) {
+                //IF THE LOGIN WORKED, AND NO SUITES, THEN GO TO INTROACTIVITY
+                if(response.isEmpty()){
+                    Intent intent = new Intent(LoginActivity.this, IntroActivity.class);
+                    startActivity(intent);
+                }
+                else {
+                    Suite.suite = response.get(0);
+                    Intent intent = new Intent(LoginActivity.this, ThreeButtonsActivity.class);
+                    startActivity(intent);
+                }
+                finish();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                //SHOULD NEVER HAPPEN
+            }
+
+            @Override
+            public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+                //ALSO SHOULD NEVER HAPPEN
+            }
+        });
+    }
+
     private boolean isEmailValid(String email) {
         //TODO: Email Validation
         Pattern pattern;
@@ -382,7 +412,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
-        mEmailView.setAdapter(adapter);
+        //mEmailView.setAdapter(adapter);
     }
 
 
