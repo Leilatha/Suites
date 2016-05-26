@@ -56,7 +56,7 @@
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:id="@+id/imageView3"
-                    android:src="@drawable/Group" />
+                    android:src="@drawable/group" />
 
                 <AutoCompleteTextView
                     android:id="@+id/email"
@@ -70,6 +70,7 @@
                     android:textColorHint="#ffffff"
                     android:textColor="#ffffff"
                     android:backgroundTint="#ffffff"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
