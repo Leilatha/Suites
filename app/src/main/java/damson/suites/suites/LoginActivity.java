@@ -249,15 +249,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 public void onSuccess(User response, int statusCode, Header[] headers,
                                       byte[] errorResponse) {
                     User.user = response;
+                    getSuite(User.user);
                     if(User.user == null) {
                         System.out.println("Null error");
                         return;
                     }
                     User.user.setPassword(password);
-                    //IF THE LOGIN WORKED, GO TO GROCERY LIST
-                    Intent intent = new Intent(LoginActivity.this, ThreeButtonsActivity.class);
-                    startActivity(intent);
-                    finish();
                 }
 
                 @Override
