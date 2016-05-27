@@ -24,8 +24,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,7 +37,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnMenuTabSelectedListener;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
 
 
 /**
@@ -83,14 +89,12 @@ public class PSA extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.fragment_psa);
 
         //TODO: fix with database stuff
-        List<String> psaList;
-        ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
-                this, android.R.layout.simple_expandable_list_item_2, psaList);
+        //List<String> psaList;
+        //ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
+        //        this, android.R.layout.simple_expandable_list_item_2, psaList);
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -154,4 +158,109 @@ public class PSA extends Fragment {
      return PlaceholderFragment.newInstance(position + 1);
      }
      }*/
+
+        /* Written by Marian
+     */
+    public void buttonPress() {
+        Intent receiveItemIntent = new Intent(getActivity(), GroceryBasketAdd.class);
+        //setContentView(R.layout.activity_grocery_basket_add);
+        startActivityForResult(receiveItemIntent, itemIdentifier);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        /* Copied by Lexie
+         * This creates an intent to the GroceryBasketAdd.java
+         * It receives new items from that activity, and then
+         * displays it into the list.
+         */
+        listMaker();
+        final Button addButton = (Button) getView().findViewById(R.id.psa_button);
+        if (addButton == null) {
+            System.out.println("ERROR");
+            return;
+        }
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                buttonPress();
+            }
+        });
+    }
+
+    /**
+     * Lexie Rochfort
+     * 5/7/16
+     * takes the data to put in list
+     */
+    private void listMaker() {
+        Suite.suite = new Suite(2, "qwert");
+        DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
+        helper.listSuiteGroceries(Suite.suite.getId(), new AsyncResponseHandler<DBGroceryListResult>() {
+            @Override
+            public void onSuccess(DBGroceryListResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                ListView myList = (ListView) getView().findViewById(R.id.grocery_basket_listView);
+
+                myList.setVisibility(View.VISIBLE);
+
+                // If no Items...
+                if (response.getGroceryList() == null) {
+                    myAdapter = null;
+                    if (myList != null)
+                        myList.setVisibility(View.GONE);
+                    TextView tv = (TextView) getView().findViewById(R.id.noItemsView);
+                    tv.setVisibility(View.VISIBLE);
+                    System.out.println("NOTE: no items in myList");
+                    return;
+                }
+
+                // There are items
+                myAdapter = new GroceryAdapter(
+                        getActivity(), (ArrayList<Grocery>) response.getGroceryList());
+                if (myList != null) {
+                    myList.setVisibility(View.VISIBLE);
+                    myList.setAdapter(myAdapter);
+                }
+                else {
+                    System.out.println("ERROR: myList not initialized");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                FrameLayout frame = (FrameLayout) getView().findViewById(R.id.fragmentContainer);
+                Snackbar
+                        .make(frame, R.string.error_network_connection, Snackbar.LENGTH_LONG)
+                        .show();
+                System.out.println("ERROR: myList not initialized");
+            }
+
+            @Override
+            public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+                // TODO: Add "please log in again" code
+                ListView myList = (ListView) getView().findViewById(R.id.grocery_basket_listView);
+                if (myList != null)
+                    myList.setVisibility(View.GONE);
+                TextView tv = (TextView) getView().findViewById(R.id.noItemsView);
+                tv.setVisibility(View.VISIBLE);
+                System.out.println("ERROR: Not logged in.");
+            }
+
+            @Override
+            public void onFinish(){
+                final ListView myList = (ListView) getView().findViewById(R.id.grocery_basket_listView);
+
+                myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent i = new Intent(myList.getContext(), GroceryBasketEdit.class);
+                        i.putExtra("item", (Serializable) myAdapter.getItem(position));
+                        startActivity(i);
+                    }
+                });
+            }
+        });
+    }
 }
