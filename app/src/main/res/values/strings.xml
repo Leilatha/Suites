@@ -48,4 +48,7 @@
     <string name="add_new_item">Add New Item</string>
     <string name="title_activity_intro">IntroActivity</string>
     <string name="create_suite_name">Suite Name</string>
+    <string name="create_suite_submit">Submit</string>
+    <string name="create_suite_error_basic">Could not make suite.</string>
+    <string name="intro_no_invites">No invites</string>
 </resources>

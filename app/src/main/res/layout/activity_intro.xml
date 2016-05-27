@@ -5,7 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="damson.suites.suites.IntroActivity">
+    tools:context="damson.suites.suites.IntroActivity"
+    android:id="@+id/create_suite_coordinator">
+
+    <ProgressBar
+        android:id="@+id/create_suite_progress"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -39,6 +49,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         style="@style/Widget.Design.FloatingActionButton"
-        android:src="@android:drawable/ic_input_add" />
+        android:src="@drawable/ic_plus_icon" />
 
 </android.support.design.widget.CoordinatorLayout>

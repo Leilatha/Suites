@@ -249,12 +249,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 public void onSuccess(User response, int statusCode, Header[] headers,
                                       byte[] errorResponse) {
                     User.user = response;
-                    getSuite(User.user);
                     if(User.user == null) {
                         System.out.println("Null error");
                         return;
                     }
                     User.user.setPassword(password);
+                    getSuite(User.user);
                 }
 
                 @Override
@@ -295,7 +295,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     Intent intent = new Intent(LoginActivity.this, IntroActivity.class);
                     startActivity(intent);
                 }
-                else {
+                else {  // Has Suite
                     Suite.suite = response.get(0);
                     Intent intent = new Intent(LoginActivity.this, ThreeButtonsActivity.class);
                     startActivity(intent);
