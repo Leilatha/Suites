@@ -1,47 +1,60 @@
 package damson.suites.suites;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+import cz.msebera.android.httpclient.Header;
 
 /* The majority of this is written by Marian Crofts, adapted from
  * the code from Grocery List. This file sets up buttons and
  * button listeners for the Chores List.
  */
-public class ChoresList extends AppCompatActivity {
+public class ChoresList extends Fragment {
     static final int itemIdentifier = 1;  // The request code
+    ArrayAdapter myAdapter;
+
+    public ChoresList(){}
+
+    public static ChoresList newInstance(){
+        ChoresList fragment = new ChoresList();
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_chores_list, container, false);
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chores_list);
 
         //TODO: fix with database stuff
-        String [] choresList = listMaker();
-        if(choresList[0].equals("")){
-            System.out.println("ERROR");
-            return;
-        }
-        ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
-                this,android.R.layout.simple_expandable_list_item_1, choresList);
-        ListView myList = (ListView) findViewById(R.id.listView);
-        if(myList != null)
-            myList.setAdapter(myAdapter);
-        else {
-            System.out.println("ERROR");
-            return;
-        }
+
+        listMaker();
 
         /* Written by Marian
          * This creates an intent to the ChoresAdd.java
          * It receives new items from that activity, and then
          * displays it into the list.
          */
-        final Button addButton = (Button) findViewById(R.id.grocery_basket_add_button);
+        final Button addButton = (Button) getView().findViewById(R.id.chores_list_add_button);
         if(addButton == null){
             System.out.println("ERROR");
             return;
@@ -58,31 +71,9 @@ public class ChoresList extends AppCompatActivity {
     /* Written by Marian
      */
     public void buttonPress() {
-        Intent receiveItemIntent = new Intent(this, ChoresAdd.class);
-        setContentView(R.layout.activity_chores_add);
+        Intent receiveItemIntent = new Intent(getActivity(), ChoresAdd.class);
+        //setContentView(R.layout.activity_chores_add);
         startActivityForResult(receiveItemIntent, itemIdentifier);
-    }
-
-    /* Written by Marian
-     * This is a continuation of the receiveItem method.
-     * This is where we know if the add was successful. If it returned a
-     * GroceryItem, then we can display its data to the list.
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
-        if (requestCode == itemIdentifier) {
-            // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-                //  HOPEFULLY THIS ISNT A RUNTIME ERROR 8D
-                GroceryItem newItem = (GroceryItem) data.getSerializableExtra("item_added");
-
-                // The user picked a contact.
-                // The Intent's data Uri identifies which contact was selected.
-
-                // Do something with the contact here (bigger example below)
-            }
-        }
     }
 
     /**
@@ -91,7 +82,73 @@ public class ChoresList extends AppCompatActivity {
      * takes the data to put in list
      */
     private String[] listMaker(){
-        String[] tempString = {"Dishes", "Trash", "Vacuuming"};
-        return tempString;
+        //TODO make DB accessor class for Chores
+        Suite.suite = new Suite(2, "qwert");
+        DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
+        helper.listSuiteGroceries(Suite.suite.getId(), new AsyncResponseHandler<DBChoresListResult>() {
+            @Override
+            public void onSuccess(DBChoresListResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                ListView myList = (ListView) getView().findViewById(R.id.chores_list_listView);
+
+                myList.setVisibility(View.VISIBLE);
+
+                // If no Items...
+                if (response.getChoresList() == null) {
+                    myAdapter = null;
+                    if (myList != null)
+                        myList.setVisibility(View.GONE);
+                    TextView tv = (TextView) getView().findViewById(R.id.noItemsView);
+                    tv.setVisibility(View.VISIBLE);
+                    System.out.println("NOTE: no items in myList");
+                    return;
+                }
+
+                // There are items
+                myAdapter = new ChoresAdapter(
+                        getActivity(), (ArrayList<Grocery>) response.getChoresList());
+                if (myList != null) {
+                    myList.setVisibility(View.VISIBLE);
+                    myList.setAdapter(myAdapter);
+                }
+                else {
+                    System.out.println("ERROR: myList not initialized");
+                    return;
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                FrameLayout frame = (FrameLayout) getView().findViewById(R.id.fragmentContainer);
+                Snackbar
+                        .make(frame, R.string.error_network_connection, Snackbar.LENGTH_LONG)
+                        .show();
+                System.out.println("ERROR: myList not initialized");
+            }
+
+            @Override
+            public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+                // TODO: Add "please log in again" code
+                ListView myList = (ListView) getView().findViewById(R.id.grocery_basket_listView);
+                if (myList != null)
+                    myList.setVisibility(View.GONE);
+                TextView tv = (TextView) getView().findViewById(R.id.noItemsView);
+                tv.setVisibility(View.VISIBLE);
+                System.out.println("ERROR: Not logged in.");
+            }
+
+            @Override
+            public void onFinish(){
+                final ListView myList = (ListView) getView().findViewById(R.id.grocery_basket_listView);
+
+                myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent i = new Intent(myList.getContext(), GroceryBasketEdit.class);
+                        i.putExtra("item", (Serializable) myAdapter.getItem(position));
+                        startActivity(i);
+                    }
+                });
+            }
+        });
     }
 }

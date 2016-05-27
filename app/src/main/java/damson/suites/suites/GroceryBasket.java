@@ -1,7 +1,6 @@
 package damson.suites.suites;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
@@ -24,12 +23,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
-
-import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -131,7 +124,7 @@ public class GroceryBasket extends Fragment {
          * It receives new items from that activity, and then
          * displays it into the list.
          */
-        final Button addButton = (Button) getView().findViewById(R.id.grocery_basket_add_button);
+        final Button addButton = (Button) getView().findViewById(R.id.chores_list_add_button);
         if(addButton == null){
             System.out.println("ERROR");
             return;

@@ -46,5 +46,6 @@
     <string name="error_grocery_add_failed_no_permission">You are not in the Suite you are putting items into</string>
     <string name="no_grocery_items">No items.</string>
     <string name="add_new_item">Add New Item</string>
+    <string name="add_new_chore">Add New Chore</string>
     <string name="post">Post!</string>
 </resources>
