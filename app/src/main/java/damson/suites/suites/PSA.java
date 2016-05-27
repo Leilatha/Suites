@@ -68,6 +68,8 @@ public class PSA extends Fragment {
      */
     private ViewPager mViewPager;
 
+    ArrayAdapter myAdapter;
+
     private OnFragmentInteractionListener mListener;
 
     public PSA() {
@@ -162,7 +164,7 @@ public class PSA extends Fragment {
         /* Written by Marian
      */
     public void buttonPress() {
-        Intent receiveItemIntent = new Intent(getActivity(), GroceryBasketAdd.class);
+        Intent receiveItemIntent = new Intent(getActivity(), psaAdd.class);
         //setContentView(R.layout.activity_grocery_basket_add);
         startActivityForResult(receiveItemIntent, itemIdentifier);
     }
@@ -195,23 +197,24 @@ public class PSA extends Fragment {
      * takes the data to put in list
      */
     private void listMaker() {
+        //TODO: change from hardcoded to real suite
         Suite.suite = new Suite(2, "qwert");
         DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
-        helper.listSuiteGroceries(Suite.suite.getId(), new AsyncResponseHandler<DBGroceryListResult>() {
+        helper.listSuitePSA(Suite.suite.getId(), new AsyncResponseHandler<DBpsaResult>() {
             @Override
-            public void onSuccess(DBGroceryListResult response, int statusCode, Header[] headers, byte[] errorResponse) {
-                ListView myList = (ListView) getView().findViewById(R.id.grocery_basket_listView);
+            public void onSuccess(DBpsaResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                ListView myList = (ListView) getView().findViewById(R.id.psa_ListView);
 
                 myList.setVisibility(View.VISIBLE);
 
                 // If no Items...
-                if (response.getGroceryList() == null) {
+                if (response.getPSA() == null) {
                     myAdapter = null;
                     if (myList != null)
                         myList.setVisibility(View.GONE);
                     TextView tv = (TextView) getView().findViewById(R.id.noItemsView);
                     tv.setVisibility(View.VISIBLE);
-                    System.out.println("NOTE: no items in myList");
+                    System.out.println("NOTE: no items in PSA");
                     return;
                 }
 
@@ -240,7 +243,7 @@ public class PSA extends Fragment {
             @Override
             public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
                 // TODO: Add "please log in again" code
-                ListView myList = (ListView) getView().findViewById(R.id.grocery_basket_listView);
+                ListView myList = (ListView) getView().findViewById(R.id.psa_ListView);
                 if (myList != null)
                     myList.setVisibility(View.GONE);
                 TextView tv = (TextView) getView().findViewById(R.id.noItemsView);
@@ -250,7 +253,7 @@ public class PSA extends Fragment {
 
             @Override
             public void onFinish(){
-                final ListView myList = (ListView) getView().findViewById(R.id.grocery_basket_listView);
+                final ListView myList = (ListView) getView().findViewById(R.id.psa_ListView);
 
                 myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override

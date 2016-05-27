@@ -210,6 +210,13 @@ public class DBHelper {
                 new AsyncResponseHandlerAdapter<>(DBGroceryListResult.class, arh));
     }
 
+    public void listSuitePSA(int suiteID, AsyncResponseHandler<DBpsaResult> argh){
+        setup("/psa?suiteid="+suiteID);
+
+        client.get(null, url.toExternalForm(),
+                new AsyncResponseHandlerAdapter<>(DBpsaResult.class, argh);
+    }
+
     public void addGroceryToSuite(int suiteID, DBAddGroceryRequest grocery, AsyncResponseHandler<DBGenericResult> arh) {
         setup("/grocery?suiteid="+suiteID);
 
