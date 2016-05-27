@@ -157,11 +157,11 @@ public class GroceryBasket extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
-        startTimer();
+        //startTimer();
         listMaker();
     }
 
-    public void startTimer() {
+    /*public void startTimer() {
 
         timer = new Timer();
 
@@ -172,9 +172,9 @@ public class GroceryBasket extends Fragment {
 
         timer.schedule(timerTask, 5000, 10000); //
 
-    }
+    } */
 
-    public void initializeTimerTask() {
+    /*public void initializeTimerTask() {
         timerTask = new TimerTask() {
             public void run() {
                 //use a handler to run a toast that shows the current timestamp
@@ -191,7 +191,7 @@ public class GroceryBasket extends Fragment {
 
         };
 
-    }
+    }*/
 
 
 

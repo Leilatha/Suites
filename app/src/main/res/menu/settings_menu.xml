@@ -13,4 +13,9 @@
         android:title="Invite Suite Member"
         app:showAsAction="never"/>
 
+    <item android:id="@+id/logout"
+        android:orderInCategory="102"
+        android:title= "Logout"
+        app:showAsAction="never"/>
+
 </menu>
