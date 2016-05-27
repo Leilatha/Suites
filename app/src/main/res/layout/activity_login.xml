@@ -40,7 +40,7 @@
                 android:id="@+id/imageView"
                 android:adjustViewBounds="true"
                 android:layout_centerInParent="true"
-                android:src="@drawable/SuitesIcon1" />
+                android:src="@drawable/suties_icon_1" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -56,16 +56,20 @@
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:id="@+id/imageView3"
-                    android:src="@drawable/Group" />
+                    android:src="@drawable/group" />
 
-                <EditText
+                <AutoCompleteTextView
+                    android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
-                    android:id="@+id/editText2"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
                     android:textColorHint="#ffffff"
                     android:textColor="#ffffff"
-                    android:backgroundTint="#ffffff" />
+                    android:backgroundTint="#ffffff"/>
             </LinearLayout>
 
             <LinearLayout
@@ -77,13 +81,17 @@
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:id="@+id/imageView4"
-                    android:src="@drawable/GroupCopy" />
+                    android:src="@drawable/group_copy" />
 
                 <EditText
+                    android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:hint="@string/prompt_password"
+                    android:imeActionId="@+id/login"
+                    android:imeActionLabel="@string/action_sign_in_short"
+                    android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
-                    android:id="@+id/password_registration"
                     android:textColorHint="#ffffff"
                     android:textColor="#ffffff"
                     android:backgroundTint="#ffffff" />

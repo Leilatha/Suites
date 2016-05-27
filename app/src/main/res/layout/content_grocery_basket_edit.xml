@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,7 +8,10 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="damson.suites.suites.GroceryBasketEdit">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="damson.suites.suites.GroceryBasketAdd"
+    tools:showIn="@layout/activity_grocery_basket_edit"
+    android:background="@android:color/background_light">
 
     <LinearLayout
         android:orientation="vertical"
@@ -21,44 +25,44 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/groceryBasketAddItem"
-                android:id="@+id/Item_Label" />
+                android:id="@+id/grocery_basket_edit_Item_Label" />
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/Item_Text"
+                android:id="@+id/grocery_basket_edit_Item_Text"
                 android:layout_weight="1"
-                android:editable="true"
-                android:inputType="text" />
+                android:inputType="text"
+                android:editable="true" />
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/groceryBasketAddQuantity"
-                android:id="@+id/Quantity_Label" />
+                android:id="@+id/grocery_basket_edit_Quantity_Label" />
 
             <EditText
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/Quantity_Text"
-                android:layout_gravity="center_horizontal"
-                android:editable="true"
-                android:inputType="number|text" />
+                android:id="@+id/grocery_basket_edit_Quantity_Text"
+                android:layout_weight="1"
+                android:inputType="number"
+                android:editable="true" />
         </LinearLayout>
 
         <LinearLayout
@@ -72,15 +76,16 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/groceryBasketAddprice"
-                android:id="@+id/Price_Label" />
+                android:id="@+id/grocery_basket_edit_Price_Label" />
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/Price_Text"
-                android:layout_weight="1"
+                android:id="@+id/grocery_basket_edit_Price_Text"
+                android:inputType="numberDecimal"
                 android:editable="true"
-                android:inputType="numberDecimal" />
+                android:elegantTextHeight="false" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -88,26 +93,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:gravity="center_vertical|fill_vertical|center_horizontal">
+            android:gravity="center_vertical|fill_vertical|center_horizontal" >
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/groceryBasketEdit"
-                android:id="@+id/Edit_Button" />
+                android:id="@+id/grocery_basket_edit_Edit_Button"
+                android:onClick="addItem"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/groceryBasketDelete"
-                android:id="@+id/Delete_Button" />
+                android:id="@+id/grocery_basket_edit_Delete_Button" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/groceryBasketAddCancel"
-                android:id="@+id/Cancel_Button" />
-        </LinearLayout>
+                android:id="@+id/grocery_basket_edit_Cancel_Button"
+                android:layout_gravity="right"
+                android:onClick="Cancel" />
 
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
