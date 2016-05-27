@@ -93,13 +93,13 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Edit"
+                android:text="@string/groceryBasketEdit"
                 android:id="@+id/Edit_Button" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Delete"
+                android:text="@string/groceryBasketDelete"
                 android:id="@+id/Delete_Button" />
 
             <Button
