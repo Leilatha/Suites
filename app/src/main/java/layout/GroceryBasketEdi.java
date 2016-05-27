@@ -72,7 +72,7 @@ public class GroceryBasketEdi extends Fragment {
 
         //store previous information
         String prevName = item.getItem();
-        String prevQuantity = item.getQuantity();
+        int prevQuantity = item.getQuantity();
         Double prevPrice = item.getPrice();
 
         //fill fields with information

@@ -41,7 +41,7 @@ public class ChoresList extends AppCompatActivity {
          * It receives new items from that activity, and then
          * displays it into the list.
          */
-        final Button addButton = (Button) findViewById(R.id.add_button);
+        final Button addButton = (Button) findViewById(R.id.grocery_basket_add_button);
         if(addButton == null){
             System.out.println("ERROR");
             return;

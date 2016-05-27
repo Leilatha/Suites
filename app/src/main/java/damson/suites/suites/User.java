@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.security.Principal;
 
 public class User implements Principal {
-    protected static User user;
+    protected static User user = new User(0, null, null, null);
 
     private final int id;
     private final String email;
