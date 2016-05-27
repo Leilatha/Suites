@@ -40,7 +40,7 @@
                 android:id="@+id/imageView"
                 android:adjustViewBounds="true"
                 android:layout_centerInParent="true"
-                android:src="@drawable/SuitesIcon1" />
+                android:src="@drawable/suitesicon1" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -56,7 +56,7 @@
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:id="@+id/imageView3"
-                    android:src="@drawable/Group" />
+                    android:src="@drawable/group" />
 
                 <EditText
                     android:layout_width="match_parent"
@@ -77,7 +77,7 @@
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:id="@+id/imageView4"
-                    android:src="@drawable/GroupCopy" />
+                    android:src="@drawable/groupcopy" />
 
                 <EditText
                     android:layout_width="match_parent"
