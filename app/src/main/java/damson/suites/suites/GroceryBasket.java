@@ -78,7 +78,6 @@ public class GroceryBasket extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.fragment_grocery_basket);
 
         //TODO: fix with database stuff
 
