@@ -30,7 +30,8 @@ public class AsyncResponseHandlerAdapter<B> extends AsyncHttpResponseHandler {
         } catch (IOException e) {
             e.printStackTrace();
             try {
-                DBHelper.mapper.getTypeFactory().constructCollectionType(List.class, bb);
+                res = DBHelper.mapper.readValue(response,
+                        DBHelper.mapper.getTypeFactory().constructCollectionType(List.class, bb));
             }
             catch (Exception e1){
                 e1.printStackTrace();

@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/view" />
+    android:layout_height="wrap_content"
+    android:padding="6dp">
 
     <EditText
         android:layout_width="0dp"
@@ -14,6 +10,15 @@
         android:id="@+id/create_suite_name_view"
         android:layout_weight="1"
         android:inputType="text"
-        android:hint="@string/create_suite_name" />
+        android:hint="@string/create_suite_name"
+        android:imeActionId="@+id/create_suite_confirm"
+        android:imeOptions="actionDone"
+        android:imeActionLabel="Submit" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/create_suite_submit"
+        android:id="@+id/create_suite_button" />
 
 </LinearLayout>
