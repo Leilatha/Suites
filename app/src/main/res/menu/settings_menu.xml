@@ -7,4 +7,10 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/invite_user"
+        android:orderInCategory="101"
+        android:title="Invite Suite Member"
+        app:showAsAction="never"/>
+
 </menu>

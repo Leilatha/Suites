@@ -46,4 +46,7 @@
     <string name="error_grocery_add_failed_no_permission">You are not in the Suite you are putting items into</string>
     <string name="no_grocery_items">No items.</string>
     <string name="add_new_item">Add New Item</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
