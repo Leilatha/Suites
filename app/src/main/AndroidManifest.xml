@@ -24,21 +24,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
-     ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
-        -->
-        =======
         <activity
-            android:name=".ThreeButtonsActivity"
+            android:name=".GroceryBasket"
+            android:label="@string/title_activity_grocery_basket"
+            android:parentActivityName=".LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="damson.suites.suites.LoginActivity" />
+        </activity>
+
+        <activity android:name=".ThreeButtonsActivity"
             android:label="ThreeButtonsActivity"
             android:parentActivityName=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
-        <!--
-     ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
-        -->
+        <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
@@ -46,10 +48,14 @@
         <activity
             android:name=".GroceryBasketAdd"
             android:label="@string/title_activity_grocery_basket_add"
+            android:parentActivityName=".GroceryBasket"
             android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="damson.suites.suites.GroceryBasket" />
         </activity>
-        <activity android:name=".RegistrationActivity" />
-        <activity android:name=".GroceryBasketEdit" />
+        <activity android:name=".ChoresAdd"></activity>
+        <activity android:name=".RegistrationActivity"></activity>
     </application>
 
 </manifest>
