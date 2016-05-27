@@ -209,6 +209,7 @@ public class GroceryBasket extends Fragment {
      * takes the data to put in list
      */
     private void listMaker() {
+        //TODO: Remove these lines, they are for testing
         Suite.suite = new Suite(2, "qwert");
         DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
         helper.listSuiteGroceries(Suite.suite.getId(), new AsyncResponseHandler<DBGroceryListResult>() {
@@ -235,6 +236,8 @@ public class GroceryBasket extends Fragment {
                 if (myList != null) {
                     myList.setVisibility(View.VISIBLE);
                     myList.setAdapter(myAdapter);
+                    TextView tv = (TextView) getView().findViewById(R.id.noItemsView);
+                    tv.setVisibility(View.GONE);
                 }
                 else {
                     System.out.println("ERROR: myList not initialized");

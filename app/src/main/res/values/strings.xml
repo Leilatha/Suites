@@ -16,8 +16,8 @@
     <string name="error_invalid_password_long">This password is too long</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_login_failed">Email and password not recognized</string>
-    <string name="error_password_required">Password required</string>
 
+    <string name="error_password_required">Password required</string>
     <string name="error_registration_failed_no_email">Email required for registration</string>
     <string name="error_registration_failed_invalid_email">Email already in use</string>
     <string name="error_registration_failed_no_password">Password required for registration</string>
@@ -43,25 +43,12 @@
     <string name="Add">Add</string>
     <string name="chore_name">Chore Name</string>
     <string name="description">Description</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="invite_new">Invite a new suite member</string>
-    <string name="post">Post!</string>
-    <string name="title_activity_official_bottom_bar">OfficialBottomBar</string>
-
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="error_grocery_add_failed_no_permission">You are not in the Suite you are putting items into</string>
     <string name="no_grocery_items">No items.</string>
     <string name="add_new_item">Add New Item</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_intro">IntroActivity</string>
     <string name="create_suite_name">Suite Name</string>
     <string name="create_suite_submit">Submit</string>
     <string name="create_suite_error_basic">Could not make suite.</string>
     <string name="intro_no_invites">No invites</string>
-    <string name="add_new_chore">Add New Chore</string>
-    <string name="post">Post!</string>
 </resources>

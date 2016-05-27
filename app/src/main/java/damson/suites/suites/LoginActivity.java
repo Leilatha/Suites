@@ -195,7 +195,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        //go straight to psa do not collect $200
 
         // Reset errors.
         mEmailView.setError(null);
@@ -255,10 +254,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         return;
                     }
                     User.user.setPassword(password);
-                    //IF THE LOGIN WORKED, GOES TO BOTTOM BAR
-                    Intent intent = new Intent(LoginActivity.this, ThreeButtonsActivity.class);
-                    startActivity(intent);
-                    finish();
+                    getSuite(User.user);
                 }
 
                 @Override
