@@ -23,6 +23,14 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_intro" />
+    <ViewStub
+        android:id="@+id/create_suite_stub"
+        android:inflatedId="@+id/create_suite_inflated"
+        android:layout="@layout/create_suite_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" />
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/intro_fab"
