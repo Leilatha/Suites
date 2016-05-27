@@ -60,8 +60,6 @@ public class InviteUser extends AppCompatActivity {
             focusView.requestFocus();
         }
         else {
-            DBInvitation item = new DBInvitation(email, Suite.suite.getId());
-
             // Upload item to grocery basket
             DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
             helper.makeInvitation(email, Suite.suite.getId(), new AsyncResponseHandler<DBGenericResult>() {

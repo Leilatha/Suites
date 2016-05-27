@@ -24,15 +24,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".GroceryBasket"
-            android:label="@string/title_activity_grocery_basket"
-            android:parentActivityName=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="damson.suites.suites.LoginActivity" />
-        </activity>
+        <!--
+     ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
+        =======
         <activity
             android:name=".ThreeButtonsActivity"
             android:label="ThreeButtonsActivity"
@@ -50,30 +46,11 @@
         <activity
             android:name=".GroceryBasketAdd"
             android:label="@string/title_activity_grocery_basket_add"
-            android:parentActivityName=".GroceryBasket"
-            android:theme="@style/AppTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="damson.suites.suites.GroceryBasket" />
-        </activity>
-            android:theme="@style/AppTheme"></activity>
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity android:name=".RegistrationActivity" />
-        <activity
-            android:name=".OfficialBottomBar"
-            android:label="@string/title_activity_official_bottom_bar"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".GroceryBasketEdit" />
-        <activity
-            android:name=".IntroActivity"
-            android:label="@string/title_activity_intro"
-            android:parentActivityName=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="damson.suites.suites.LoginActivity" />
-        </activity>
-        <activity android:name=".InviteUser"></activity>
+        <activity android:name=".InviteUser" />
+        <activity android:name=".EditCredentials"></activity>
     </application>
 
 </manifest>

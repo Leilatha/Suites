@@ -33,7 +33,7 @@ public class ThreeButtonsActivity extends FragmentActivity {
         setSupportActionBar(toolbar);
 
         //Eventually, set title to the name of the user's specific suite
-        setTitle("(User's suite name)");
+        setTitle(Suite.suite.getName());
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.three_buttons_activity);
 
@@ -104,6 +104,15 @@ public class ThreeButtonsActivity extends FragmentActivity {
             case R.id.invite_user:
                 Intent i = new Intent(this, InviteUser.class);
                 startActivity(i);
+                break;
+            case R.id.logout:
+                User.user = null;
+                Suite.suite = null;
+                Intent j = new Intent(this, LoginActivity.class);
+                startActivity(j);
+                break;
+
+
         }
 
         return super.onOptionsItemSelected(item);
