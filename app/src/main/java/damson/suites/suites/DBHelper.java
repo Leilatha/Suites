@@ -148,11 +148,11 @@ public class DBHelper {
                 new AsyncResponseHandlerAdapter<>(Suite.class, arh)); //TODO: If crash check this line
     }
 
-    public void getUserInvites(AsyncResponseHandler<DBInvitation[]> arh) {
+    public void getUserInvites(AsyncResponseHandler<Suite[]> arh) {
         setup("/invite");
 
         client.get(null, url.toExternalForm(),
-                new AsyncResponseHandlerAdapter<>(DBInvitation[].class, arh));
+                new AsyncResponseHandlerAdapter<>(Suite[].class, arh));
     }
 
     public void makeInvitation(String invitee, int suiteID, AsyncResponseHandler<DBGenericResult> arh) {
