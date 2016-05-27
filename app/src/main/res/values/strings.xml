@@ -16,7 +16,6 @@
     <string name="error_login_failed">Email and password not recognized</string>
     <string name="error_password_required">Password required</string>
 
-    <string name="error_password_required">Password required</string>
     <string name="error_registration_failed_no_email">Email required for registration</string>
     <string name="error_registration_failed_invalid_email">Email already in use</string>
     <string name="error_registration_failed_no_password">Password required for registration</string>
@@ -39,6 +38,8 @@
     <string name="groceryBasketAddCancel">Cancel</string>
     <string name="groceryBasketEdit">Edit</string>
     <string name="groceryBasketDelete">Delete Item</string>
+    <string name="no_grocery_items">No Grocery Items</string>
+    <string name="add_new_item">Add New Item</string>
     <string name="Add">Add</string>
     <string name="chore_name">Chore Name</string>
     <string name="description">Description</string>

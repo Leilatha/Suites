@@ -87,8 +87,8 @@ public class PSA extends Fragment {
 
         //TODO: fix with database stuff
         List<String> psaList;
-        /**ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
-                this, android.R.layout.simple_expandable_list_item_2, psaList);*/
+        ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
+                this, android.R.layout.simple_expandable_list_item_2, psaList);
     }
 
 
@@ -111,7 +111,7 @@ public class PSA extends Fragment {
         }
     }
 
-    /*@Override TODO: MIGHT NEED TO UNCOMMENT THESE METHOD
+    @Override //TODO: MIGHT NEED TO UNCOMMENT THESE METHOD
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
@@ -127,7 +127,6 @@ public class PSA extends Fragment {
         super.onDetach();
         mListener = null;
     }
-    */
 
     /**
      * This interface must be implemented by activities that contain this
