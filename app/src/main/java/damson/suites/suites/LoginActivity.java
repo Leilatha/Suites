@@ -255,7 +255,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     }
                     User.user.setPassword(password);
                     //IF THE LOGIN WORKED, GO TO GROCERY LIST
-                    Intent intent = new Intent(LoginActivity.this, ThreeButtonsActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, OfficialBottomBar.class);
                     startActivity(intent);
                     finish();
                 }
