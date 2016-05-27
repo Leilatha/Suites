@@ -53,15 +53,17 @@ public class IntroActivity extends AppCompatActivity {
 
     private void createInviteList() {
         DBHelper helper = new DBHelper(User.user);
-        helper.getUserInvites(new AsyncResponseHandler<DBInvitation[]>() {
+        helper.getUserInvites(new AsyncResponseHandler<Suite[]>() {
             @Override
-            public void onSuccess(DBInvitation[] response, int statusCode, Header[] headers, byte[] errorResponse) {
+            public void onSuccess(Suite[] response, int statusCode, Header[] headers, byte[] errorResponse) {
                 if(response.length == 0) {  //Does not have invites
                     setNoInviteText(true);
                 }
                 else {  // Has invites
                     setNoInviteText(false);
-
+                    InviteAdapter inviteAdapter = new InviteAdapter(getApplicationContext(), response);
+                    ListView inviteList = (ListView) findViewById(R.id.intro_suite_invite_list);
+                    inviteList.setAdapter(inviteAdapter);
                 }
             }
 
