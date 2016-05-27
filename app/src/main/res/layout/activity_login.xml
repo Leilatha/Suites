@@ -40,7 +40,7 @@
                 android:id="@+id/imageView"
                 android:adjustViewBounds="true"
                 android:layout_centerInParent="true"
-                android:src="@drawable/suties_icon_1" />
+                android:src="@drawable/suitesicon1" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -58,18 +58,14 @@
                     android:id="@+id/imageView3"
                     android:src="@drawable/group" />
 
-                <AutoCompleteTextView
-                    android:id="@+id/email"
+                <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:imeOptions="actionNext"
+                    android:id="@+id/editText2"
                     android:textColorHint="#ffffff"
                     android:textColor="#ffffff"
-                    android:backgroundTint="#ffffff"/>
+                    android:backgroundTint="#ffffff" />
             </LinearLayout>
 
             <LinearLayout
@@ -81,17 +77,13 @@
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:id="@+id/imageView4"
-                    android:src="@drawable/group_copy" />
+                    android:src="@drawable/groupcopy" />
 
                 <EditText
-                    android:id="@+id/password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password"
-                    android:imeActionId="@+id/login"
-                    android:imeActionLabel="@string/action_sign_in_short"
-                    android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
+                    android:id="@+id/password_registration"
                     android:textColorHint="#ffffff"
                     android:textColor="#ffffff"
                     android:backgroundTint="#ffffff" />
