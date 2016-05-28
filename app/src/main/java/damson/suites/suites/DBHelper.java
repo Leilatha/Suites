@@ -272,4 +272,53 @@ public class DBHelper {
         client.delete(null, url.toExternalForm(),
                 new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
     }
+
+    public void addChoreToSuite(int suiteID, DBAddChoreRequest chore, AsyncResponseHandler<DBGenericResult> arh){
+        setup("/chore?suiteid="+suiteID);
+
+        //output stream to server
+        String jsonrequest = null;
+        try{
+            jsonrequest = DBHelper.mapper.writeValueAsString(chore);
+        }catch (JsonProcessingException e){
+            e.printStackTrace();
+        }
+        StringEntity entity = null;
+        try{
+            entity = new StringEntity(jsonrequest);
+        }catch(UnsupportedEncodingException e){
+            e.printStackTrace();
+        }
+        client.post(null, url.toExternalForm(), entity, APPLICATION_JSON,
+                new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
+    }
+
+    public void editChore(DBChoreView chore, AsyncResponseHandler<DBGenericResult> arh){
+        setup("/chore?choreid="+chore.getId());
+        DBAddChoreRequest req =
+                new DBAddChoreRequest(chore.getName(), chore.getDescription(), chore.getCurrentTurn(), chore.getAssignees());
+
+        // Output stream to server
+        String jsonrequest = null;
+        try {
+            jsonrequest = DBHelper.mapper.writeValueAsString(req);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        StringEntity entity = null;
+        try {
+            entity = new StringEntity(jsonrequest);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        client.put(null, url.toExternalForm(), entity, APPLICATION_JSON,
+                new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
+    }
+
+    public void deleteChore(DBChoreView chore, AsyncResponseHandler<DBGenericResult> arh){
+        setup("/chore?choreid="+chore.getId());
+
+        client.delete(null, url.toExternalForm(),
+                new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
+    }
 }

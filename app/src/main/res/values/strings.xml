@@ -53,4 +53,5 @@
     <string name="create_suite_submit">Submit</string>
     <string name="create_suite_error_basic">Could not make suite.</string>
     <string name="intro_no_invites">No invites</string>
+    <string name="chore">Chore</string>
 </resources>
