@@ -8,6 +8,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import cz.msebera.android.httpclient.entity.StringEntity;
 
@@ -109,6 +110,11 @@ public class DBHelper {
                 new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
     }
 
+    public void editAccount(String mEmail, String mPassword, String mName,
+                            AsyncResponseHandler<DBGenericResult> arh) {
+        registerAccount(mEmail, mPassword, mName, arh);
+    }
+
     public void login(String mEmail, String mPassword, AsyncResponseHandler<User> arh) {
         account = mEmail;
         password = mPassword;
@@ -140,18 +146,18 @@ public class DBHelper {
                 new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
     }
 
-    public void getUserSuites(AsyncResponseHandler<Suite[]> arh) {
+    public void getUserSuites(AsyncResponseHandler<List<Suite>> arh) {
         setup("/suite");
 
         client.get(null, url.toExternalForm(),
-                new AsyncResponseHandlerAdapter<>(Suite[].class, arh)); //TODO: If crash check this line
+                new AsyncResponseHandlerAdapter<>(Suite.class, arh)); //TODO: If crash check this line
     }
 
-    public void getUserInvites(AsyncResponseHandler<DBInvitation[]> arh) {
+    public void getUserInvites(AsyncResponseHandler<Suite[]> arh) {
         setup("/invite");
 
         client.get(null, url.toExternalForm(),
-                new AsyncResponseHandlerAdapter<>(DBInvitation[].class, arh));
+                new AsyncResponseHandlerAdapter<>(Suite[].class, arh));
     }
 
     public void makeInvitation(String invitee, int suiteID, AsyncResponseHandler<DBGenericResult> arh) {
@@ -203,11 +209,24 @@ public class DBHelper {
                 new AsyncResponseHandlerAdapter<>(DBUserListResult.class, arh));
     }
 
+    public void listSuiteChores(int suiteID, AsyncResponseHandler<DBChoresListResult> arh){
+        setup("/chore?suiteid="+suiteID);
+        client.get(null, url.toExternalForm(),
+                new AsyncResponseHandlerAdapter<>(DBChoresListResult.class, arh));
+    }
+
     public void listSuiteGroceries(int suiteID, AsyncResponseHandler<DBGroceryListResult> arh) {
         setup("/grocery?suiteid="+suiteID);
 
         client.get(null, url.toExternalForm(),
                 new AsyncResponseHandlerAdapter<>(DBGroceryListResult.class, arh));
+    }
+
+    public void listSuitePSA(int suiteID, AsyncResponseHandler<DBPSAListResult> argh){
+        setup("/psa?suiteid="+suiteID);
+
+        client.get(null, url.toExternalForm(),
+                new AsyncResponseHandlerAdapter<>(DBPSAListResult.class, argh));
     }
 
     public void addGroceryToSuite(int suiteID, DBAddGroceryRequest grocery, AsyncResponseHandler<DBGenericResult> arh) {
@@ -254,6 +273,55 @@ public class DBHelper {
 
     public void deleteGrocery(Grocery grocery, AsyncResponseHandler<DBGenericResult> arh) {
         setup("/grocery?groceryid="+grocery.getId());
+
+        client.delete(null, url.toExternalForm(),
+                new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
+    }
+
+    public void addChoreToSuite(int suiteID, DBAddChoreRequest chore, AsyncResponseHandler<DBGenericResult> arh){
+        setup("/chore?suiteid="+suiteID);
+
+        //output stream to server
+        String jsonrequest = null;
+        try{
+            jsonrequest = DBHelper.mapper.writeValueAsString(chore);
+        }catch (JsonProcessingException e){
+            e.printStackTrace();
+        }
+        StringEntity entity = null;
+        try{
+            entity = new StringEntity(jsonrequest);
+        }catch(UnsupportedEncodingException e){
+            e.printStackTrace();
+        }
+        client.post(null, url.toExternalForm(), entity, APPLICATION_JSON,
+                new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
+    }
+
+    public void editChore(DBChoreView chore, AsyncResponseHandler<DBGenericResult> arh){
+        setup("/chore?choreid="+chore.getId());
+        DBAddChoreRequest req =
+                new DBAddChoreRequest(chore.getName(), chore.getDescription(), chore.getCurrentTurn(), chore.getAssignees());
+
+        // Output stream to server
+        String jsonrequest = null;
+        try {
+            jsonrequest = DBHelper.mapper.writeValueAsString(req);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        StringEntity entity = null;
+        try {
+            entity = new StringEntity(jsonrequest);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        client.put(null, url.toExternalForm(), entity, APPLICATION_JSON,
+                new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
+    }
+
+    public void deleteChore(DBChoreView chore, AsyncResponseHandler<DBGenericResult> arh){
+        setup("/chore?choreid="+chore.getId());
 
         client.delete(null, url.toExternalForm(),
                 new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));

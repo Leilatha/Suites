@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -33,6 +36,7 @@ import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.lang.Runnable;
 
 import cz.msebera.android.httpclient.Header;
 import com.roughike.bottombar.BottomBar;
@@ -149,8 +153,43 @@ public class GroceryBasket extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
+        //startTimer();
         listMaker();
     }
+
+    /*public void startTimer() {
+
+        timer = new Timer();
+
+        //initialize the TimerTask's job
+        initializeTimerTask();
+
+        //schedule the timer, after the first 5000ms the TimerTask will run every 10000ms
+
+        timer.schedule(timerTask, 5000, 10000); //
+
+    } */
+
+    /*public void initializeTimerTask() {
+        timerTask = new TimerTask() {
+            public void run() {
+                //use a handler to run a toast that shows the current timestamp
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        listMaker();
+                    }
+
+                });
+
+            }
+
+        };
+
+    }*/
+
+
 
     /* Written by Marian
      */
@@ -166,6 +205,7 @@ public class GroceryBasket extends Fragment {
      * takes the data to put in list
      */
     private void listMaker() {
+        //TODO: Remove these lines, they are for testing
         Suite.suite = new Suite(2, "qwert");
         DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
         helper.listSuiteGroceries(Suite.suite.getId(), new AsyncResponseHandler<DBGroceryListResult>() {
@@ -192,6 +232,8 @@ public class GroceryBasket extends Fragment {
                 if (myList != null) {
                     myList.setVisibility(View.VISIBLE);
                     myList.setAdapter(myAdapter);
+                    TextView tv = (TextView) getView().findViewById(R.id.noItemsView);
+                    tv.setVisibility(View.GONE);
                 }
                 else {
                     System.out.println("ERROR: myList not initialized");
