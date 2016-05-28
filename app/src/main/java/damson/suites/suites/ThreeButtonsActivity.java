@@ -38,7 +38,7 @@ public class ThreeButtonsActivity extends AppCompatActivity {
         mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
                 new BottomBarFragment(MoneyFragment.newInstance(), R.drawable.moneymanagement, "Money Manager"),
                 new BottomBarFragment(GroceryBasket.newInstance(), R.drawable.grocerieslist, "Groceries"),
-                new BottomBarFragment(PSA.newInstance(), R.drawable.psa, "PSA"),
+                new BottomBarFragment(PSAList.newInstance(), R.drawable.psa, "PSA"),
                 new BottomBarFragment(Calendar.newInstance(), R.drawable.chores, "Calendar")
                 //Last we need to add the chores fragment here
 
