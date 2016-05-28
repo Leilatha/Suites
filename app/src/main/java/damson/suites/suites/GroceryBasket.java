@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -33,6 +36,7 @@ import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.lang.Runnable;
 
 import cz.msebera.android.httpclient.Header;
 import com.roughike.bottombar.BottomBar;
@@ -44,6 +48,10 @@ import com.roughike.bottombar.OnMenuTabSelectedListener;
 public class GroceryBasket extends Fragment {
     static final int itemIdentifier = 1;  // The request code
     ArrayAdapter myAdapter;
+    Timer timer;
+    TimerTask timerTask;
+
+    final Handler handler = new Handler();
 
     public GroceryBasket()
     {}
@@ -85,7 +93,7 @@ public class GroceryBasket extends Fragment {
         listMaker();
         //BottomBar mBottomBar = BottomBar.attach(this, savedInstanceState);
         //mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
-            //new BottomBarFragment(PSA.newInstance(), R.drawable.psa, "PSA")
+            //new BottomBarFragment(PSAList.newInstance(), R.drawable.psa, "PSAList")
         //);
 
         /* mBottomBar.setItemsFromMenu(R.menu.three_buttons_menu, new OnMenuTabSelectedListener() {
@@ -102,7 +110,7 @@ public class GroceryBasket extends Fragment {
                         //Snackbar.make(coordinatorLayout, "Location Item Selected", Snackbar.LENGTH_LONG).show();
                         break;
                     case R.id.psa:
-                        public static PSA newInstance();
+                        public static PSAList newInstance();
                 }
             }
         }); */
@@ -149,8 +157,43 @@ public class GroceryBasket extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
+        //startTimer();
         listMaker();
     }
+
+    /*public void startTimer() {
+
+        timer = new Timer();
+
+        //initialize the TimerTask's job
+        initializeTimerTask();
+
+        //schedule the timer, after the first 5000ms the TimerTask will run every 10000ms
+
+        timer.schedule(timerTask, 5000, 10000); //
+
+    } */
+
+    /*public void initializeTimerTask() {
+        timerTask = new TimerTask() {
+            public void run() {
+                //use a handler to run a toast that shows the current timestamp
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        listMaker();
+                    }
+
+                });
+
+            }
+
+        };
+
+    }*/
+
+
 
     /* Written by Marian
      */
@@ -166,12 +209,14 @@ public class GroceryBasket extends Fragment {
      * takes the data to put in list
      */
     private void listMaker() {
-        Suite.suite = new Suite(2, "qwert");
         DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
         helper.listSuiteGroceries(Suite.suite.getId(), new AsyncResponseHandler<DBGroceryListResult>() {
             @Override
             public void onSuccess(DBGroceryListResult response, int statusCode, Header[] headers, byte[] errorResponse) {
-                ListView myList = (ListView) getView().findViewById(R.id.grocery_basket_listView);
+                View view = getView();
+                if(view == null) return;
+                if(view.getId() != R.id.grocery_basket_listView) return;
+                ListView myList = (ListView) view.findViewById(R.id.grocery_basket_listView);
 
                 myList.setVisibility(View.VISIBLE);
 
@@ -192,6 +237,8 @@ public class GroceryBasket extends Fragment {
                 if (myList != null) {
                     myList.setVisibility(View.VISIBLE);
                     myList.setAdapter(myAdapter);
+                    TextView tv = (TextView) getView().findViewById(R.id.noItemsView);
+                    tv.setVisibility(View.GONE);
                 }
                 else {
                     System.out.println("ERROR: myList not initialized");
@@ -201,7 +248,10 @@ public class GroceryBasket extends Fragment {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                FrameLayout frame = (FrameLayout) getView().findViewById(R.id.fragmentContainer);
+                View view = getView();
+                if(view == null) return;
+                if(view.getId() != R.id.grocery_basket_listView) return;
+                FrameLayout frame = (FrameLayout) view.findViewById(R.id.fragmentContainer);
                 Snackbar
                         .make(frame, R.string.error_network_connection, Snackbar.LENGTH_LONG)
                         .show();
@@ -211,7 +261,10 @@ public class GroceryBasket extends Fragment {
             @Override
             public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
                 // TODO: Add "please log in again" code
-                ListView myList = (ListView) getView().findViewById(R.id.grocery_basket_listView);
+                View view = getView();
+                if(view == null) return;
+                if(view.getId() != R.id.grocery_basket_listView) return;
+                ListView myList = (ListView) view.findViewById(R.id.grocery_basket_listView);
                 if (myList != null)
                     myList.setVisibility(View.GONE);
                 TextView tv = (TextView) getView().findViewById(R.id.noItemsView);
@@ -221,8 +274,10 @@ public class GroceryBasket extends Fragment {
 
             @Override
             public void onFinish(){
-                final ListView myList = (ListView) getView().findViewById(R.id.grocery_basket_listView);
-
+                View view = getView();
+                if(view == null) return;
+                if(view.getId() != R.id.grocery_basket_listView) return;
+                final ListView myList = (ListView) view.findViewById(R.id.grocery_basket_listView);
                 myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
