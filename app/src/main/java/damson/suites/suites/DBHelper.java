@@ -224,6 +224,61 @@ public class DBHelper {
                 new AsyncResponseHandlerAdapter<>(DBPSAListResult.class, argh));
     }
 
+    public void postSuitePSA(int suiteID, String title, String description, AsyncResponseHandler<DBGenericResult> arh) {
+        setup("/psa?suiteid="+suiteID);
+
+        // Output stream to server
+        String jsonrequest = null;
+        DBAddPSARequest request = new DBAddPSARequest(title, description);
+
+        try {
+            jsonrequest = DBHelper.mapper.writeValueAsString(request);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        StringEntity entity = null;
+        try {
+            entity = new StringEntity(jsonrequest);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        client.post(null, url.toExternalForm(), entity, APPLICATION_JSON,
+                new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
+    }
+
+    public void editSuitePSA(DBPSAView psa, AsyncResponseHandler<DBGenericResult> arh) {
+        editSuitePSA(psa.getId(), psa.getTitle(), psa.getDescription(), arh);
+    }
+    public void editSuitePSA(int psaID, String psaTitle, String psaDescription,
+                             AsyncResponseHandler<DBGenericResult> arh) {
+        setup("/psa?psaid="+psaID);
+
+        // Output stream to server
+        String jsonrequest = null;
+        DBAddPSARequest request = new DBAddPSARequest(psaTitle, psaDescription);
+
+        try {
+            jsonrequest = DBHelper.mapper.writeValueAsString(request);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        StringEntity entity = null;
+        try {
+            entity = new StringEntity(jsonrequest);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        client.post(null, url.toExternalForm(), entity, APPLICATION_JSON,
+                new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
+    }
+
+    public void deleteSuitePSA(int psaID, AsyncResponseHandler<DBGenericResult> arh) {
+        setup("/psa?psaid="+psaID);
+
+        client.delete(null, url.toExternalForm(),
+                new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
+    }
+
     public void addGroceryToSuite(int suiteID, DBAddGroceryRequest grocery, AsyncResponseHandler<DBGenericResult> arh) {
         setup("/grocery?suiteid="+suiteID);
 
