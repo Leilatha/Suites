@@ -10,7 +10,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="damson.suites.suites.RegistrationActivity"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#252d3d">
 
     <!-- Login progress -->
     <ProgressBar
@@ -34,13 +35,28 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:id="@+id/imageView" />
-
-            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="200dp"
+                android:id="@+id/imageView"
+                android:adjustViewBounds="true"
+                android:layout_centerInParent="true"
+                android:src="@drawable/suties_icon_1" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView2" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageView3"
+                    android:src="@drawable/group" />
 
                 <AutoCompleteTextView
                     android:id="@+id/email"
@@ -50,13 +66,22 @@
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:imeOptions="actionNext" />
+                    android:imeOptions="actionNext"
+                    android:textColorHint="#ffffff"
+                    android:textColor="#ffffff"
+                    android:backgroundTint="#ffffff"/>
+            </LinearLayout>
 
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageView4"
+                    android:src="@drawable/group_copy" />
 
                 <EditText
                     android:id="@+id/password"
@@ -67,29 +92,38 @@
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:singleLine="true" />
-
-            </android.support.design.widget.TextInputLayout>
+                    android:textColorHint="#ffffff"
+                    android:textColor="#ffffff"
+                    android:backgroundTint="#ffffff" />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/action_sign_in_short"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:background="#ffffff"
+                android:clickable="true"
+                android:textColor="#000000" />
+
+            <Space
+                android:layout_width="20px"
+                android:layout_height="20px" />
 
             <Button
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="@string/action_register"
                 android:id="@+id/register_button"
-                style="?android:textAppearanceSmall"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:background="#ffffff"
+                android:textColor="#000000" />
 
         </LinearLayout>
     </ScrollView>
-
 </android.support.design.widget.CoordinatorLayout>

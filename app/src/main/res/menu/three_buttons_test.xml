@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/recent_item"
-        android:icon="@drawable/ic_update_white_24dp"
-        android:title="Recents" />
+        android:icon="@drawable/grocerieslist"
+        android:title="Groceries" />
     <item
         android:id="@+id/location_item"
-        android:icon="@drawable/ic_location_on_white_24dp"
-        android:title="Location" />
+        android:icon="@drawable/chores_grey"
+        android:title="Chores" />
     <item
         android:id="@+id/favorite_item"
-        android:icon="@drawable/ic_favorite_white_24dp"
-        android:title="Favorire" />
+        android:icon="@drawable/psa_grey"
+        android:title="PSA" />
 
 </menu>

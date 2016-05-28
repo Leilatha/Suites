@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/Quantity_Text"
                 android:layout_weight="1"
-                android:inputType="text"
+                android:inputType="number"
                 android:editable="true" />
         </LinearLayout>
 

@@ -4,6 +4,7 @@ import com.google.common.base.Optional;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.Consumes;
@@ -28,15 +29,32 @@ public class AccountResource {
         um = manager;
     }
 
-    @GET // Change to return a User once it is JSON-encodable.
-    public User getUserInfo(@Auth User user) {
-        return user;
+    @GET
+    public User getUserInfo(@Auth User user, @QueryParam("email") String email) {
+        if (email == null) {
+            return user;
+        } else {
+            return um.getUserByEmail(email);
+        }
     }
 
     @POST
     public GenericResult registerUser(RegistrationRequest request) {
         try {
             um.registerUser(request.getEmail(), request.getName(), request.getPassword());
+            return new GenericResult(true, "Ok");
+        } catch (UserException e) {
+            return new GenericResult(false, e.getMessage());
+        }
+    }
+
+    @PUT
+    public GenericResult editUser(@Auth User user, RegistrationRequest request) {
+        try {
+            um.editUser(user,
+                        request.getEmail(),
+                        request.getName(),
+                        request.getPassword());
             return new GenericResult(true, "Ok");
         } catch (UserException e) {
             return new GenericResult(false, e.getMessage());

@@ -39,6 +39,7 @@ public class ServerApplication extends Application<ServerConfiguration> {
         final SuiteManager sm = new SuiteManager(dao);
         final GroceryManager gm = new GroceryManager(dao);
         final ChoreManager cm = new ChoreManager(dao);
+        final PSAManager pm = new PSAManager(dao);
 
         dao.createSuiteTable();
         dao.createUserTable();
@@ -47,6 +48,7 @@ public class ServerApplication extends Application<ServerConfiguration> {
         dao.createGroceryTable();
         dao.createChoreTable();
         dao.createChoreAssignmentTable();
+        dao.createPSATable();
 
         dao.createAssigneeCountFunction();
         dao.createSuiteMembershipFunction();
@@ -76,5 +78,8 @@ public class ServerApplication extends Application<ServerConfiguration> {
 
         final ChoreResource choreRes = new ChoreResource(cm, sm);
         environment.jersey().register(choreRes);
+
+        final PSAResource psaRes = new PSAResource(pm, sm);
+        environment.jersey().register(psaRes);
     }
 }

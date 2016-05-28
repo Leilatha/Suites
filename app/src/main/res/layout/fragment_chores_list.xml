@@ -23,19 +23,18 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/listView"
+        android:id="@+id/chores_list_listView"
         tools:listitem="@android:layout/simple_expandable_list_item_2"
-        android:layout_weight="0.56"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/add_button" />
+        android:layout_below="@+id/chores_list_add_button" />
 
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Item"
-        android:id="@+id/add_button"
+        android:text="@string/add_new_chore"
+        android:id="@+id/chores_list_add_button"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"

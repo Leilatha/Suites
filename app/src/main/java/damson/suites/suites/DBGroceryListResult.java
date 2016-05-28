@@ -16,7 +16,7 @@ public class DBGroceryListResult {
 			  @JsonProperty("groceryList") List<Grocery> groceryList) {
         this.success = success;
         this.message = message;
-	this.groceryList = groceryList;
+        this.groceryList = groceryList;
     }
 
     @JsonProperty("success")

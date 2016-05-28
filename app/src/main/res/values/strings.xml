@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Suites</string>
 
+    <!-- General Login Failure strings -->
+    <string name="error_network_connection">No network connection</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -8,7 +11,6 @@
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_register">Register</string>
-    <string name="error_network_connection">No network connection</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_invalid_password_long">This password is too long</string>
@@ -26,33 +28,29 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-
-
-    <!--strings related to grocery basket-->
     <string name="title_activity_grocery_basket">GroceryBasket</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_grocery_basket_add">GroceryBasketAdd</string>
-    <string name="title_activity_grocery_basket_edit">GroceryBasketEdit</string>
     <string name="groceryBasketAddItem">Item</string>
     <string name="groceryBasketAddQuantity">Quantity</string>
     <string name="groceryBasketAddDone">Done</string>
     <string name="groceryBasketAddAdd_another_item">Add Another Item</string>
     <string name="groceryBasketAddprice">Price</string>
-
-
-    <string name="Add">Add</string>
-    <string name="groceryBasketEdit">Edit</string>
-    <string name="groceryBasketDelete">Delete</string>
     <string name="groceryBasketAddCancel">Cancel</string>
-
-    <!--strings related to chores-->
+    <string name="groceryBasketEdit">Edit</string>
+    <string name="groceryBasketDelete">Delete Item</string>
+    <string name="Add">Add</string>
     <string name="chore_name">Chore Name</string>
     <string name="description">Description</string>
-
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-
+    <string name="error_grocery_add_failed_no_permission">You are not in the Suite you are putting items into</string>
+    <string name="no_grocery_items">No items.</string>
+    <string name="add_new_item">Add New Item</string>
+    <string name="add_new_chore">Add New Chore</string>
+    <string name="post">Post!</string>
+    <string name="title_activity_intro">IntroActivity</string>
+    <string name="create_suite_name">Suite Name</string>
+    <string name="create_suite_submit">Submit</string>
+    <string name="create_suite_error_basic">Could not make suite.</string>
+    <string name="intro_no_invites">No invites</string>
 </resources>

@@ -10,7 +10,9 @@ All account requests are to the path ```/accounts```.
 Account Info
 ------------
 To get information on the authenticated account, send a plain GET request with
-no parameters.
+no parameters. Optionally, you can add the query parameter "email" set to the
+email of a user you want to search. If there is no user with that email, the
+response will be empty (and have response code 204).
 
 Account Registration
 --------------------
@@ -33,6 +35,10 @@ The response will also be encoded as JSON, with the following format (GenericRes
 ```
 
 This request does not require authentication.
+
+Account Editing
+---------------
+The same as registration, except you must authenticate.
 
 Suite Management
 ================
@@ -106,6 +112,12 @@ ID of the suite you would like to join. A response comes in the form (GenericRes
 }
 ```
 
+Leaving a Suite
+===============
+To leave a suite, send a PUT request to "/suite/leave", with a JSON number matching
+the ID of the suite you would like to leave. The response should be empty on
+success.
+
 Listing Users in a Suite
 ========================
 To list the users of a suite, send a GET request to "/suite/userlist?suiteid=x"
@@ -169,3 +181,60 @@ Delete Grocery
 Send a DELETE request with the query parameter "groceryid" set to the id of the
 grocery item to remove. The response comes in the same form as adding and editing
 groceries.
+
+Chores
+======
+
+Get Suite Chores
+----------------
+Send a GET request with the query parameter "suiteid" set to the id of the suite
+to the path /chore. The response will come in JSON-encoded ChoreListResult.
+
+Add Chore
+---------
+Send a POST request with the query parameter "suiteid" set to the id of the suite
+to the path /chore, with JSON-encoded AddChoreRequest as the body. The
+response will come in the form of JSON-encoded GenericResult.
+
+Edit Chore
+----------
+Send a PUT request with the query parameter "choreid" set to the id of the chore
+to the path /chore, with JSON-encoded AddChoreRequest as the body. The response
+will come in the form of JSON-encoded GenericResult.
+
+Delete Chore
+------------
+Send a DELETE request with the query parameter "choreid" set to the id of the chore
+to the path /chore. The response will come in the form of JSON-encoded
+GenericResult.
+
+Advance a Chore
+---------------
+This is to move the chore assignee to the next person. Send a POST request to the
+path /chore/advance with the query parameter "choreid" set to the id of the
+chore.
+
+PSA
+===
+
+Get Suite PSAs
+--------------
+Send a GET request to /psa with the query parameter "suiteid" set to the suite ID.
+The response is a JSON-encoded PSAListResult.
+
+Add a PSA
+---------
+Send a POST request to /psa with the query parameter "suiteid" set to the suite ID,
+and with the content of a JSON-encoded AddPSARequest. The response is a
+JSON-encoded GenericResult.
+
+Edit a PSA
+----------
+Send a PUT request to /psa with the query parameter "psaid" set to the PSA ID,
+and with the content of a JSON-encoded AddPSARequest. The response is a
+JSON-encoded GenericResult.
+
+Delete a PSA
+------------
+Send a DELETE request to /psa with the query parameter "psaid" set to the PSA
+ID. The response is a JSON-encoded GenericResult.

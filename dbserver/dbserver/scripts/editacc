@@ -1,0 +1,2 @@
+#!/bin/sh
+curl -H "Content-Type: application/json" -i -u "$2:$3" -d "{\"email\":\"$4\", \"password\":\"$5\", \"name\":\"$6\"}" -X PUT $1/account
