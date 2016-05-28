@@ -81,13 +81,13 @@ public class IntroActivity extends AppCompatActivity {
 
     private void setNoInviteText(boolean setText) {
         ListView myList = (ListView) findViewById(R.id.intro_suite_invite_list);
-        TextView tv = null;
+        TextView tv = (TextView) findViewById(R.id.intro_no_invites_view);;
 
         // If no Items...
         if (setText) {
             if (myList != null)
                 myList.setVisibility(View.GONE);
-            tv = (TextView) findViewById(R.id.intro_no_invites_view);
+
             tv.setVisibility(View.VISIBLE);
             System.out.println("NOTE: no items in myList");
             return;
