@@ -1,7 +1,6 @@
 package damson.suites.suites;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
@@ -28,12 +27,6 @@ import android.widget.TextView;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
-
-import org.w3c.dom.Text;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.lang.Runnable;
@@ -48,10 +41,6 @@ import com.roughike.bottombar.OnMenuTabSelectedListener;
 public class GroceryBasket extends Fragment {
     static final int itemIdentifier = 1;  // The request code
     ArrayAdapter myAdapter;
-    Timer timer;
-    TimerTask timerTask;
-
-    final Handler handler = new Handler();
 
     public GroceryBasket()
     {}
@@ -86,14 +75,13 @@ public class GroceryBasket extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.fragment_grocery_basket);
 
         //TODO: fix with database stuff
 
         listMaker();
         //BottomBar mBottomBar = BottomBar.attach(this, savedInstanceState);
         //mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
-            //new BottomBarFragment(PSAList.newInstance(), R.drawable.psa, "PSAList")
+            //new BottomBarFragment(PSA.newInstance(), R.drawable.psa, "PSA")
         //);
 
         /* mBottomBar.setItemsFromMenu(R.menu.three_buttons_menu, new OnMenuTabSelectedListener() {
@@ -110,7 +98,7 @@ public class GroceryBasket extends Fragment {
                         //Snackbar.make(coordinatorLayout, "Location Item Selected", Snackbar.LENGTH_LONG).show();
                         break;
                     case R.id.psa:
-                        public static PSAList newInstance();
+                        public static PSA newInstance();
                 }
             }
         }); */
@@ -140,7 +128,7 @@ public class GroceryBasket extends Fragment {
          * It receives new items from that activity, and then
          * displays it into the list.
          */
-        final Button addButton = (Button) getView().findViewById(R.id.grocery_basket_add_button);
+        final Button addButton = (Button) getView().findViewById(R.id.chores_list_add_button);
         if(addButton == null){
             System.out.println("ERROR");
             return;

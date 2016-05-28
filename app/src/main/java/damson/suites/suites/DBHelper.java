@@ -204,6 +204,12 @@ public class DBHelper {
                 new AsyncResponseHandlerAdapter<>(DBUserListResult.class, arh));
     }
 
+    public void listSuiteChores(int suiteID, AsyncResponseHandler<DBChoresListResult> arh){
+        setup("/chore?suiteid="+suiteID);
+        client.get(null, url.toExternalForm(),
+                new AsyncResponseHandlerAdapter<>(DBChoresListResult.class, arh));
+    }
+
     public void listSuiteGroceries(int suiteID, AsyncResponseHandler<DBGroceryListResult> arh) {
         setup("/grocery?suiteid="+suiteID);
 

@@ -3,6 +3,7 @@ package damson.suites.suites;
 
 import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarFragment;
+import com.roughike.bottombar.OnMenuTabSelectedListener;
 
 import layout.Calendar;
 
@@ -36,7 +38,7 @@ public class ThreeButtonsActivity extends AppCompatActivity {
         mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
                 new BottomBarFragment(MoneyFragment.newInstance(), R.drawable.moneymanagement, "Money Manager"),
                 new BottomBarFragment(GroceryBasket.newInstance(), R.drawable.grocerieslist, "Groceries"),
-                new BottomBarFragment(PSAList.newInstance(), R.drawable.psa, "PSAList"),
+                new BottomBarFragment(PSA.newInstance(), R.drawable.psa, "PSA"),
                 new BottomBarFragment(Calendar.newInstance(), R.drawable.chores, "Calendar")
                 //Last we need to add the chores fragment here
 
@@ -55,7 +57,7 @@ public class ThreeButtonsActivity extends AppCompatActivity {
                         //Snackbar.make(coordinatorLayout, "Location Item Selected", Snackbar.LENGTH_LONG).show();
                         break;
                     case R.id.psa:
-                        //public static PSAList newInstance();
+                        //public static PSA newInstance();
                 }
             }
         }); */
