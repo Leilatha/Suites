@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -66,6 +67,13 @@ public class IntroActivity extends AppCompatActivity {
                     InviteAdapter inviteAdapter = new InviteAdapter(getApplicationContext(), response);
                     ListView inviteList = (ListView) findViewById(R.id.intro_suite_invite_list);
                     inviteList.setAdapter(inviteAdapter);
+                    final ListView myList = (ListView) findViewById(R.id.intro_suite_invite_list);
+                    myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            joinSuite((Suite)myList.getAdapter().getItem(position));
+                        }
+                    });
                 }
             }
 
@@ -81,15 +89,30 @@ public class IntroActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
-                final ListView myList = (ListView) findViewById(R.id.intro_suite_invite_list);
-                myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent i = new Intent(myList.getContext(), GroceryBasketEdit.class);
-                        i.putExtra("item", (Serializable) .getItem(position));
-                        startActivity(i);
-                    }
-                });
+            }
+        });
+    }
+
+    private void joinSuite(final Suite item) {
+        DBHelper helper = new DBHelper(User.user);
+        helper.joinSuite(item.getId(), new AsyncResponseHandler<DBGenericResult>() {
+            @Override
+            public void onSuccess(DBGenericResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                Toast.makeText(IntroActivity.this, "Joined!", Toast.LENGTH_SHORT).show();
+                Suite.suite = item;
+                Intent intent = new Intent(IntroActivity.this, ThreeButtonsActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                Toast.makeText(IntroActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+
             }
         });
     }
@@ -206,13 +229,6 @@ public class IntroActivity extends AppCompatActivity {
                 //ALSO SHOULD NEVER HAPPEN
             }
         });
-    }
-
-    private void showProgress(final boolean show) {
-        View coordinator = findViewById(R.id.create_suite_coordinator);
-        View progress = findViewById(R.id.create_suite_progress);
-        progress.setVisibility(show ? View.VISIBLE : View.GONE);
-        coordinator.setVisibility(show ? View.GONE : View.VISIBLE);
     }
 
     @Override
