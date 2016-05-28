@@ -4,7 +4,6 @@ package damson.suites.suites;
 import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,16 +13,14 @@ import android.view.MenuItem;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarFragment;
 import com.roughike.bottombar.OnMenuTabSelectedListener;
-import com.roughike.bottombar.OnTabSelectedListener;
 
 import layout.Calendar;
 
 /**
  * Created by Matthew on 5/21/2016.
  */
-public class ThreeButtonsActivity extends FragmentActivity {
+public class ThreeButtonsActivity extends AppCompatActivity {
     private CoordinatorLayout coordinatorLayout;
-    private BottomBar mBottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +34,12 @@ public class ThreeButtonsActivity extends FragmentActivity {
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.three_buttons_activity);
 
-        mBottomBar = BottomBar.attach(this, savedInstanceState);
+        BottomBar mBottomBar = BottomBar.attach(this, savedInstanceState);
         mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
                 new BottomBarFragment(MoneyFragment.newInstance(), R.drawable.moneymanagement, "Money Manager"),
                 new BottomBarFragment(GroceryBasket.newInstance(), R.drawable.grocerieslist, "Groceries"),
                 new BottomBarFragment(PSA.newInstance(), R.drawable.psa, "PSA"),
+                new BottomBarFragment(Calendar.newInstance(), R.drawable.chores, "Calendar")
                 //Last we need to add the chores fragment here
 
         );
@@ -63,16 +61,6 @@ public class ThreeButtonsActivity extends FragmentActivity {
                 }
             }
         }); */
-
-        mBottomBar.setOnItemSelectedListener(new OnTabSelectedListener() {
-            @Override
-            public void onItemSelected(int position) {
-                switch (position) {
-                    case 0:
-                        // Item 1 Selected
-                }
-            }
-        });
 
         // Set the color for the active tab. Ignored on mobile when there are more than three tabs.
         mBottomBar.setActiveTabColor("#C2185B");
