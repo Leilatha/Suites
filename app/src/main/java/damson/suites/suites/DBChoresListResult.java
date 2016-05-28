@@ -33,7 +33,7 @@ public class DBChoresListResult {
     }
 
     @JsonProperty("choreList")
-    public List<DBChoreView> getChoresList() {
+    public List<DBChoreView> getChoreList() {
         return choreList;
     }
 }

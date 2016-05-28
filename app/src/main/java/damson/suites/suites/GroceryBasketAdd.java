@@ -102,7 +102,7 @@ public class GroceryBasketAdd extends AppCompatActivity {
         else{
             quantity = "";
         }
-        if(quantity_field.getText().toString().length() != 0) {
+        if(price_field.getText().toString().length() != 0) {
             price = Double.parseDouble(price_field.getText().toString());
         }
         else{

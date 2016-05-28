@@ -5,16 +5,25 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -25,6 +34,13 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnMenuTabSelectedListener;
+
+import java.util.List;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -79,12 +95,14 @@ public class PSAList extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.fragment_psa);
 
         //TODO: fix with database stuff
-        //List<String> psaList;
-        //ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
-        //        this, android.R.layout.simple_expandable_list_item_2, psaList);
+        List<String> psaList;
+        /**ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
+                this, android.R.layout.simple_expandable_list_item_2, psaList);*/
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -129,7 +147,7 @@ public class PSAList extends Fragment {
         }
     }
 
-    @Override //TODO: MIGHT NEED TO UNCOMMENT THESE METHOD
+    /*@Override TODO: MIGHT NEED TO UNCOMMENT THESE METHOD
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
@@ -145,6 +163,7 @@ public class PSAList extends Fragment {
         super.onDetach();
         mListener = null;
     }
+    */
 
     /**
      * This interface must be implemented by activities that contain this

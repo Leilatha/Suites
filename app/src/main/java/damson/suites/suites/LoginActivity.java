@@ -293,11 +293,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 //IF THE LOGIN WORKED, AND NO SUITES, THEN GO TO INTROACTIVITY
                 if(response.isEmpty()){
                     Intent intent = new Intent(LoginActivity.this, IntroActivity.class);
+                    finish();
                     startActivity(intent);
                 }
                 else {  // Has Suite
                     Suite.suite = response.get(0);
                     Intent intent = new Intent(LoginActivity.this, ThreeButtonsActivity.class);
+                    finish();
                     startActivity(intent);
                 }
                 finish();
