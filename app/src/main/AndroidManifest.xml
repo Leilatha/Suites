@@ -58,6 +58,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="damson.suites.suites.LoginActivity" />
         </activity>
+<<<<<<< .merge_file_a19532
+=======
+        <activity android:name=".InviteUser" />
+        <activity android:name=".EditCredentials"></activity>
+>>>>>>> .merge_file_a09392
     </application>
 
 </manifest>
