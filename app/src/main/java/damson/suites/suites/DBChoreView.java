@@ -1,10 +1,14 @@
 package damson.suites.suites;
 
 
+import android.support.v4.util.CircularArray;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Andy on 5/27/2016.
@@ -51,5 +55,38 @@ public class DBChoreView {
     @JsonProperty("assignees")
     public List<User> getAssignees() {
         return assignees;
+    }
+
+    public void randomize(){
+        User [] users = new User[assignees.size()];
+        for(int i = 0; i < assignees.size(); i++){
+            users[i] = assignees.get(i);
+        }
+
+        //set up random to return random indices
+        Random random = new Random();
+        int index = random.nextInt(users.length);
+        //stores indices already stored
+        ArrayList<Integer> found = new ArrayList<>(users.length);
+
+        CircularArray<User> rotation = null;
+
+        //Loop to fill in rotation
+        while(rotation.size() < users.length){
+            if(!found.contains(index)) {
+                rotation.addLast(users[index]);
+                found.add(new Integer(index));
+                index = random.nextInt(users.length);
+            }
+            else{
+                index = random.nextInt(users.length);
+            }
+        }
+
+        //put new rotation into assignees
+        for(int i = 0; i < rotation.size(); i++){
+            assignees.remove(i);
+            assignees.add(i, rotation.get(i));
+        }
     }
 }

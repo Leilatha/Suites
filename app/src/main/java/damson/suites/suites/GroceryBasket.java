@@ -41,10 +41,6 @@ import com.roughike.bottombar.OnMenuTabSelectedListener;
 public class GroceryBasket extends Fragment {
     static final int itemIdentifier = 1;  // The request code
     ArrayAdapter myAdapter;
-    Timer timer;
-    TimerTask timerTask;
-
-    final Handler handler = new Handler();
 
     public GroceryBasket()
     {}
