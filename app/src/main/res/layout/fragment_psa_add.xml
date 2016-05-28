@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="damson.suites.suites.PSAAdd">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" >
+
+        <LinearLayout
+             android:orientation="horizontal"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center_horizontal" >
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:textAppearance="?android:attr/textAppearanceLarge"
+                 android:text="Annoucement"
+                 android:id="@+id/Announcement"/>
+
+             <EditText
+                 android:layout_width="0dp"
+                 android:layout_height="wrap_content"
+                 android:id="@+id/Item_Text"
+                 android:layout_weight="1"
+                 android:inputType="text"
+                 android:editable="true" />
+        </LinearLayout>
+
+
+        <LinearLayout
+             android:orientation="horizontal"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center_horizontal"
+             android:gravity="center_vertical|fill_vertical|center_horizontal" >
+             <Button
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/Add"
+                 android:id="@+id/Add_Button"
+                 android:onClick="Add"/>
+             <Button
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="@string/groceryBasketAddCancel"
+                 android:id="@+id/Cancel_Button"
+                 android:layout_gravity="right"
+                 android:onClick="Cancel" />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

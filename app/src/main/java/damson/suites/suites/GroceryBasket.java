@@ -93,7 +93,7 @@ public class GroceryBasket extends Fragment {
         listMaker();
         //BottomBar mBottomBar = BottomBar.attach(this, savedInstanceState);
         //mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
-            //new BottomBarFragment(PSA.newInstance(), R.drawable.psa, "PSA")
+            //new BottomBarFragment(PSAList.newInstance(), R.drawable.psa, "PSAList")
         //);
 
         /* mBottomBar.setItemsFromMenu(R.menu.three_buttons_menu, new OnMenuTabSelectedListener() {
@@ -110,7 +110,7 @@ public class GroceryBasket extends Fragment {
                         //Snackbar.make(coordinatorLayout, "Location Item Selected", Snackbar.LENGTH_LONG).show();
                         break;
                     case R.id.psa:
-                        public static PSA newInstance();
+                        public static PSAList newInstance();
                 }
             }
         }); */

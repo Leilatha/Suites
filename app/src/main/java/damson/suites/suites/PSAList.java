@@ -1,26 +1,20 @@
 package damson.suites.suites;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -31,15 +25,8 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnMenuTabSelectedListener;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -47,12 +34,12 @@ import cz.msebera.android.httpclient.Header;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link PSA.OnFragmentInteractionListener} interface
+ * {@link PSAList.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link PSA#newInstance} factory method to
+ * Use the {@link PSAList#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PSA extends Fragment {
+public class PSAList extends Fragment {
     /**
      * The {@link PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -67,12 +54,13 @@ public class PSA extends Fragment {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    static final int itemIdentifier = 1;
 
     ArrayAdapter myAdapter;
 
     private OnFragmentInteractionListener mListener;
 
-    public PSA() {
+    public PSAList() {
         // Required empty public constructor
     }
 
@@ -80,11 +68,11 @@ public class PSA extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment PSA.
+     * @return A new instance of fragment PSAList.
      */
     // TODO: Rename and change types and number of parameters
-    public static PSA newInstance() {
-        PSA fragment = new PSA();
+    public static PSAList newInstance() {
+        PSAList fragment = new PSAList();
         return fragment;
     }
 
@@ -108,6 +96,30 @@ public class PSA extends Fragment {
         } else System.out.println("ERROR");
         // Inflate the layout for this fragment
         return view;
+    }
+
+    public Dialog onCreateDialog(Bundle savedInstanceState){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        // Get the layout inflater
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder.setView(inflater.inflate(R.layout.fragment_psa_add, null))
+                // Add action buttons
+                .setPositiveButton(R.string.psa_add, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // add a psa
+                    }
+                })
+                .setNegativeButton(R.string.psa_add_cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //LoginDialogFragment.this.getDialog().cancel();
+                        //This is copy pasted so might need to fix what doesn't make sense.
+                    }
+                });
+        return builder.create();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -164,7 +176,7 @@ public class PSA extends Fragment {
         /* Written by Marian
      */
     public void buttonPress() {
-        Intent receiveItemIntent = new Intent(getActivity(), psaAdd.class);
+        Intent receiveItemIntent = new Intent(getActivity(), PSAAdd.class);
         //setContentView(R.layout.activity_grocery_basket_add);
         startActivityForResult(receiveItemIntent, itemIdentifier);
     }
@@ -200,9 +212,9 @@ public class PSA extends Fragment {
         //TODO: change from hardcoded to real suite
         Suite.suite = new Suite(2, "qwert");
         DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
-        helper.listSuitePSA(Suite.suite.getId(), new AsyncResponseHandler<DBpsaResult>() {
+        helper.listSuitePSA(Suite.suite.getId(), new AsyncResponseHandler<DBPSAListResult>() {
             @Override
-            public void onSuccess(DBpsaResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+            public void onSuccess(DBPSAListResult response, int statusCode, Header[] headers, byte[] errorResponse) {
                 ListView myList = (ListView) getView().findViewById(R.id.psa_ListView);
 
                 myList.setVisibility(View.VISIBLE);
@@ -214,7 +226,7 @@ public class PSA extends Fragment {
                         myList.setVisibility(View.GONE);
                     TextView tv = (TextView) getView().findViewById(R.id.noItemsView);
                     tv.setVisibility(View.VISIBLE);
-                    System.out.println("NOTE: no items in PSA");
+                    System.out.println("NOTE: no items in PSAList");
                     return;
                 }
 
