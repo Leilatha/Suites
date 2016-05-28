@@ -239,7 +239,7 @@ public class PSAList extends Fragment {
                 myList.setVisibility(View.VISIBLE);
 
                 // If no Items...
-                if (response.getPSA() == null) {
+                if (response.getPSAList() == null) {
                     myAdapter = null;
                     if (myList != null)
                         myList.setVisibility(View.GONE);
@@ -250,7 +250,7 @@ public class PSAList extends Fragment {
                 }
 
                 // There are items
-                myAdapter = new GroceryAdapter(
+              /*  myAdapter = new GroceryAdapter(
                         getActivity(), (ArrayList<Grocery>) response.getGroceryList());
                 if (myList != null) {
                     myList.setVisibility(View.VISIBLE);
@@ -259,7 +259,7 @@ public class PSAList extends Fragment {
                 else {
                     System.out.println("ERROR: myList not initialized");
                     return;
-                }
+                }*/
             }
 
             @Override

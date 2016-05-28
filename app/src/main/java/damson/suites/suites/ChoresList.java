@@ -1,7 +1,8 @@
 package damson.suites.suites;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,7 @@ import cz.msebera.android.httpclient.Header;
  * the code from Grocery List. This file sets up buttons and
  * button listeners for the Chores List.
  */
-public class ChoresList extends AppCompatActivity {
+public class ChoresList extends Fragment {
     static final int itemIdentifier = 1;  // The request code
     ArrayAdapter myAdapter;
 
@@ -34,32 +35,24 @@ public class ChoresList extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chores_list);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_chores_list, container, false);
+        return view;
+    }
 
-        //TODO: fix with database stuff
-        String [] choresList = listMaker();
-        if(choresList[0].equals("")){
-            System.out.println("ERROR");
-            return;
-        }
-        ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
-                this,android.R.layout.simple_expandable_list_item_1, choresList);
-        ListView myList = (ListView) findViewById(R.id.listView);
-        if(myList != null)
-            myList.setAdapter(myAdapter);
-        else {
-            System.out.println("ERROR");
-            return;
-        }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        listMaker();
 
         /* Written by Marian
          * This creates an intent to the ChoresAdd.java
          * It receives new items from that activity, and then
          * displays it into the list.
          */
-        final Button addButton = (Button) findViewById(R.id.grocery_basket_add_button);
+        final Button addButton = (Button) getView().findViewById(R.id.chores_list_add_button);
         if(addButton == null){
             System.out.println("ERROR");
             return;
@@ -76,31 +69,9 @@ public class ChoresList extends AppCompatActivity {
     /* Written by Marian
      */
     public void buttonPress() {
-        Intent receiveItemIntent = new Intent(this, ChoresAdd.class);
-        setContentView(R.layout.activity_chores_add);
+        Intent receiveItemIntent = new Intent(getActivity(), ChoresAdd.class);
+        //setContentView(R.layout.activity_chores_add);
         startActivityForResult(receiveItemIntent, itemIdentifier);
-    }
-
-    /* Written by Marian
-     * This is a continuation of the receiveItem method.
-     * This is where we know if the add was successful. If it returned a
-     * GroceryItem, then we can display its data to the list.
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
-        if (requestCode == itemIdentifier) {
-            // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-                //  HOPEFULLY THIS ISNT A RUNTIME ERROR 8D
-                GroceryItem newItem = (GroceryItem) data.getSerializableExtra("item_added");
-
-                // The user picked a contact.
-                // The Intent's data Uri identifies which contact was selected.
-
-                // Do something with the contact here (bigger example below)
-            }
-        }
     }
 
     /**
