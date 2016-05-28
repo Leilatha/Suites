@@ -1,7 +1,6 @@
 package damson.suites.suites;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
@@ -27,12 +26,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
-
-import org.w3c.dom.Text;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -86,7 +79,6 @@ public class GroceryBasket extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.fragment_grocery_basket);
 
         //TODO: fix with database stuff
 
@@ -140,7 +132,7 @@ public class GroceryBasket extends Fragment {
          * It receives new items from that activity, and then
          * displays it into the list.
          */
-        final Button addButton = (Button) getView().findViewById(R.id.grocery_basket_add_button);
+        final Button addButton = (Button) getView().findViewById(R.id.chores_list_add_button);
         if(addButton == null){
             System.out.println("ERROR");
             return;
@@ -209,13 +201,14 @@ public class GroceryBasket extends Fragment {
      * takes the data to put in list
      */
     private void listMaker() {
-        //TODO: Remove these lines, they are for testing
-        Suite.suite = new Suite(2, "qwert");
         DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
         helper.listSuiteGroceries(Suite.suite.getId(), new AsyncResponseHandler<DBGroceryListResult>() {
             @Override
             public void onSuccess(DBGroceryListResult response, int statusCode, Header[] headers, byte[] errorResponse) {
-                ListView myList = (ListView) getView().findViewById(R.id.grocery_basket_listView);
+                View view = getView();
+                if(view == null) return;
+                if(view.getId() != R.id.grocery_basket_listView) return;
+                ListView myList = (ListView) view.findViewById(R.id.grocery_basket_listView);
 
                 myList.setVisibility(View.VISIBLE);
 
@@ -247,7 +240,10 @@ public class GroceryBasket extends Fragment {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                FrameLayout frame = (FrameLayout) getView().findViewById(R.id.fragmentContainer);
+                View view = getView();
+                if(view == null) return;
+                if(view.getId() != R.id.grocery_basket_listView) return;
+                FrameLayout frame = (FrameLayout) view.findViewById(R.id.fragmentContainer);
                 Snackbar
                         .make(frame, R.string.error_network_connection, Snackbar.LENGTH_LONG)
                         .show();
@@ -257,7 +253,10 @@ public class GroceryBasket extends Fragment {
             @Override
             public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
                 // TODO: Add "please log in again" code
-                ListView myList = (ListView) getView().findViewById(R.id.grocery_basket_listView);
+                View view = getView();
+                if(view == null) return;
+                if(view.getId() != R.id.grocery_basket_listView) return;
+                ListView myList = (ListView) view.findViewById(R.id.grocery_basket_listView);
                 if (myList != null)
                     myList.setVisibility(View.GONE);
                 TextView tv = (TextView) getView().findViewById(R.id.noItemsView);
@@ -267,8 +266,10 @@ public class GroceryBasket extends Fragment {
 
             @Override
             public void onFinish(){
-                final ListView myList = (ListView) getView().findViewById(R.id.grocery_basket_listView);
-
+                View view = getView();
+                if(view == null) return;
+                if(view.getId() != R.id.grocery_basket_listView) return;
+                final ListView myList = (ListView) view.findViewById(R.id.grocery_basket_listView);
                 myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
