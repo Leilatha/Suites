@@ -97,6 +97,7 @@ public class ThreeButtonsActivity extends AppCompatActivity {
                 User.user = null;
                 Suite.suite = null;
                 Intent j = new Intent(this, LoginActivity.class);
+                finish();
                 startActivity(j);
                 break;
 
@@ -104,5 +105,8 @@ public class ThreeButtonsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public void onBackPressed() {
     }
 }

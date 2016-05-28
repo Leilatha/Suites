@@ -46,8 +46,7 @@
         <activity
             android:name=".GroceryBasketAdd"
             android:label="@string/title_activity_grocery_basket_add"
-            android:theme="@style/AppTheme">
-        </activity>
+            android:theme="@style/AppTheme"></activity>
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".GroceryBasketEdit" />
         <activity
@@ -60,7 +59,15 @@
                 android:value="damson.suites.suites.LoginActivity" />
         </activity>
         <activity android:name=".InviteUser" />
-        <activity android:name=".EditCredentials"></activity>
+        <activity
+            android:name=".EditCredentials"
+            android:label="EditCredentials"
+            android:parentActivityName=".ThreeButtonsActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="damson.suites.suites.ThreeButtonsActivity"/>
+        </activity>
     </application>
 
 </manifest>
