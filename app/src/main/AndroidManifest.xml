@@ -58,6 +58,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="damson.suites.suites.LoginActivity" />
         </activity>
+        <activity android:name=".InviteUser" />
+        <activity android:name=".EditCredentials"></activity>
     </application>
 
 </manifest>
