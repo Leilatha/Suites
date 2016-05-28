@@ -1,6 +1,7 @@
 package damson.suites.suites;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
@@ -27,6 +28,12 @@ import android.widget.TextView;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+
+import org.w3c.dom.Text;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.lang.Runnable;
@@ -40,7 +47,11 @@ import com.roughike.bottombar.OnMenuTabSelectedListener;
 
 public class GroceryBasket extends Fragment {
     static final int itemIdentifier = 1;  // The request code
+    private static final int GROCERY_EDIT = 3;
     ArrayAdapter myAdapter;
+
+    final Handler handler = new Handler();
+    private int position = 0;
 
     public GroceryBasket()
     {}
@@ -75,10 +86,9 @@ public class GroceryBasket extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.fragment_grocery_basket);
 
-        //TODO: fix with database stuff
-
-        listMaker();
+        //listMaker();
         //BottomBar mBottomBar = BottomBar.attach(this, savedInstanceState);
         //mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
             //new BottomBarFragment(PSA.newInstance(), R.drawable.psa, "PSA")
@@ -128,7 +138,7 @@ public class GroceryBasket extends Fragment {
          * It receives new items from that activity, and then
          * displays it into the list.
          */
-        final Button addButton = (Button) getView().findViewById(R.id.chores_list_add_button);
+        final Button addButton = (Button) getView().findViewById(R.id.grocery_basket_add_button);
         if(addButton == null){
             System.out.println("ERROR");
             return;
@@ -139,7 +149,7 @@ public class GroceryBasket extends Fragment {
                 buttonPress();
             }
         });
-
+        position = 0;
     }
 
     @Override
@@ -203,10 +213,8 @@ public class GroceryBasket extends Fragment {
             public void onSuccess(DBGroceryListResult response, int statusCode, Header[] headers, byte[] errorResponse) {
                 View view = getView();
                 if(view == null) return;
-                if(view.getId() != R.id.grocery_basket_listView) return;
+                if(view.getId() != R.id.grocery_basket_relative_layout) return;
                 ListView myList = (ListView) view.findViewById(R.id.grocery_basket_listView);
-
-                myList.setVisibility(View.VISIBLE);
 
                 // If no Items...
                 if (response.getGroceryList() == null) {
@@ -238,7 +246,7 @@ public class GroceryBasket extends Fragment {
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
                 View view = getView();
                 if(view == null) return;
-                if(view.getId() != R.id.grocery_basket_listView) return;
+                if(view.getId() != R.id.grocery_basket_relative_layout) return;
                 FrameLayout frame = (FrameLayout) view.findViewById(R.id.fragmentContainer);
                 Snackbar
                         .make(frame, R.string.error_network_connection, Snackbar.LENGTH_LONG)
@@ -251,7 +259,7 @@ public class GroceryBasket extends Fragment {
                 // TODO: Add "please log in again" code
                 View view = getView();
                 if(view == null) return;
-                if(view.getId() != R.id.grocery_basket_listView) return;
+                if(view.getId() != R.id.grocery_basket_relative_layout) return;
                 ListView myList = (ListView) view.findViewById(R.id.grocery_basket_listView);
                 if (myList != null)
                     myList.setVisibility(View.GONE);
@@ -264,20 +272,33 @@ public class GroceryBasket extends Fragment {
             public void onFinish(){
                 View view = getView();
                 if(view == null) return;
-                if(view.getId() != R.id.grocery_basket_listView) return;
+                if(view.getId() != R.id.grocery_basket_relative_layout) return;
                 final ListView myList = (ListView) view.findViewById(R.id.grocery_basket_listView);
                 myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent i = new Intent(myList.getContext(), GroceryBasketEdit.class);
                         i.putExtra("item", (Serializable) myAdapter.getItem(position));
-                        startActivity(i);
+                        i.putExtra("position", position);
+                        startActivityForResult(i, GROCERY_EDIT);
                     }
                 });
+                myList.setSelection(position);
             }
         });
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        View view = getView();
+        if(view == null) return;
+        if(view.getId() != R.id.grocery_basket_relative_layout) return;
+        if(requestCode == GROCERY_EDIT) {
+            ListView myList = (ListView) view.findViewById(R.id.grocery_basket_listView);
+            position = data.getIntExtra("position", 0);
+        }
+    }
 
     @Override
     public void onStop() {
