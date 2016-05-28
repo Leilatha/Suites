@@ -41,8 +41,8 @@ public class PSAAdapter extends ArrayAdapter<DBPSAView>{
         }
 
         //Populate data into template view using data object
-        viewHolder.AuthorName.setText(psa.getAuthor());
-        viewHolder.Date.setText(psa.getTimestamp());
+        viewHolder.AuthorName.setText(psa.getAuthor().toString());
+        viewHolder.Date.setText(psa.getTimestamp().toString());
         viewHolder.Text.setText(psa.getDescription());
         viewHolder.AuthorName.setTextColor(Color.BLACK);
         viewHolder.Date.setTextColor(Color.BLACK);

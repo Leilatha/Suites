@@ -257,7 +257,7 @@ public class PSAList extends Fragment {
 
                 // There are items
                 myAdapter = new PSAAdapter(
-                        getActivity(), (ArrayList<PSAItem>) response.getPSAList());
+                        getActivity(), (ArrayList<DBPSAView>) response.getPSAList());
                 if (myList != null) {
                     myList.setVisibility(View.VISIBLE);
                     myList.setAdapter(myAdapter);
