@@ -59,7 +59,15 @@
                 android:value="damson.suites.suites.LoginActivity" />
         </activity>
         <activity android:name=".InviteUser" />
-        <activity android:name=".EditCredentials" />
+        <activity
+            android:name=".EditCredentials"
+            android:label="EditCredentials"
+            android:parentActivityName=".ThreeButtonsActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="damson.suites.suites.ThreeButtonsActivity"/>
+        </activity>
         <activity android:name=".ChoresEdit"></activity>
     </application>
 

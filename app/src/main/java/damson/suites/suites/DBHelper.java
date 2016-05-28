@@ -110,6 +110,11 @@ public class DBHelper {
                 new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
     }
 
+    public void editAccount(String mEmail, String mPassword, String mName,
+                            AsyncResponseHandler<DBGenericResult> arh) {
+        registerAccount(mEmail, mPassword, mName, arh);
+    }
+
     public void login(String mEmail, String mPassword, AsyncResponseHandler<User> arh) {
         account = mEmail;
         password = mPassword;
