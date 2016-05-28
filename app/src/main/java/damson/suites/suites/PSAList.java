@@ -110,7 +110,7 @@ public class PSAList extends Fragment {
         View view = inflater.inflate(R.layout.fragment_psa, container, false);
         ListView myList = (ListView) view.findViewById(R.id.listView);
         if (myList != null) {
-            //myList.setAdapter(myAdapter);
+            myList.setAdapter(myAdapter);
         } else System.out.println("ERROR");
         // Inflate the layout for this fragment
         return view;
@@ -228,12 +228,18 @@ public class PSAList extends Fragment {
      * takes the data to put in list
      */
     private void listMaker() {
-        //TODO: change from hardcoded to real suite
-        Suite.suite = new Suite(2, "qwert");
         DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
+        //TODO: fix Suite.suite if doesn't work
         helper.listSuitePSA(Suite.suite.getId(), new AsyncResponseHandler<DBPSAListResult>() {
             @Override
             public void onSuccess(DBPSAListResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                View view = getView();
+                if(view == null){
+                    return;
+                }
+                if (view.getId() != R.id.psa_ListView){
+                    return;
+                }
                 ListView myList = (ListView) getView().findViewById(R.id.psa_ListView);
 
                 myList.setVisibility(View.VISIBLE);
@@ -250,8 +256,8 @@ public class PSAList extends Fragment {
                 }
 
                 // There are items
-              /*  myAdapter = new GroceryAdapter(
-                        getActivity(), (ArrayList<Grocery>) response.getGroceryList());
+                myAdapter = new PSAAdapter(
+                        getActivity(), (ArrayList<PSAItem>) response.getPSAList());
                 if (myList != null) {
                     myList.setVisibility(View.VISIBLE);
                     myList.setAdapter(myAdapter);
@@ -259,7 +265,7 @@ public class PSAList extends Fragment {
                 else {
                     System.out.println("ERROR: myList not initialized");
                     return;
-                }*/
+                }
             }
 
             @Override
