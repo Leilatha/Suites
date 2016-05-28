@@ -17,11 +17,13 @@ import android.view.View;
 import android.view.ViewStub;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,6 +77,19 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
 
+            }
+
+            @Override
+            public void onFinish() {
+                final ListView myList = (ListView) findViewById(R.id.intro_suite_invite_list);
+                myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent i = new Intent(myList.getContext(), GroceryBasketEdit.class);
+                        i.putExtra("item", (Serializable) .getItem(position));
+                        startActivity(i);
+                    }
+                });
             }
         });
     }
