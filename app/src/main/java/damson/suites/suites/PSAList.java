@@ -71,6 +71,7 @@ public class PSAList extends Fragment {
      */
     private ViewPager mViewPager;
     static final int itemIdentifier = 1;
+    private DBHelper helpMeAndy;
 
     ArrayAdapter myAdapter;
 
@@ -192,12 +193,37 @@ public class PSAList extends Fragment {
      }
      }*/
 
-        /* Written by Marian
+    /* poorly copied by Marian
      */
     public void buttonPress() {
-        Intent receiveItemIntent = new Intent(getActivity(), PSAAdd.class);
-        //setContentView(R.layout.activity_grocery_basket_add);
-        startActivityForResult(receiveItemIntent, itemIdentifier);
+        helpMeAndy = new DBHelper(User.user);
+        helpMeAndy.postSuitePSA(Suite.suite.getId(),
+                new String(""),
+                ((TextView) getView().findViewById(R.id.psaText)).getText().toString(),
+                new AsyncResponseHandler<DBGenericResult>() {
+                    @Override
+                    public void onSuccess(DBGenericResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                        ((TextView) getView().findViewById(R.id.psaText)).setText("");
+                        listMaker();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage(R.string.PostMessageWan)
+                                .setTitle(R.string.PostError);
+                        AlertDialog dialog = builder.create();
+                    }
+
+                    @Override
+                    public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage(R.string.PostMessageTuu)
+                                .setTitle(R.string.PostError);
+                        AlertDialog dialog = builder.create();                    }
+                });
+
+
     }
 
     @Override
@@ -233,11 +259,12 @@ public class PSAList extends Fragment {
         helper.listSuitePSA(Suite.suite.getId(), new AsyncResponseHandler<DBPSAListResult>() {
             @Override
             public void onSuccess(DBPSAListResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                System.err.println("wan");
                 View view = getView();
                 if(view == null){
                     return;
                 }
-                if (view.getId() != R.id.psa_ListView){
+                if (view.getId() != R.id.psaFrame){
                     return;
                 }
                 ListView myList = (ListView) getView().findViewById(R.id.psa_ListView);
@@ -251,7 +278,7 @@ public class PSAList extends Fragment {
                         myList.setVisibility(View.GONE);
                     TextView tv = (TextView) getView().findViewById(R.id.noItemsView);
                     tv.setVisibility(View.VISIBLE);
-                    System.out.println("NOTE: no items in PSAList");
+                    System.err.println("NOTE: no items in PSAList");
                     return;
                 }
 
@@ -270,6 +297,7 @@ public class PSAList extends Fragment {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                System.err.println("tuu");
                 FrameLayout frame = (FrameLayout) getView().findViewById(R.id.fragmentContainer);
                 Snackbar
                         .make(frame, R.string.error_network_connection, Snackbar.LENGTH_LONG)
@@ -279,6 +307,7 @@ public class PSAList extends Fragment {
 
             @Override
             public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+                System.err.println("tree");
                 // TODO: Add "please log in again" code
                 ListView myList = (ListView) getView().findViewById(R.id.psa_ListView);
                 if (myList != null)
@@ -290,6 +319,7 @@ public class PSAList extends Fragment {
 
             @Override
             public void onFinish(){
+                System.err.println("fo");
                 final ListView myList = (ListView) getView().findViewById(R.id.psa_ListView);
 
                 myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -300,6 +330,7 @@ public class PSAList extends Fragment {
                         startActivity(i);
                     }
                 });
+                myList.setSelection(myList.getCount()-1);
             }
         });
     }

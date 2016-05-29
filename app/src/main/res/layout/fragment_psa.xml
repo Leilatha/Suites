@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PSAList">
+    tools:context=".PSAList"
+    android:id="@+id/psaFrame">
 
     <LinearLayout
         android:orientation="vertical"
@@ -23,8 +24,8 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:ems="10"
-            android:id="@+id/editText"
-            android:text="Share with the Suite!" />
+            android:id="@+id/psaText"
+            android:hint="Share with the Suite!" />
 
         <Button
             android:layout_width="wrap_content"
