@@ -196,6 +196,9 @@ public class PSAList extends Fragment {
     /* poorly copied by Marian
      */
     public void buttonPress() {
+        if(((TextView) getView().findViewById(R.id.psaText)).getText().toString().equals("")){
+            return;
+        }
         helpMeAndy = new DBHelper(User.user);
         helpMeAndy.postSuitePSA(Suite.suite.getId(),
                 new String(""),
