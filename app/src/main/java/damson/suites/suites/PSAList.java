@@ -320,15 +320,6 @@ public class PSAList extends Fragment {
             @Override
             public void onFinish(){
                 final ListView myList = (ListView) getView().findViewById(R.id.psa_ListView);
-
-                myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent i = new Intent(myList.getContext(), GroceryBasketEdit.class);
-                        i.putExtra("item", (Serializable) myAdapter.getItem(position));
-                        startActivity(i);
-                    }
-                });
                 myList.setSelection(myList.getCount()-1);
             }
         });
