@@ -296,7 +296,7 @@ public class GroceryBasket extends Fragment {
         if(view.getId() != R.id.grocery_basket_relative_layout) return;
         if(requestCode == GROCERY_EDIT) {
             ListView myList = (ListView) view.findViewById(R.id.grocery_basket_listView);
-            position = data.getIntExtra("position", 0);
+            if(data != null) position = data.getIntExtra("position", 0);
         }
     }
 
