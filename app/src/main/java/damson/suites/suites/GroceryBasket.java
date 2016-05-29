@@ -45,6 +45,8 @@ import android.support.design.widget.CoordinatorLayout;
 import com.roughike.bottombar.BottomBarFragment;
 import com.roughike.bottombar.OnMenuTabSelectedListener;
 
+
+//change for commit
 public class GroceryBasket extends Fragment {
     static final int itemIdentifier = 1;  // The request code
     ArrayAdapter myAdapter;
