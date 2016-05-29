@@ -262,7 +262,6 @@ public class PSAList extends Fragment {
         helper.listSuitePSA(Suite.suite.getId(), new AsyncResponseHandler<DBPSAListResult>() {
             @Override
             public void onSuccess(DBPSAListResult response, int statusCode, Header[] headers, byte[] errorResponse) {
-                System.err.println("wan");
                 View view = getView();
                 if(view == null){
                     return;
@@ -300,7 +299,6 @@ public class PSAList extends Fragment {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                System.err.println("tuu");
                 FrameLayout frame = (FrameLayout) getView().findViewById(R.id.fragmentContainer);
                 Snackbar
                         .make(frame, R.string.error_network_connection, Snackbar.LENGTH_LONG)
@@ -310,7 +308,6 @@ public class PSAList extends Fragment {
 
             @Override
             public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
-                System.err.println("tree");
                 // TODO: Add "please log in again" code
                 ListView myList = (ListView) getView().findViewById(R.id.psa_ListView);
                 if (myList != null)
@@ -322,7 +319,6 @@ public class PSAList extends Fragment {
 
             @Override
             public void onFinish(){
-                System.err.println("fo");
                 final ListView myList = (ListView) getView().findViewById(R.id.psa_ListView);
 
                 myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
