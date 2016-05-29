@@ -45,8 +45,6 @@ public class ChoresList extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //TODO: fix with database stuff
-
         listMaker();
 
         /* Written by Marian
@@ -133,7 +131,12 @@ public class ChoresList extends Fragment {
             @Override
             public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
                 // TODO: Add "please log in again" code
-                ListView myList = (ListView) getView().findViewById(R.id.grocery_basket_listView);
+                View view = getView();
+                if(view == null){
+                    return;
+                }
+                if(view.getId() != R.id.chores_list_listView) return;
+                ListView myList = (ListView) getView().findViewById(R.id.chores_list_listView);
                 if (myList != null)
                     myList.setVisibility(View.GONE);
                 TextView tv = (TextView) getView().findViewById(R.id.noItemsView);
@@ -143,12 +146,15 @@ public class ChoresList extends Fragment {
 
             @Override
             public void onFinish(){
-                final ListView myList = (ListView) getView().findViewById(R.id.grocery_basket_listView);
+                View view = getView();
+                if(view == null) return;
+                if(view.getId() != R.id.chores_list_listView) return;
+                final ListView myList = (ListView) getView().findViewById(R.id.chores_list_listView);
 
                 myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent i = new Intent(myList.getContext(), GroceryBasketEdit.class);
+                        Intent i = new Intent(myList.getContext(), ChoresEdit.class);
                         i.putExtra("item", (Serializable) myAdapter.getItem(position));
                         startActivity(i);
                     }

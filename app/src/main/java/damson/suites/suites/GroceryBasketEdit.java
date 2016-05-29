@@ -21,8 +21,10 @@ public class GroceryBasketEdit extends AppCompatActivity {
     private Grocery itemDB;
     private GroceryItem item;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+}
+
+    //@Override
+    /*protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_grocery_basket_edit);
@@ -173,4 +175,4 @@ public class GroceryBasketEdit extends AppCompatActivity {
         setResult(RESULT_OK, new Intent().putExtra("position", getIntent().getIntExtra("position", 0)));
         finish();
     }
-}
+} */

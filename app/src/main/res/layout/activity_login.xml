@@ -40,7 +40,7 @@
                 android:id="@+id/imageView"
                 android:adjustViewBounds="true"
                 android:layout_centerInParent="true"
-                android:src="@drawable/suties_icon_1" />
+                android:src="@drawable/suitesicon1" />
 
             <ImageView
                 android:layout_width="wrap_content"
