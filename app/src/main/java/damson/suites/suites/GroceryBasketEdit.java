@@ -21,7 +21,8 @@ public class GroceryBasketEdit extends AppCompatActivity {
     private Grocery itemDB;
     private GroceryItem item;
 
-    @Override
+
+    //@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -126,6 +127,7 @@ public class GroceryBasketEdit extends AppCompatActivity {
             help.editGrocery(new Grocery(item), new AsyncResponseHandler<DBGenericResult>() {
                 @Override
                 public void onSuccess(DBGenericResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                    setResult(RESULT_OK, new Intent().putExtra("position", getIntent().getIntExtra("position",0)));
                     finish();
                 }
 
@@ -136,7 +138,7 @@ public class GroceryBasketEdit extends AppCompatActivity {
 
                 @Override
                 public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
-                    finish();
+                    weFailed();
                 }
             });
         }
@@ -151,6 +153,7 @@ public class GroceryBasketEdit extends AppCompatActivity {
         helper.deleteGrocery(new Grocery(item), new AsyncResponseHandler<DBGenericResult>() {
             @Override
             public void onSuccess(DBGenericResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                setResult(RESULT_OK, new Intent().putExtra("position", 0));
                 finish();
             }
 
@@ -161,12 +164,14 @@ public class GroceryBasketEdit extends AppCompatActivity {
 
             @Override
             public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+                setResult(RESULT_OK, new Intent().putExtra("position", getIntent().getIntExtra("position",0)));
                 finish();
             }
         });
     }
 
-    private void cancel(){
+    private void cancel() {
+        setResult(RESULT_OK, new Intent().putExtra("position", getIntent().getIntExtra("position", 0)));
         finish();
     }
 }

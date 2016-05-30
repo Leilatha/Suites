@@ -12,7 +12,7 @@
         android:id="@+id/fragment_grocery_basket"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:name="damson.suites.suites.GroceryBasket" />
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"

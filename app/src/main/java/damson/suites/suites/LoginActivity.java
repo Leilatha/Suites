@@ -195,7 +195,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        //go straight to psa do not collect $200
 
         // Reset errors.
         mEmailView.setError(null);
@@ -255,10 +254,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         return;
                     }
                     User.user.setPassword(password);
-                    //IF THE LOGIN WORKED, GOES TO BOTTOM BAR
-                    Intent intent = new Intent(LoginActivity.this, ThreeButtonsActivity.class);
-                    startActivity(intent);
-                    finish();
+                    getSuite(User.user);
                 }
 
                 @Override
@@ -287,6 +283,38 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             });
         }
+    }
+
+    private void getSuite(User user) {
+        DBHelper helper = new DBHelper(user);
+        helper.getUserSuites(new AsyncResponseHandler<List<Suite>>() {
+            @Override
+            public void onSuccess(List<Suite> response, int statusCode, Header[] headers, byte[] errorResponse) {
+                //IF THE LOGIN WORKED, AND NO SUITES, THEN GO TO INTROACTIVITY
+                if(response.isEmpty()){
+                    Intent intent = new Intent(LoginActivity.this, IntroActivity.class);
+                    finish();
+                    startActivity(intent);
+                }
+                else {  // Has Suite
+                    Suite.suite = response.get(0);
+                    Intent intent = new Intent(LoginActivity.this, ThreeButtonsActivity.class);
+                    finish();
+                    startActivity(intent);
+                }
+                finish();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                //SHOULD NEVER HAPPEN
+            }
+
+            @Override
+            public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+                //ALSO SHOULD NEVER HAPPEN
+            }
+        });
     }
 
     private boolean isEmailValid(String email) {
@@ -383,7 +411,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
-        mEmailView.setAdapter(adapter);
+        //mEmailView.setAdapter(adapter);
     }
 
     private interface ProfileQuery {

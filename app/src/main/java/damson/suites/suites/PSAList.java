@@ -1,6 +1,9 @@
 package damson.suites.suites;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -37,9 +40,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnMenuTabSelectedListener;
 
+import java.util.List;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -47,12 +50,12 @@ import cz.msebera.android.httpclient.Header;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link PSA.OnFragmentInteractionListener} interface
+ * {@link PSAList.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link PSA#newInstance} factory method to
+ * Use the {@link PSAList#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PSA extends Fragment {
+public class PSAList extends Fragment {
     /**
      * The {@link PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -67,12 +70,14 @@ public class PSA extends Fragment {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    static final int itemIdentifier = 1;
+    private DBHelper helpMeAndy;
 
     ArrayAdapter myAdapter;
 
     private OnFragmentInteractionListener mListener;
 
-    public PSA() {
+    public PSAList() {
         // Required empty public constructor
     }
 
@@ -80,23 +85,25 @@ public class PSA extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @return A new instance of fragment PSA.
+     * @return A new instance of fragment PSAList.
      */
     // TODO: Rename and change types and number of parameters
-    public static PSA newInstance() {
-        PSA fragment = new PSA();
+    public static PSAList newInstance() {
+        PSAList fragment = new PSAList();
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.fragment_psa);
 
         //TODO: fix with database stuff
-        //List<String> psaList;
-        //ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
-        //        this, android.R.layout.simple_expandable_list_item_2, psaList);
+        List<String> psaList;
+        /**ArrayAdapter<String> myAdapter=new ArrayAdapter<String>(
+                this, android.R.layout.simple_expandable_list_item_2, psaList);*/
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,10 +111,34 @@ public class PSA extends Fragment {
         View view = inflater.inflate(R.layout.fragment_psa, container, false);
         ListView myList = (ListView) view.findViewById(R.id.listView);
         if (myList != null) {
-            //myList.setAdapter(myAdapter);
+            myList.setAdapter(myAdapter);
         } else System.out.println("ERROR");
         // Inflate the layout for this fragment
         return view;
+    }
+
+    public Dialog onCreateDialog(Bundle savedInstanceState){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        // Get the layout inflater
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder.setView(inflater.inflate(R.layout.fragment_psa_add, null))
+                // Add action buttons
+                .setPositiveButton(R.string.psa_add, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // add a psa
+                    }
+                })
+                .setNegativeButton(R.string.psa_add_cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //LoginDialogFragment.this.getDialog().cancel();
+                        //This is copy pasted so might need to fix what doesn't make sense.
+                    }
+                });
+        return builder.create();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -117,7 +148,7 @@ public class PSA extends Fragment {
         }
     }
 
-    @Override //TODO: MIGHT NEED TO UNCOMMENT THESE METHOD
+    /*@Override TODO: MIGHT NEED TO UNCOMMENT THESE METHOD
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
@@ -133,6 +164,7 @@ public class PSA extends Fragment {
         super.onDetach();
         mListener = null;
     }
+    */
 
     /**
      * This interface must be implemented by activities that contain this
@@ -161,12 +193,40 @@ public class PSA extends Fragment {
      }
      }*/
 
-        /* Written by Marian
+    /* poorly copied by Marian
      */
     public void buttonPress() {
-        Intent receiveItemIntent = new Intent(getActivity(), psaAdd.class);
-        //setContentView(R.layout.activity_grocery_basket_add);
-        startActivityForResult(receiveItemIntent, itemIdentifier);
+        if(((TextView) getView().findViewById(R.id.psaText)).getText().toString().equals("")){
+            return;
+        }
+        helpMeAndy = new DBHelper(User.user);
+        helpMeAndy.postSuitePSA(Suite.suite.getId(),
+                new String(""),
+                ((TextView) getView().findViewById(R.id.psaText)).getText().toString(),
+                new AsyncResponseHandler<DBGenericResult>() {
+                    @Override
+                    public void onSuccess(DBGenericResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                        ((TextView) getView().findViewById(R.id.psaText)).setText("");
+                        listMaker();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage(R.string.PostMessageWan)
+                                .setTitle(R.string.PostError);
+                        AlertDialog dialog = builder.create();
+                    }
+
+                    @Override
+                    public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setMessage(R.string.PostMessageTuu)
+                                .setTitle(R.string.PostError);
+                        AlertDialog dialog = builder.create();                    }
+                });
+
+
     }
 
     @Override
@@ -197,30 +257,36 @@ public class PSA extends Fragment {
      * takes the data to put in list
      */
     private void listMaker() {
-        //TODO: change from hardcoded to real suite
-        Suite.suite = new Suite(2, "qwert");
         DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
-        helper.listSuitePSA(Suite.suite.getId(), new AsyncResponseHandler<DBpsaResult>() {
+        //TODO: fix Suite.suite if doesn't work
+        helper.listSuitePSA(Suite.suite.getId(), new AsyncResponseHandler<DBPSAListResult>() {
             @Override
-            public void onSuccess(DBpsaResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+            public void onSuccess(DBPSAListResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                View view = getView();
+                if(view == null){
+                    return;
+                }
+                if (view.getId() != R.id.psaFrame){
+                    return;
+                }
                 ListView myList = (ListView) getView().findViewById(R.id.psa_ListView);
 
                 myList.setVisibility(View.VISIBLE);
 
                 // If no Items...
-                if (response.getPSA() == null) {
+                if (response.getPSAList() == null) {
                     myAdapter = null;
                     if (myList != null)
                         myList.setVisibility(View.GONE);
                     TextView tv = (TextView) getView().findViewById(R.id.noItemsView);
                     tv.setVisibility(View.VISIBLE);
-                    System.out.println("NOTE: no items in PSA");
+                    System.err.println("NOTE: no items in PSAList");
                     return;
                 }
 
                 // There are items
-                myAdapter = new GroceryAdapter(
-                        getActivity(), (ArrayList<Grocery>) response.getGroceryList());
+                myAdapter = new PSAAdapter(
+                        getActivity(), (ArrayList<DBPSAView>) response.getPSAList());
                 if (myList != null) {
                     myList.setVisibility(View.VISIBLE);
                     myList.setAdapter(myAdapter);
@@ -254,15 +320,7 @@ public class PSA extends Fragment {
             @Override
             public void onFinish(){
                 final ListView myList = (ListView) getView().findViewById(R.id.psa_ListView);
-
-                myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent i = new Intent(myList.getContext(), GroceryBasketEdit.class);
-                        i.putExtra("item", (Serializable) myAdapter.getItem(position));
-                        startActivity(i);
-                    }
-                });
+                myList.setSelection(myList.getCount()-1);
             }
         });
     }

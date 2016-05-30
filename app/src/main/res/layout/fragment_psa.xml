@@ -2,13 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="damson.suites.suites.PSA">
+    tools:context=".PSAList"
+    android:id="@+id/psaFrame">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="bottom|center_horizontal"
         android:weightSum="1">
 
         <ListView
@@ -23,13 +24,13 @@
             android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:ems="10"
-            android:id="@+id/editText"
-            android:text="Share with the Suite!" />
+            android:id="@+id/psaText"
+            android:hint="Share with the Suite!" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/post"
+            android:text="post"
             android:id="@+id/psa_button"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
