@@ -8,7 +8,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="damson.suites.suites.ChoresEdit"
-    android:id="@+id/chores_list_edit_coordinator">
+    android:id="@+id/chores_list_edit_coordinator"
+    android:background="#252d3d">
 
     <LinearLayout
         android:orientation="vertical"
@@ -29,14 +30,17 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/chore"
-                android:id="@+id/chores_list_edit_Chore_Label" />
+                android:id="@+id/chores_list_edit_Chore_Label"
+                android:textColorHint="#FFFFFF"
+                android:textColor="#FFFFFF" />
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/chores_list_edit_Chore_Text"
                 android:layout_weight="1"
-                android:inputType="text" />
+                android:inputType="text"
+                android:backgroundTint="#FFFFFF" />
 
         </LinearLayout>
 
@@ -51,13 +55,16 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Description"
-                android:id="@+id/chores_list_edit_Description_label"/>
+                android:id="@+id/chores_list_edit_Description_label"
+                android:textColorHint="#FFFFFF"
+                android:textColor="#FFFFFF" />
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/chores_list_edit_Description_text"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:backgroundTint="#FFFFFF" />
 
 
         </LinearLayout>
