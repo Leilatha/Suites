@@ -56,7 +56,7 @@
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:id="@+id/imageView3"
-                    android:src="@drawable/group" />
+                    android:src="@drawable/email" />
 
                 <AutoCompleteTextView
                     android:id="@+id/email"
@@ -81,7 +81,7 @@
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:id="@+id/imageView4"
-                    android:src="@drawable/group_copy" />
+                    android:src="@drawable/password" />
 
                 <EditText
                     android:id="@+id/password"
