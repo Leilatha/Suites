@@ -1,9 +1,9 @@
 package damson.suites.suites;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +20,7 @@ public class GroceryBasketEdit extends AppCompatActivity {
     private Double prevPrice;
     private Grocery itemDB;
     private GroceryItem item;
+
 
 
     //@Override
