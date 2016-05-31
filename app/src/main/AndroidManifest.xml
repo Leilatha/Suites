@@ -69,6 +69,7 @@
                 android:value="damson.suites.suites.ThreeButtonsActivity"/>
         </activity>
         <activity android:name=".ChoresEdit"></activity>
+        <activity android:name=".ChoresAdd"></activity>
     </application>
 
 </manifest>
