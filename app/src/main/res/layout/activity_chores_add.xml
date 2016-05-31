@@ -8,7 +8,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="damson.suites.suites.ChoresAdd"
-    android:id="@+id/chores_list_add_coordinator">
+    android:id="@+id/chores_list_add_coordinator"
+    android:background="#252d3d">
 
     <LinearLayout
         android:orientation="vertical"
@@ -28,14 +29,18 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Chore"
-                android:id="@+id/chores_list_add_Chore_Label" />
+                android:id="@+id/chores_list_add_Chore_Label"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF" />
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/chores_list_add_Chore_Text"
                 android:layout_weight="1"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#FFFFFF" />
         </LinearLayout>
 
         <LinearLayout
@@ -49,14 +54,18 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Description"
-                android:id="@+id/chores_list_add_Description_label" />
+                android:id="@+id/chores_list_add_Description_label"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF" />
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/chores_list_add_Description_Text"
                 android:layout_weight="1"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#FFFFFF" />
         </LinearLayout>
 
         <LinearLayout

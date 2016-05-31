@@ -10,7 +10,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="damson.suites.suites.RegistrationActivity"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#252d3d">
 
     <!-- Login progress -->
     <ProgressBar
@@ -35,61 +36,109 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="100dp"
-                android:id="@+id/imageView" />
-
-            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="200dp"
+                android:id="@+id/imageView"
+                android:src="@drawable/suitesicon1" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView8" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageView5"
+                    android:src="@drawable/email" />
 
                 <AutoCompleteTextView
                     android:id="@+id/email_registration"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:imeOptions="actionNext" />
+                    android:imeOptions="actionNext"
+                    android:backgroundTint="#ffffff"
+                    android:layout_gravity="right"
+                    android:textColorHint="#FFFFFF"
+                    android:textColor="#FFFFFF" />
 
-            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageView6"
+                    android:src="@drawable/password" />
 
                 <EditText
                     android:id="@+id/password_registration"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:hint="@string/prompt_password"
                     android:imeOptions="actionNext"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:backgroundTint="#ffffff"
+                    android:textColorHint="#FFFFFF"
+                    android:textColor="#FFFFFF" />
 
-            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
             <!-- TODO: Add Confirm Password functionality-->
 
-            <android.support.design.widget.TextInputLayout
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/imageView7"
+                    android:src="@drawable/name" />
 
                 <EditText
                     android:id="@+id/name_registration"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:hint="@string/prompt_name"
                     android:imeActionId="@+id/registration"
                     android:imeActionLabel="@string/action_register"
                     android:imeOptions="actionUnspecified"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:inputType="textCapWords" />
+                    android:inputType="textCapWords"
+                    android:backgroundTint="#ffffff"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#FFFFFF" />
+
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             </android.support.design.widget.TextInputLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView9" />
 
             <Button
                 android:layout_width="match_parent"
