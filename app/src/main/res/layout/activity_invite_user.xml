@@ -5,7 +5,8 @@
     android:id="@+id/inviteLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InviteUser">
+    tools:context=".InviteUser"
+    android:background="#252d3d">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,16 +17,26 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="damson.suites.suites.InviteUser">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/imageView10"
+        android:src="@drawable/suitesicon1" />
+
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
         android:id="@+id/invite_suitemate"
-        android:layout_alignParentTop="true"
+        android:layout_marginTop="54dp"
+        android:hint="Invite a suitemate"
+        android:layout_below="@+id/imageView10"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="82dp"
-        android:hint="Invite a suitemate" />
+        android:textColorHint="#FFFFFF"
+        android:drawableTint="#FFFFFF"
+        android:backgroundTint="#FFFFFF"
+        android:textColor="#FFFFFF" />
 
     <Button
         android:layout_width="wrap_content"
@@ -34,6 +45,7 @@
         android:id="@+id/send_invite"
         android:layout_below="@+id/invite_suitemate"
         android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>
