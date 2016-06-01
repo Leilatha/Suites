@@ -40,7 +40,7 @@ public class ThreeButtonsActivity extends AppCompatActivity {
                 new BottomBarFragment(ChoresList.newInstance(), R.drawable.chores, "Chores"),
                 new BottomBarFragment(PSAList.newInstance(), R.drawable.psa, "PSA"),
                 new BottomBarFragment(MoneyFragment.newInstance(), R.drawable.moneymanagement, "Money Manager"),
-                new BottomBarFragment(Calendar.newInstance(), R.drawable.chores, "Calendar")
+                new BottomBarFragment(Calendar.newInstance(), R.drawable.calendar, "Calendar")
 
 
                 //Last we need to add the chores fragment here

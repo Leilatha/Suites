@@ -11,27 +11,31 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="damson.suites.suites.GroceryBasketAdd"
     tools:showIn="@layout/activity_grocery_basket_add"
-    android:background="@android:color/background_light">
+    android:background="#252d3d">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" >
+        android:layout_height="wrap_content"
+        android:background="#252d3d"
+        android:gravity="center_horizontal|clip_vertical"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" >
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/groceryBasketAddItem"
-                android:id="@+id/Item_Label" />
+                android:id="@+id/Item_Label"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF" />
 
             <EditText
                 android:layout_width="0dp"
@@ -39,21 +43,29 @@
                 android:id="@+id/Item_Text"
                 android:layout_weight="1"
                 android:inputType="text"
-                android:editable="true" />
+                android:editable="true"
+                android:drawableTint="#FFFFFF"
+                android:backgroundTint="#FFFFFF"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal" >
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/groceryBasketAddQuantity"
-                android:id="@+id/Quantity_Label" />
+                android:id="@+id/Quantity_Label"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF" />
 
             <EditText
                 android:layout_width="0dp"
@@ -61,21 +73,29 @@
                 android:id="@+id/Quantity_Text"
                 android:layout_weight="1"
                 android:inputType="number"
-                android:editable="true" />
+                android:editable="true"
+                android:drawableTint="#FFFFFF"
+                android:backgroundTint="#FFFFFF"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/groceryBasketAddprice"
-                android:id="@+id/Price_Label" />
+                android:id="@+id/Price_Label"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -83,32 +103,46 @@
                 android:id="@+id/Price_Text"
                 android:inputType="numberDecimal"
                 android:editable="true"
-                android:elegantTextHeight="false" />
+                android:elegantTextHeight="false"
+                android:drawableTint="#FFFFFF"
+                android:backgroundTint="#FFFFFF"
+                android:textColor="#FFFFFF" />
 
         </LinearLayout>
+
+        <Space
+            android:layout_width="20px"
+            android:layout_height="20px" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_vertical|fill_vertical|center_horizontal" >
+            android:layout_height="match_parent">
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Add"
                 android:id="@+id/Add_Button"
-                android:onClick="addItem"/>
+                android:onClick="addItem"
+                android:textColor="#000000"
+                android:background="#FFFFFF"
+                android:layout_marginLeft="80dp" />
+
+            <Space
+                android:layout_width="20px"
+                android:layout_height="20px"
+                android:layout_gravity="center_horizontal" />
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/groceryBasketAddCancel"
                 android:id="@+id/Cancel_Button"
-                android:layout_gravity="right"
-                android:onClick="Cancel" />
-
+                android:onClick="Cancel"
+                android:textColor="#000000"
+                android:background="#FFFFFF" />
         </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>

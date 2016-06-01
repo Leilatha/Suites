@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="6dp"
-    android:background="#252d3d">
+    android:background="#252d3d"
+    android:gravity="center_vertical">
 
     <EditText
         android:layout_width="0dp"
@@ -24,6 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/create_suite_submit"
-        android:id="@+id/create_suite_button" />
+        android:id="@+id/create_suite_button"
+        android:background="#FFFFFF" />
 
 </LinearLayout>
