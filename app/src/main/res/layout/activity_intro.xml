@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context="damson.suites.suites.IntroActivity"
-    android:id="@+id/create_suite_coordinator">
+    android:id="@+id/create_suite_coordinator"
+    android:animateLayoutChanges="true">
 
     <ProgressBar
         android:id="@+id/create_suite_progress"
@@ -32,13 +33,12 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_intro" />
-    <ViewStub
-        android:id="@+id/create_suite_stub"
-        android:inflatedId="@+id/create_suite_inflated"
-        android:layout="@layout/create_suite_layout"
+    <include layout="@layout/create_suite_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom" />
+        android:layout_gravity="bottom"
+        android:visibility="gone"
+        android:id="@+id/create_suite_menu"/>
 
 
     <android.support.design.widget.FloatingActionButton

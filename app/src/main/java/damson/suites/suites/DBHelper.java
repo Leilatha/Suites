@@ -46,25 +46,56 @@ public class DBHelper {
     }
     RequestMethod requestMethod;
 
-
+    /**
+     * Used when a different server address from the default is needed.
+     * @param server_address
+     * @param account
+     * @param password
+     */
     DBHelper(String server_address, String account, String password) {
         if(server_address != null) host = server_address;
         this.account = account;
         this.password = password;
     }
 
+    /**
+     * Used when a different server address from the default is needed.
+     * @param server_address
+     * @param u
+     */
     DBHelper(String server_address, User u) { this(server_address, u.getEmail(), u.getPassword());}
 
+    /**
+     * Used when a different server address from the default is needed. Used only for login().
+     * @param server_address
+     */
     DBHelper(String server_address) {
         this(server_address, null, null);
     }
 
+    /**
+     * Constructor used when account is known.
+     * @param account
+     * @param password
+     */
     DBHelper(String account, String password) { this(null, account, password); }
 
+    /**
+     * Constructor used when account is known.
+     * @param u
+     *          User, usually at User.user.
+     */
     DBHelper(User u) { this(null, u.getEmail(), u.getPassword()); }
 
+    /**
+     * Constructor used for the login() method only.
+     */
     DBHelper() {this(null, null, null); }
 
+    /**
+     * Setup the URL and the login header, if specified.
+     * @param path
+     */
     private void setup(String path) {
         this.path = path;
         try {
@@ -86,6 +117,14 @@ public class DBHelper {
     }
 
 
+    /**
+     * Use the default constructor.
+     *
+     * @param mEmail
+     * @param mPassword
+     * @param mName
+     * @param arh
+     */
     public void registerAccount(String mEmail, String mPassword, String mName,
                                 AsyncResponseHandler<DBGenericResult> arh)  {
         setup("/account");
@@ -114,6 +153,13 @@ public class DBHelper {
         registerAccount(mEmail, mPassword, mName, arh);
     }
 
+    /**
+     * Use the default constructor.
+     *
+     * @param mEmail
+     * @param mPassword
+     * @param arh
+     */
     public void login(String mEmail, String mPassword, AsyncResponseHandler<User> arh) {
         account = mEmail;
         password = mPassword;

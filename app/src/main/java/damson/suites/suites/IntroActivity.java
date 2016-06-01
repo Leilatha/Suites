@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
@@ -14,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewStub;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -27,20 +27,26 @@ import android.widget.Toast;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.util.TextUtils;
 
 public class IntroActivity extends AppCompatActivity {
     private CoordinatorLayout coordinatorLayout;
     FloatingActionButton fab;
-    View inflated;
+    View createSuite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.intro_toolbar);
         setSupportActionBar(toolbar);
 
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.three_buttons_activity);
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setTitle("Choose or create a suite");
+        actionbar.show();
+
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.create_suite_coordinator);
+
 
         fab = (FloatingActionButton) findViewById(R.id.intro_fab);
         assert fab != null;
@@ -143,15 +149,14 @@ public class IntroActivity extends AppCompatActivity {
     }
 
     private void createSuiteMenu() {
-        ViewStub stub = null;
         EditText field = null;
-        if(inflated == null) {
-            stub = (ViewStub) findViewById(R.id.create_suite_stub);
+        createSuite = findViewById(R.id.create_suite_menu);
 
-            inflated = stub.inflate();
-
+        if(createSuite != null) {
             field = (EditText) findViewById(R.id.create_suite_name_view);
-            inflated.setVisibility(View.VISIBLE);
+            createSuite.setTranslationY(createSuite.getHeight());
+            createSuite.setVisibility(View.VISIBLE);
+            createSuite.animate().translationY(0);
             fab.setVisibility(View.GONE);
             field.requestFocus();
 
@@ -174,12 +179,17 @@ public class IntroActivity extends AppCompatActivity {
                 }
             });
         }
-        inflated.requestFocus();
     }
 
     private void createSuite() {
-        DBHelper helper = new DBHelper(User.user);
         EditText field = (EditText) findViewById(R.id.create_suite_name_view);
+
+        if(TextUtils.isEmpty(field.getText())) {
+            field.setError("Add a name");
+            return;
+        }
+
+        DBHelper helper = new DBHelper(User.user);
 
         helper.addSuite(field.getText().toString(), new AsyncResponseHandler<DBGenericResult>() {
             @Override
@@ -281,5 +291,6 @@ public class IntroActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
+
     }
 }
