@@ -100,7 +100,9 @@ public class ChoreResource {
     @POST @Path("/advance")
     public GenericResult advanceChore(@Auth User user,
                                       @QueryParam("choreid") IntParam choreId) {
-        if (cm.advanceChore(choreId.get(), user)) {
+	if (choreId == null) {
+	    return new GenericResult(false, "You need to specify a chore.");
+	} else if (cm.advanceChore(choreId.get(), user)) {
             return new GenericResult(true, "");
         } else {
             return new GenericResult(false, "Could not advance chore.");
