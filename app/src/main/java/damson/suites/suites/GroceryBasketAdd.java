@@ -43,7 +43,7 @@ public class GroceryBasketAdd extends AppCompatActivity {
             }
         });
 
-        Button cancelButton = (Button)findViewById(R.id.grocery_basket_edit_Cancel_Button);
+        Button cancelButton = (Button)findViewById(R.id.grocery_basket_add_cancel_button);
         cancelButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 cancel();

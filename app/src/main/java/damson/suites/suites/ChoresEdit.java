@@ -3,16 +3,12 @@ package damson.suites.suites;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.util.CircularArray;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -52,6 +48,7 @@ public class ChoresEdit extends AppCompatActivity {
         Button cancelButton = (Button)findViewById(R.id.chores_list_edit_Cancel_button);
         Button deleteButton = (Button)findViewById(R.id.chores_list_edit_Delete_button);
         Button randomizeButton = (Button)findViewById(R.id.chores_list_edit_Randomize_button);
+        Button doneButton = (Button)findViewById(R.id.chores_list_edit_mark_done);
         editButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 attemptEdit();
@@ -71,8 +68,13 @@ public class ChoresEdit extends AppCompatActivity {
             public void onClick(View v){
                 randomize();
                 attemptEdit();
-                randomize();
+                sendRandomize();
                 finish();
+            }
+        });
+        doneButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                markDone();
             }
         });
     }
@@ -220,5 +222,9 @@ public class ChoresEdit extends AppCompatActivity {
         }
 
         sendRandomize(new DBChoreView(chore.getId(), chore.getName(), chore.getDescription(), 0, assignees));
+    }
+
+    private void markDone(){
+
     }
 }
