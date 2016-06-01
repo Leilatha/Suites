@@ -230,7 +230,7 @@ public interface SuitesDAO {
     void fixChore(@Bind("id") int id);
 
     @SqlQuery("SELECT Id, Email, Name, ProfilePicture FROM ChoreAssignment JOIN Member " +
-              "ON Id = MemberId AND ChoreId = :choreid")
+              "ON Id = MemberId AND ChoreId = :choreid ORDER BY Turn ASC")
     List<User> getChoreAssignees(@Bind("choreid") int choreId);
 
     @SqlQuery("SELECT PSA.Id AS pid, PSA.Title AS ptit, PSA.Description AS pdesc, PSA.Timestamp AS ptime, " +
