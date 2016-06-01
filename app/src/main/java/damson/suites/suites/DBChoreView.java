@@ -69,9 +69,9 @@ public class DBChoreView {
         //stores indices already stored
         ArrayList<Integer> found = new ArrayList<>(users.length);
 
-        CircularArray<User> rotation = null;
+        CircularArray<User> rotation = new CircularArray<>(users.length);
 
-        //Loop to fill in rotation
+        //Loop to fill in rotation  //This could accidentally run for a long time
         while(rotation.size() < users.length){
             if(!found.contains(index)) {
                 rotation.addLast(users[index]);
