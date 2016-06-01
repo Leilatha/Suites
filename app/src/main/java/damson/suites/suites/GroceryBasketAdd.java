@@ -1,26 +1,13 @@
 package damson.suites.suites;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
-
-import java.net.URL;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -44,19 +31,19 @@ public class GroceryBasketAdd extends AppCompatActivity {
         //Toolbar toolbar = (Toolbar) findViewById(R.id.grocery_basket_add_toolbar);
         //setSupportActionBar(toolbar);
 
-        item_field = (EditText) findViewById(R.id.Item_Text);
-        quantity_field = (EditText) findViewById(R.id.Quantity_Text);
-        price_field = (EditText) findViewById(R.id.Price_Text);
+        item_field = (EditText) findViewById(R.id.grocery_basket_add_item_text);
+        quantity_field = (EditText) findViewById(R.id.grocery_basket_add_quantity_text);
+        price_field = (EditText) findViewById(R.id.grocery_basket_add_price_text);
 
         //Button listener
-        Button addButton = (Button)findViewById(R.id.Add_Button);
+        Button addButton = (Button)findViewById(R.id.grocery_basket_add_add_button);
         addButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 attemptAddItem();
             }
         });
 
-        Button cancelButton = (Button)findViewById(R.id.Cancel_Button);
+        Button cancelButton = (Button)findViewById(R.id.grocery_basket_edit_Cancel_Button);
         cancelButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View view){
                 cancel();

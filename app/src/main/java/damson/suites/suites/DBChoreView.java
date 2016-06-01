@@ -3,8 +3,8 @@ package damson.suites.suites;
 
 import android.support.v4.util.CircularArray;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;

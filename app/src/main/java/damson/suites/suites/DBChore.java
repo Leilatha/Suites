@@ -1,12 +1,14 @@
 package damson.suites.suites;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.io.Serializable;
 
 /**
  * Created by Andy on 5/27/2016.
  */
-public class DBChore {
+public class DBChore implements Serializable {
     private final int id;
     private final String name;
     private final String descript;

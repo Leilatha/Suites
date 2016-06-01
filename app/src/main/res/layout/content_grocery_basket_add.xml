@@ -33,14 +33,14 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/groceryBasketAddItem"
-                android:id="@+id/Item_Label"
+                android:id="@+id/grocery_basket_add_item_label"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#FFFFFF" />
 
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/Item_Text"
+                android:id="@+id/grocery_basket_add_item_text"
                 android:layout_weight="1"
                 android:inputType="text"
                 android:editable="true"
@@ -63,14 +63,14 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/groceryBasketAddQuantity"
-                android:id="@+id/Quantity_Label"
+                android:id="@+id/grocery_basket_add_quantity_label"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#FFFFFF" />
 
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/Quantity_Text"
+                android:id="@+id/grocery_basket_add_quantity_text"
                 android:layout_weight="1"
                 android:inputType="number"
                 android:editable="true"
@@ -93,14 +93,14 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/groceryBasketAddprice"
-                android:id="@+id/Price_Label"
+                android:id="@+id/grocery_basket_add_price_label"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#FFFFFF" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/Price_Text"
+                android:id="@+id/grocery_basket_add_price_text"
                 android:inputType="numberDecimal"
                 android:editable="true"
                 android:elegantTextHeight="false"
@@ -123,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/Add"
-                android:id="@+id/Add_Button"
+                android:id="@+id/grocery_basket_add_add_button"
                 android:onClick="addItem"
                 android:textColor="#000000"
                 android:background="#FFFFFF"
@@ -138,7 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/groceryBasketAddCancel"
-                android:id="@+id/Cancel_Button"
+                android:id="@+id/grocery_basket_add_cancel_button"
                 android:onClick="Cancel"
                 android:textColor="#000000"
                 android:background="#FFFFFF" />

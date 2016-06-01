@@ -1,12 +1,14 @@
 package damson.suites.suites;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.io.IOException;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -25,7 +27,11 @@ public class ChoresEdit extends AppCompatActivity {
 
         //get fields from item we're editing
         Intent i = getIntent();
-        chore = (DBChoreView)i.getSerializableExtra("item");
+        try {
+            chore = DBHelper.mapper.readValue(i.getStringExtra("item"), DBChoreView.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         prevName = chore.getName();
         prevDescription = chore.getDescription();

@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
@@ -59,17 +60,17 @@ public class ChoresAdd extends AppCompatActivity {
         name_field.setError(null);
         description_field.setError(null);
 
-        String name;
-        String description;
+        final String name;
+        final String description;
 
         //Store values at time of add attempt
-        if(name_field.getText().toString().length() != 0){
+        if(!TextUtils.isEmpty(name_field.getText())){
             name = name_field.getText().toString();
         }
         else{
             name = "";
         }
-        if(description_field.getText().toString().length() != 0){
+        if(!TextUtils.isEmpty(description_field.getText())){
             description = description_field.getText().toString();
         }
         else{
@@ -98,7 +99,8 @@ public class ChoresAdd extends AppCompatActivity {
             help.listUsersInASuite(Suite.suite.getId(), new AsyncResponseHandler<DBUserListResult>(){
                @Override
                 public void onSuccess(DBUserListResult response, int statusCode, Header[] headers, byte[]errorResponse) {
-                    ChoresAdd.users = response.getUserList();
+                   ChoresAdd.users = response.getUserList();
+                   sendRequest(name, description);
                }
                 @Override
                 public void onFailure(int statusCode, Header[]headers, byte[] errorResponse, Throwable e){
@@ -113,27 +115,37 @@ public class ChoresAdd extends AppCompatActivity {
                     return;
                 }
             });
-            chore = new DBAddChoreRequest(name, description, 0, users);
-            help.addChoreToSuite(Suite.suite.getId(), chore, new AsyncResponseHandler<DBGenericResult>(){
-                @Override
-                public void onSuccess(DBGenericResult response, int statusCode, Header[] headers, byte[] errorResponse) {
-                    finish();
-                }
-
-                @Override
-                public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                    Snackbar mySnackbar = Snackbar.make(findViewById(R.id.chores_list_add_coordinator),
-                            "You are not in the Suite you are putting items into", Snackbar.LENGTH_SHORT);
-                    mySnackbar.show();
-                    Log.e("ChoresAdd", "Not in suite.");
-                }
-
-                @Override
-                public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
-                    // TODO: Set up a "please login again" page
-                }
-            });
         }
+    }
+
+    private void sendRequest(String name, String description) {
+        DBHelper help = new DBHelper(User.user);
+
+        List<Integer> userInts = new ArrayList<Integer>();
+        for(User u : users) {
+            userInts.add(u.getId());
+        }
+
+        chore = new DBAddChoreRequest(name, description, userInts);
+        help.addChoreToSuite(Suite.suite.getId(), chore, new AsyncResponseHandler<DBGenericResult>(){
+            @Override
+            public void onSuccess(DBGenericResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                finish();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                Snackbar mySnackbar = Snackbar.make(findViewById(R.id.chores_list_add_coordinator),
+                        "You are not in the Suite you are putting items into", Snackbar.LENGTH_SHORT);
+                mySnackbar.show();
+                Log.e("ChoresAdd", "Not in suite.");
+            }
+
+            @Override
+            public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+                // TODO: Set up a "please login again" page
+            }
+        });
     }
 
     private void cancel(){

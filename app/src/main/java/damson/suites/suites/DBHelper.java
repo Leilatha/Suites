@@ -7,6 +7,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.entity.StringEntity;
@@ -357,8 +358,14 @@ public class DBHelper {
 
     public void editChore(DBChoreView chore, AsyncResponseHandler<DBGenericResult> arh){
         setup("/chore?choreid="+chore.getId());
+
+        List<Integer> userInts = new ArrayList<Integer>();
+        for(User u : chore.getAssignees()) {
+            userInts.add(u.getId());
+        }
+
         DBAddChoreRequest req =
-                new DBAddChoreRequest(chore.getName(), chore.getDescription(), chore.getCurrentTurn(), chore.getAssignees());
+                new DBAddChoreRequest(chore.getName(), chore.getDescription(), userInts);
 
         // Output stream to server
         String jsonrequest = null;

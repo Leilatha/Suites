@@ -14,7 +14,8 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
@@ -80,7 +81,6 @@ public class ChoresList extends Fragment {
      * takes the data to put in list
      */
     private void listMaker(){
-        //TODO make DB accessor class for Chores
         DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
         helper.listSuiteChores(Suite.suite.getId(), new AsyncResponseHandler<DBChoresListResult>() {
             @Override
@@ -89,7 +89,7 @@ public class ChoresList extends Fragment {
                 if (view == null){
                     return;
                 }
-                if (view.getId() != R.id.chores_list_listView){
+                if (view.getId() != R.id.chores_relative_layout){
                     return;
                 }
                 ListView myList = (ListView) getView().findViewById(R.id.chores_list_listView);
@@ -125,7 +125,7 @@ public class ChoresList extends Fragment {
                 if (view == null){
                     return;
                 }
-                if (view.getId() != R.id.chores_list_listView){
+                if (view.getId() != R.id.chores_relative_layout){
                     return;
                 }
                 FrameLayout frame = (FrameLayout) getView().findViewById(R.id.fragmentContainer);
@@ -155,18 +155,29 @@ public class ChoresList extends Fragment {
             public void onFinish(){
                 View view = getView();
                 if(view == null) return;
-                if(view.getId() != R.id.chores_list_listView) return;
+                if(view.getId() != R.id.chores_relative_layout) return;
                 final ListView myList = (ListView) getView().findViewById(R.id.chores_list_listView);
 
                 myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent i = new Intent(myList.getContext(), ChoresEdit.class);
-                        i.putExtra("item", (Serializable) myAdapter.getItem(position));
+                        try {
+                            i.putExtra("item", DBHelper.mapper.writeValueAsString(myAdapter.getItem(position)));
+                        } catch (JsonProcessingException e) {
+                            e.printStackTrace();
+                        }
                         startActivity(i);
                     }
                 });
             }
         });
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        //startTimer();
+        listMaker();
     }
 }

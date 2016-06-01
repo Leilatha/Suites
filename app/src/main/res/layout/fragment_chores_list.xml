@@ -27,6 +27,16 @@
         android:layout_below="@+id/chores_list_add_button" />
 
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/no_chores"
+        android:id="@+id/no_chores_view"
+        android:enabled="true"
+        android:visibility="gone"
+        android:layout_centerInParent="true" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

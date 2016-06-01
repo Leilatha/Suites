@@ -27,7 +27,7 @@
              <EditText
                  android:layout_width="0dp"
                  android:layout_height="wrap_content"
-                 android:id="@+id/Item_Text"
+                 android:id="@+id/grocery_basket_add_item_text"
                  android:layout_weight="1"
                  android:inputType="text"
                  android:editable="true"

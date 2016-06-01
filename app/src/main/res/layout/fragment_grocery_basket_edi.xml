@@ -30,13 +30,13 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/groceryBasketAddItem"
-                android:id="@+id/Item_Label"
+                android:id="@+id/grocery_basket_add_item_label"
                 android:textColor="#FFFFFF" />
 
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/Item_Text"
+                android:id="@+id/grocery_basket_add_item_text"
                 android:layout_weight="1"
                 android:editable="true"
                 android:inputType="text"
@@ -55,13 +55,13 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/groceryBasketAddQuantity"
-                android:id="@+id/Quantity_Label"
+                android:id="@+id/grocery_basket_add_quantity_label"
                 android:textColor="#FFFFFF" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/Quantity_Text"
+                android:id="@+id/grocery_basket_add_quantity_text"
                 android:layout_gravity="center_horizontal"
                 android:editable="true"
                 android:inputType="number|text"

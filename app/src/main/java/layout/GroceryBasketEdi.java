@@ -1,8 +1,6 @@
 package layout;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -66,8 +64,8 @@ public class GroceryBasketEdi extends Fragment {
         Intent intent = new Intent(super.getActivity(),GroceryBasket.class);
         GroceryItem item = (GroceryItem)intent.getSerializableExtra("item");
 
-        name = (EditText) view.findViewById(R.id.Item_Text);
-        quantity = (EditText) view.findViewById(R.id.Quantity_Text);
+        name = (EditText) view.findViewById(R.id.grocery_basket_add_item_text);
+        quantity = (EditText) view.findViewById(R.id.grocery_basket_add_quantity_text);
         price = (EditText) view.findViewById(R.id.Price_Text);
 
         //store previous information

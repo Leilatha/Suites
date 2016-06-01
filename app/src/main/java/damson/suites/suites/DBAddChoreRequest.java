@@ -11,17 +11,14 @@ import java.util.List;
 public class DBAddChoreRequest{
     private final String name;
     private final String description;
-    private final int currentTurn;
-    private final List<User> assignees;
+    private final List<Integer> assignees;
 
     @JsonCreator
     public DBAddChoreRequest(@JsonProperty("name") String name,
                                @JsonProperty("description") String description,
-                             @JsonProperty("currentTurn") int currentTurn,
-                             @JsonProperty("assignees") List<User> assignees) {
+                             @JsonProperty("assignees") List<Integer> assignees) {
         this.name = name;
         this.description = description;
-        this.currentTurn = currentTurn;
         this.assignees = assignees;
     }
     @JsonProperty("name")
@@ -32,12 +29,8 @@ public class DBAddChoreRequest{
     public String getDescription(){
         return description;
     }
-    @JsonProperty("currentTurn")
-    public int getCurrentTurn(){
-        return currentTurn;
-    }
     @JsonProperty("assignees")
-    public List<User> getAssignees(){
+    public List<Integer> getAssignees(){
         return assignees;
     }
 }
