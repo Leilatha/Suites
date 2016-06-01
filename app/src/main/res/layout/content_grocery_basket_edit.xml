@@ -106,13 +106,23 @@
                 android:layout_height="wrap_content"
                 android:text="@string/groceryBasketEdit"
                 android:id="@+id/grocery_basket_edit_Edit_Button"
-                android:onClick="addItem"/>
+                android:onClick="addItem"
+                android:background="#FFFFFF" />
+
+            <Space
+                android:layout_width="20px"
+                android:layout_height="20px" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="@string/groceryBasketDelete"
-                android:id="@+id/grocery_basket_edit_Delete_Button" />
+                android:id="@+id/grocery_basket_edit_Delete_Button"
+                android:background="#FFFFFF" />
+
+            <Space
+                android:layout_width="20px"
+                android:layout_height="20px" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -120,7 +130,8 @@
                 android:text="@string/groceryBasketAddCancel"
                 android:id="@+id/grocery_basket_edit_Cancel_Button"
                 android:layout_gravity="right"
-                android:onClick="Cancel" />
+                android:onClick="Cancel"
+                android:background="#FFFFFF" />
 
         </LinearLayout>
     </LinearLayout>

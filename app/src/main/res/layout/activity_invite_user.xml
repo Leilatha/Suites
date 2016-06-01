@@ -39,12 +39,14 @@
         android:textColor="#FFFFFF" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="Send Invite"
         android:id="@+id/send_invite"
         android:layout_below="@+id/invite_suitemate"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:background="#FFFFFF"
+        android:textColor="#000000" />
 
 </RelativeLayout>
 

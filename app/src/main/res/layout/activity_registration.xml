@@ -61,7 +61,6 @@
                     android:id="@+id/email_registration"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -88,7 +87,6 @@
                     android:id="@+id/password_registration"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/prompt_password"
                     android:imeOptions="actionNext"
                     android:inputType="textPassword"
                     android:maxLines="1"
@@ -116,7 +114,6 @@
                     android:id="@+id/name_registration"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="@string/prompt_name"
                     android:imeActionId="@+id/registration"
                     android:imeActionLabel="@string/action_register"
                     android:imeOptions="actionUnspecified"
@@ -141,10 +138,13 @@
                 android:id="@+id/imageView9" />
 
             <Button
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:text="@string/action_register"
-                android:id="@+id/register_button_2" />
+                android:id="@+id/register_button_2"
+                android:textColor="#000000"
+                android:layout_gravity="center_horizontal"
+                android:background="#FFFFFF" />
 
         </LinearLayout>
     </ScrollView>
