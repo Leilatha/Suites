@@ -3,12 +3,16 @@ package damson.suites.suites;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.util.CircularArray;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -65,9 +69,9 @@ public class ChoresEdit extends AppCompatActivity {
         });
         randomizeButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                chore.randomize();
+                randomize();
                 attemptEdit();
-                sendRandomize();
+                randomize();
                 finish();
             }
         });
@@ -137,10 +141,9 @@ public class ChoresEdit extends AppCompatActivity {
         Snackbar.make(findViewById(R.id.chores_list_edit_coordinator), "Edit Item Fail", Snackbar.LENGTH_SHORT);
     }
 
-    private void sendRandomize() {
+    private void sendRandomize(DBChoreView choreView) {
         DBHelper help = new DBHelper(User.user);
-        help.editChore(new DBChoreView(chore.getId(), prevName, prevDescription,
-                chore.getCurrentTurn(), chore.getAssignees()),
+        help.editChore(choreView,
                 new AsyncResponseHandler<DBGenericResult>() {
                     @Override
                     public void onSuccess(DBGenericResult response, int statusCode, Header[] headers, byte[] errorResponse) {
@@ -181,5 +184,41 @@ public class ChoresEdit extends AppCompatActivity {
                         finish();
                     }
                 });
+    }
+
+    public void randomize(){
+        List<User> assignees = chore.getAssignees();
+        User [] users = new User[assignees.size()];
+        for(int i = 0; i < assignees.size(); i++){
+            users[i] = assignees.get(i);
+        }
+
+        //set up random to return random indices
+        Random random = new Random();
+        int index = random.nextInt(users.length);
+        //stores indices already stored
+        ArrayList<Integer> found = new ArrayList<>(users.length);
+
+        CircularArray<User> rotation = new CircularArray<>(users.length);
+
+        //Loop to fill in rotation  //This could accidentally run for a long time
+        while(rotation.size() < users.length){
+            if(!found.contains(index)) {
+                rotation.addLast(users[index]);
+                found.add(new Integer(index));
+                index = random.nextInt(users.length);
+            }
+            else{
+                index = random.nextInt(users.length);
+            }
+        }
+
+        //put new rotation into assignees
+        for(int i = 0; i < rotation.size(); i++){
+            assignees.remove(i);
+            assignees.add(i, rotation.get(i));
+        }
+
+        sendRandomize(new DBChoreView(chore.getId(), chore.getName(), chore.getDescription(), 0, assignees));
     }
 }

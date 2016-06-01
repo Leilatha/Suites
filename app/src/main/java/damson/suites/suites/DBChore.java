@@ -44,4 +44,5 @@ public class DBChore implements Serializable {
     public int getCurrentTurn() {
         return currentTurn;
     }
+
 }
