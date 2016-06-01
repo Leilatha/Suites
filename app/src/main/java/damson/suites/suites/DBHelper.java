@@ -3,7 +3,6 @@ package damson.suites.suites;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -200,6 +199,25 @@ public class DBHelper {
         }
         client.post(null, url.toExternalForm(), entity, APPLICATION_JSON,
                 new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
+    }
+
+    public void leaveSuite(int suiteID, AsyncResponseHandler<Void> arh) {
+        setup("/suite/leave");
+
+        String jsonrequest = null;
+        try {
+            jsonrequest = DBHelper.mapper.writeValueAsString(suiteID);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        StringEntity entity = null;
+        try {
+            entity = new StringEntity(jsonrequest);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        client.post(null, url.toExternalForm(), entity, APPLICATION_JSON,
+                new AsyncResponseHandlerAdapter<>(null, arh));
     }
 
     public void listUsersInASuite(int suiteID, AsyncResponseHandler<DBUserListResult> arh) {
