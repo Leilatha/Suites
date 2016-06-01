@@ -212,7 +212,7 @@ Advance a Chore
 ---------------
 This is to move the chore assignee to the next person. Send a POST request to the
 path /chore/advance with the query parameter "choreid" set to the id of the
-chore.
+chore. The response is GenericResult.
 
 PSA
 ===
