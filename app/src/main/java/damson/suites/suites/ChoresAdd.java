@@ -1,16 +1,11 @@
 package damson.suites.suites;
 
-import android.preference.PreferenceActivity;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -20,10 +15,10 @@ import cz.msebera.android.httpclient.Header;
 
 public class ChoresAdd extends AppCompatActivity {
 
-    private EditText name_field;
-    private EditText description_field;
-    DBAddChoreRequest chore;
-    public static List<User> users;
+    private EditText name_field = null;
+    private EditText description_field = null;
+    DBAddChoreRequest chore = null;
+    public static List<User> users = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

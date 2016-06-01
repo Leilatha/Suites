@@ -266,7 +266,7 @@ public class IntroActivity extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.settings_menu, menu);
+        getMenuInflater().inflate(R.menu.settings_logout, menu);
         return true;
     }
 
@@ -291,6 +291,12 @@ public class IntroActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra("email", User.user.getEmail());
+        startActivity(intent);
 
+        User.user = null;
+        Suite.suite = null;
+        finish();
     }
 }

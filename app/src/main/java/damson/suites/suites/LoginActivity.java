@@ -51,13 +51,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private static final int REQUEST_READ_CONTACTS = 0;
 
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -82,6 +75,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        if(getIntent().hasExtra("email")) {
+            mEmailView.setText(getIntent().getStringExtra("email"));
+        }
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -135,6 +131,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if(resultCode == RESULT_OK){
                 mEmailView.setText(data.getStringExtra("email"));
                 mPasswordView.setText("");
+                Snackbar.make(findViewById(R.id.login_coordinator),
+                        R.string.registration_successful, Snackbar.LENGTH_SHORT);
             }
         }
     }
