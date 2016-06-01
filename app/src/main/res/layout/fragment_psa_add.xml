@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="damson.suites.suites.PSAAdd">
+    tools:context="damson.suites.suites.PSAAdd"
+    android:background="#252d3d">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -20,7 +21,8 @@
                  android:layout_height="wrap_content"
                  android:textAppearance="?android:attr/textAppearanceLarge"
                  android:text="Announcement"
-                 android:id="@+id/Announcement"/>
+                 android:id="@+id/Announcement"
+                 android:textColor="#FFFFFF" />
 
              <EditText
                  android:layout_width="0dp"
@@ -28,7 +30,8 @@
                  android:id="@+id/Item_Text"
                  android:layout_weight="1"
                  android:inputType="text"
-                 android:editable="true" />
+                 android:editable="true"
+                 android:backgroundTint="#FFFFFF" />
         </LinearLayout>
 
 

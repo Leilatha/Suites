@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="damson.suites.suites.ThreeButtonsActivity">
+    tools:context="damson.suites.suites.ThreeButtonsActivity"
+    android:background="#252d3d">
 
     <LinearLayout
         android:orientation="vertical"
@@ -28,7 +29,8 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/groceryBasketAddItem"
-                android:id="@+id/Item_Label" />
+                android:id="@+id/Item_Label"
+                android:textColor="#FFFFFF" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -36,7 +38,8 @@
                 android:id="@+id/Item_Text"
                 android:layout_weight="1"
                 android:editable="true"
-                android:inputType="text" />
+                android:inputType="text"
+                android:backgroundTint="#FFFFFF" />
         </LinearLayout>
 
         <LinearLayout
@@ -50,7 +53,8 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/groceryBasketAddQuantity"
-                android:id="@+id/Quantity_Label" />
+                android:id="@+id/Quantity_Label"
+                android:textColor="#FFFFFF" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -58,7 +62,8 @@
                 android:id="@+id/Quantity_Text"
                 android:layout_gravity="center_horizontal"
                 android:editable="true"
-                android:inputType="number|text" />
+                android:inputType="number|text"
+                android:backgroundTint="#FFFFFF" />
         </LinearLayout>
 
         <LinearLayout
@@ -72,7 +77,8 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/groceryBasketAddprice"
-                android:id="@+id/Price_Label" />
+                android:id="@+id/Price_Label"
+                android:textColor="#FFFFFF" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -80,7 +86,8 @@
                 android:id="@+id/Price_Text"
                 android:layout_weight="1"
                 android:editable="true"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:backgroundTint="#FFFFFF" />
         </LinearLayout>
 
         <LinearLayout
