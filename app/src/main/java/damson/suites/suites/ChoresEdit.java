@@ -66,6 +66,9 @@ public class ChoresEdit extends AppCompatActivity {
         randomizeButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 chore.randomize();
+                attemptEdit();
+                sendRandomize();
+                finish();
             }
         });
     }
@@ -132,6 +135,28 @@ public class ChoresEdit extends AppCompatActivity {
 
     private void weFailed(){
         Snackbar.make(findViewById(R.id.chores_list_edit_coordinator), "Edit Item Fail", Snackbar.LENGTH_SHORT);
+    }
+
+    private void sendRandomize() {
+        DBHelper help = new DBHelper(User.user);
+        help.editChore(new DBChoreView(chore.getId(), prevName, prevDescription,
+                chore.getCurrentTurn(), chore.getAssignees()),
+                new AsyncResponseHandler<DBGenericResult>() {
+                    @Override
+                    public void onSuccess(DBGenericResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                        weFailed();
+                    }
+
+                    @Override
+                    public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+                        finish();
+                    }
+                });
     }
 
     private void cancel(){
