@@ -1,9 +1,9 @@
 package damson.suites.suites;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -121,6 +121,13 @@ public class ChoresList extends Fragment {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                View view = getView();
+                if (view == null){
+                    return;
+                }
+                if (view.getId() != R.id.chores_list_listView){
+                    return;
+                }
                 FrameLayout frame = (FrameLayout) getView().findViewById(R.id.fragmentContainer);
                 Snackbar
                         .make(frame, R.string.error_network_connection, Snackbar.LENGTH_LONG)

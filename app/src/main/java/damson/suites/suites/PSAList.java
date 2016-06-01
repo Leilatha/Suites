@@ -2,47 +2,26 @@ package damson.suites.suites;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.roughike.bottombar.BottomBar;
-import com.roughike.bottombar.OnMenuTabSelectedListener;
-
-import java.util.List;
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -299,6 +278,13 @@ public class PSAList extends Fragment {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                View view = getView();
+                if(view == null){
+                    return;
+                }
+                if (view.getId() != R.id.psaFrame){
+                    return;
+                }
                 FrameLayout frame = (FrameLayout) getView().findViewById(R.id.fragmentContainer);
                 Snackbar
                         .make(frame, R.string.error_network_connection, Snackbar.LENGTH_LONG)
@@ -309,6 +295,13 @@ public class PSAList extends Fragment {
             @Override
             public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
                 // TODO: Add "please log in again" code
+                View view = getView();
+                if(view == null){
+                    return;
+                }
+                if (view.getId() != R.id.psaFrame){
+                    return;
+                }
                 ListView myList = (ListView) getView().findViewById(R.id.psa_ListView);
                 if (myList != null)
                     myList.setVisibility(View.GONE);
@@ -319,7 +312,15 @@ public class PSAList extends Fragment {
 
             @Override
             public void onFinish(){
+                View view = getView();
+                if(view == null){
+                    return;
+                }
+                if (view.getId() != R.id.psaFrame){
+                    return;
+                }
                 final ListView myList = (ListView) getView().findViewById(R.id.psa_ListView);
+
                 myList.setSelection(myList.getCount()-1);
             }
         });

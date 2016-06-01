@@ -60,4 +60,5 @@
     <string name="PostError">Failed to post</string>
     <string name="PostMessageWan">Check yo connection</string>
     <string name="PostMessageTuu">How you get here without logging in?</string>
+    <string name="registration_successful">Registration Successful</string>
 </resources>
