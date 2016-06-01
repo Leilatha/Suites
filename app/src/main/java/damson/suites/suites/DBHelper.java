@@ -391,6 +391,13 @@ public class DBHelper {
                 new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
     }
 
+    public void advanceChore(DBChoreView chore, AsyncResponseHandler<DBGenericResult> arh) {
+        setup("/chore/advance?="+chore.getId());
+
+        client.post(url.toExternalForm(),
+                new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));
+    }
+
     public void listSuitePSA(int suiteID, AsyncResponseHandler<DBPSAListResult> argh){
         setup("/psa?suiteid="+suiteID);
 

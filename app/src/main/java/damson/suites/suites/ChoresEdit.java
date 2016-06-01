@@ -3,12 +3,16 @@ package damson.suites.suites;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.util.CircularArray;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -66,9 +70,7 @@ public class ChoresEdit extends AppCompatActivity {
         });
         randomizeButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                randomize();
-                attemptEdit();
-                sendRandomize();
+                randomizeAndSave();
                 finish();
             }
         });
@@ -144,6 +146,7 @@ public class ChoresEdit extends AppCompatActivity {
     }
 
     private void sendRandomize(DBChoreView choreView) {
+
         DBHelper help = new DBHelper(User.user);
         help.editChore(choreView,
                 new AsyncResponseHandler<DBGenericResult>() {
@@ -188,7 +191,7 @@ public class ChoresEdit extends AppCompatActivity {
                 });
     }
 
-    public void randomize(){
+    public void randomizeAndSave(){
         List<User> assignees = chore.getAssignees();
         User [] users = new User[assignees.size()];
         for(int i = 0; i < assignees.size(); i++){
@@ -221,7 +224,11 @@ public class ChoresEdit extends AppCompatActivity {
             assignees.add(i, rotation.get(i));
         }
 
-        sendRandomize(new DBChoreView(chore.getId(), chore.getName(), chore.getDescription(), 0, assignees));
+        //store values at time of edit attempt
+        String newName = name.getText().toString();
+        String newDescript = description.getText().toString();
+
+        sendRandomize(new DBChoreView(chore.getId(), newName, newDescript, 0, assignees));
     }
 
     private void markDone(){
