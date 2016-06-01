@@ -16,6 +16,7 @@ import java.util.Random;
 public class DBChoreView {
     private final DBChore chore;
     private final List<User> assignees;
+    private int zero = 0;
 
     @JsonCreator
     public DBChoreView(@JsonProperty("id") int id,
@@ -69,7 +70,8 @@ public class DBChoreView {
         //stores indices already stored
         ArrayList<Integer> found = new ArrayList<>(users.length);
 
-        CircularArray<User> rotation = new CircularArray<>(users.length);
+        CircularArray<User> rotation = new CircularArray<User>(users.length);
+
 
         //Loop to fill in rotation  //This could accidentally run for a long time
         while(rotation.size() < users.length){
