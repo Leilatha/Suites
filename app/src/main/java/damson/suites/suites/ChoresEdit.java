@@ -48,6 +48,7 @@ public class ChoresEdit extends AppCompatActivity {
         Button cancelButton = (Button)findViewById(R.id.chores_list_edit_Cancel_button);
         Button deleteButton = (Button)findViewById(R.id.chores_list_edit_Delete_button);
         Button randomizeButton = (Button)findViewById(R.id.chores_list_edit_Randomize_button);
+        Button doneButton = (Button)findViewById(R.id.chores_list_edit_mark_done);
         editButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 attemptEdit();
@@ -69,6 +70,11 @@ public class ChoresEdit extends AppCompatActivity {
                 attemptEdit();
                 sendRandomize();
                 finish();
+            }
+        });
+        doneButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                markDone();
             }
         });
     }
@@ -181,5 +187,9 @@ public class ChoresEdit extends AppCompatActivity {
                         finish();
                     }
                 });
+    }
+
+    private void markDone(){
+
     }
 }
