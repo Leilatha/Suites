@@ -3,6 +3,7 @@ package damson.suites.suites;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import java.io.IOException;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -22,12 +23,19 @@ public class AsyncResponseHandlerAdapter<B> extends AsyncHttpResponseHandler {
 
     @Override
     public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+        if(bb == null) cc.onSuccess(null, statusCode, headers, response); //For the "empty response" case
         B res = null;
         try {
             res = DBHelper.mapper.readValue(response, DBHelper.mapper.constructType(bb));
-            //res.toString();
         } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                res = DBHelper.mapper.readValue(response,
+                        DBHelper.mapper.getTypeFactory().constructCollectionType(List.class, bb));
+            }
+            catch (Exception e1){
+                e.printStackTrace();
+                e1.printStackTrace();
+            }
         }
         cc.onSuccess(res, statusCode, headers, response);
     }

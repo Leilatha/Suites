@@ -51,13 +51,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private static final int REQUEST_READ_CONTACTS = 0;
 
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -68,6 +61,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    protected String password;
 
     public static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -81,6 +75,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        if(getIntent().hasExtra("email")) {
+            mEmailView.setText(getIntent().getStringExtra("email"));
+        }
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -134,6 +131,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if(resultCode == RESULT_OK){
                 mEmailView.setText(data.getStringExtra("email"));
                 mPasswordView.setText("");
+                Snackbar.make(findViewById(R.id.login_coordinator),
+                        R.string.registration_successful, Snackbar.LENGTH_SHORT);
             }
         }
     }
@@ -201,12 +200,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         // Store values at the time of the login attempt.
         String email = mEmailView.getText().toString();
-        final String password = mPasswordView.getText().toString();
+        password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
+        if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_password_required));
+            focusView = mPasswordView;
+            cancel = true;
+        }
         if (!TextUtils.isEmpty(password) && !isPasswordShort(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
@@ -248,10 +252,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         return;
                     }
                     User.user.setPassword(password);
-                    //IF THE LOGIN WORKED, GO TO GROCERY LIST
-                    Intent intent = new Intent(LoginActivity.this, ThreeButtonsActivity.class);
-                    startActivity(intent);
-                    finish();
+                    getSuite(User.user);
                 }
 
                 @Override
@@ -280,6 +281,38 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             });
         }
+    }
+
+    private void getSuite(User user) {
+        DBHelper helper = new DBHelper(user);
+        helper.getUserSuites(new AsyncResponseHandler<List<Suite>>() {
+            @Override
+            public void onSuccess(List<Suite> response, int statusCode, Header[] headers, byte[] errorResponse) {
+                //IF THE LOGIN WORKED, AND NO SUITES, THEN GO TO INTROACTIVITY
+                if(response.isEmpty()){
+                    Intent intent = new Intent(LoginActivity.this, IntroActivity.class);
+                    finish();
+                    startActivity(intent);
+                }
+                else {  // Has Suite
+                    Suite.suite = response.get(0);
+                    Intent intent = new Intent(LoginActivity.this, ThreeButtonsActivity.class);
+                    finish();
+                    startActivity(intent);
+                }
+                finish();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                //SHOULD NEVER HAPPEN
+            }
+
+            @Override
+            public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+                //ALSO SHOULD NEVER HAPPEN
+            }
+        });
     }
 
     private boolean isEmailValid(String email) {
@@ -376,9 +409,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
-        mEmailView.setAdapter(adapter);
+        //mEmailView.setAdapter(adapter);
     }
-
 
     private interface ProfileQuery {
         String[] PROJECTION = {
