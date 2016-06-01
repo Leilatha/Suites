@@ -14,6 +14,7 @@ public class DBChore implements Serializable {
     private final String descript;
     private final int currentTurn;
 
+
     @JsonCreator
     public DBChore(@JsonProperty("id") int id,
                  @JsonProperty("name") String name,

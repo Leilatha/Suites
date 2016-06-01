@@ -360,7 +360,8 @@ public class DBHelper {
         setup("/chore?choreid="+chore.getId());
 
         List<Integer> userInts = new ArrayList<Integer>();
-        for(User u : chore.getAssignees()) {
+        List<User> assignees = chore.getAssignees();
+        for(User u : assignees) {
             userInts.add(u.getId());
         }
 
@@ -392,7 +393,7 @@ public class DBHelper {
     }
 
     public void advanceChore(DBChoreView chore, AsyncResponseHandler<DBGenericResult> arh) {
-        setup("/chore/advance?="+chore.getId());
+        setup("/chore/advance?choreid="+chore.getId());
 
         client.post(url.toExternalForm(),
                 new AsyncResponseHandlerAdapter<>(DBGenericResult.class, arh));

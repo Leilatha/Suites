@@ -71,7 +71,6 @@ public class ChoresEdit extends AppCompatActivity {
         randomizeButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 randomizeAndSave();
-                finish();
             }
         });
         doneButton.setOnClickListener(new View.OnClickListener(){
@@ -232,6 +231,22 @@ public class ChoresEdit extends AppCompatActivity {
     }
 
     private void markDone(){
+        DBHelper helper = new DBHelper(User.user);
+        helper.advanceChore(chore, new AsyncResponseHandler<DBGenericResult>() {
+            @Override
+            public void onSuccess(DBGenericResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                finish();
+            }
 
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                weFailed();
+            }
+
+            @Override
+            public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+                weFailed();
+            }
+        });
     }
 }
