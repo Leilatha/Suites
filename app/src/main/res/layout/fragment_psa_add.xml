@@ -31,7 +31,8 @@
                  android:layout_weight="1"
                  android:inputType="text"
                  android:editable="true"
-                 android:backgroundTint="#FFFFFF" />
+                 android:backgroundTint="#FFFFFF"
+                 android:textColor="#FFFFFF" />
         </LinearLayout>
 
 

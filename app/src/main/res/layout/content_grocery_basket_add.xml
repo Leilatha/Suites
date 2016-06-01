@@ -45,7 +45,8 @@
                 android:inputType="text"
                 android:editable="true"
                 android:drawableTint="#FFFFFF"
-                android:backgroundTint="#FFFFFF" />
+                android:backgroundTint="#FFFFFF"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <Space
@@ -74,7 +75,8 @@
                 android:inputType="number"
                 android:editable="true"
                 android:drawableTint="#FFFFFF"
-                android:backgroundTint="#FFFFFF" />
+                android:backgroundTint="#FFFFFF"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
         <Space
@@ -103,7 +105,8 @@
                 android:editable="true"
                 android:elegantTextHeight="false"
                 android:drawableTint="#FFFFFF"
-                android:backgroundTint="#FFFFFF" />
+                android:backgroundTint="#FFFFFF"
+                android:textColor="#FFFFFF" />
 
         </LinearLayout>
 
