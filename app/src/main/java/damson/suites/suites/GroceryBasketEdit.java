@@ -146,7 +146,8 @@ public class GroceryBasketEdit extends AppCompatActivity {
     }
 
     private void weFailed() {
-        Snackbar.make(findViewById(R.id.grocery_basket_edit_coordinator), "Edit Item Fail", Snackbar.LENGTH_SHORT);
+        Snackbar.make(findViewById(R.id.grocery_basket_edit_coordinator), "Edit Item Fail",
+                Snackbar.LENGTH_SHORT).show();
     }
 
     private void delete(){

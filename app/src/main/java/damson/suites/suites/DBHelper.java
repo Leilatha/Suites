@@ -106,13 +106,14 @@ public class DBHelper {
         }
 
         client = new AsyncHttpClient();
+        client.setTimeout(3000);
+
         if(account != null && password != null) {
             client.setBasicAuth(account, password);
         }
 
 
         /*client.setReadTimeout(7000);
-        client.setConnectTimeout(7000);
         client.setChunkedStreamingMode(0);
         client.setRequestProperty("Content-Type","application/json");*/
     }

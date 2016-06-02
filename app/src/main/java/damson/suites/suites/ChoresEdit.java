@@ -136,12 +136,17 @@ public class ChoresEdit extends AppCompatActivity {
                         public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
                             finish();
                         }
+
+                        @Override
+                        public void onRetry() {
+                            retry();
+                        }
                     });
         }
     }
 
     private void weFailed(){
-        Snackbar.make(findViewById(R.id.chores_list_edit_coordinator), "Edit Item Fail", Snackbar.LENGTH_SHORT);
+        Snackbar.make(findViewById(R.id.chores_list_edit_coordinator), "Edit Item Fail", Snackbar.LENGTH_SHORT).show();
     }
 
     private void sendRandomize(DBChoreView choreView) {
@@ -163,7 +168,17 @@ public class ChoresEdit extends AppCompatActivity {
                     public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
                         finish();
                     }
+
+                    @Override
+                    public void onRetry() {
+                        retry();
+                    }
                 });
+    }
+
+    private void retry() {
+        Snackbar.make(findViewById(R.id.chores_list_edit_coordinator),
+                "Could not connect. Retrying...", Snackbar.LENGTH_SHORT).show();
     }
 
     private void cancel(){

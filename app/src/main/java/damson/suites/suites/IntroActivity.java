@@ -206,7 +206,7 @@ public class IntroActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
                 Snackbar.make(findViewById(R.id.create_suite_coordinator),
-                        R.string.error_network_connection, Snackbar.LENGTH_SHORT);
+                        R.string.error_network_connection, Snackbar.LENGTH_SHORT).show();
             }
 
             @Override

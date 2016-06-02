@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 mEmailView.setText(data.getStringExtra("email"));
                 mPasswordView.setText("");
                 Snackbar.make(findViewById(R.id.login_coordinator),
-                        R.string.registration_successful, Snackbar.LENGTH_SHORT);
+                        R.string.registration_successful, Snackbar.LENGTH_SHORT).show();
             }
         }
     }
