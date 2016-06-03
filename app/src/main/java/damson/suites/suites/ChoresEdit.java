@@ -264,4 +264,25 @@ public class ChoresEdit extends AppCompatActivity {
             }
         });
     }
+
+    private List<User> updateAssignees() {
+        DBHelper helper = new DBHelper(User.user);
+        helper.listUsersInASuite(Suite.suite.getId(), new AsyncResponseHandler<DBUserListResult>() {
+            @Override
+            public void onSuccess(DBUserListResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+
+            }
+
+            @Override
+            public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+
+            }
+        });
+        return null;
+    }
 }

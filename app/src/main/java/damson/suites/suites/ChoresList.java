@@ -27,6 +27,7 @@ import cz.msebera.android.httpclient.Header;
 public class ChoresList extends Fragment {
     static final int itemIdentifier = 1;  // The request code
     ArrayAdapter myAdapter;
+    ArrayList<DBChoreView> oldChores;
 
     public ChoresList(){}
 
@@ -46,7 +47,7 @@ public class ChoresList extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        listMaker();
+        //listMaker();
 
         /* Written by Marian
          * This creates an intent to the ChoresAdd.java

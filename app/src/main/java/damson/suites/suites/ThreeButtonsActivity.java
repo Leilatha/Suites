@@ -1,19 +1,21 @@
 package damson.suites.suites;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarFragment;
-import com.roughike.bottombar.OnMenuTabSelectedListener;
 
+import cz.msebera.android.httpclient.Header;
 import layout.Calendar;
 
 /**
@@ -96,6 +98,44 @@ public class ThreeButtonsActivity extends AppCompatActivity {
                 Intent i = new Intent(this, InviteUser.class);
                 startActivity(i);
                 break;
+            case R.id.leave_suite:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Leave the suite?")
+                        .setTitle("Confirm leave");
+                builder.setPositiveButton("Leave", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DBHelper helper = new DBHelper(User.user);
+                        helper.leaveSuite(Suite.suite.getId(), new AsyncResponseHandler<Void>() {
+                            @Override
+                            public void onSuccess(Void response, int statusCode, Header[] headers, byte[] errorResponse) {
+                                Intent i = new Intent(getApplicationContext(), IntroActivity.class);
+                                startActivity(i);
+                                Suite.suite = null;
+                                finish();
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                                Toast.makeText(getApplicationContext(), "Leave Failed", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+
+                            }
+                        });
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                break;
             case R.id.logout:
                 User.user = null;
                 Suite.suite = null;
@@ -103,8 +143,7 @@ public class ThreeButtonsActivity extends AppCompatActivity {
                 finish();
                 startActivity(j);
                 break;
-
-
+            //case R.id.
         }
 
         return super.onOptionsItemSelected(item);

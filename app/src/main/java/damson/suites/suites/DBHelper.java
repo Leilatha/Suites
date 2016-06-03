@@ -197,7 +197,7 @@ public class DBHelper {
         setup("/suite");
 
         client.get(null, url.toExternalForm(),
-                new AsyncResponseHandlerAdapter<>(Suite.class, arh)); //TODO: If crash check this line
+                new AsyncResponseHandlerAdapter<>(List.class, Suite.class, arh));
     }
 
     public void getUserInvites(AsyncResponseHandler<Suite[]> arh) {
@@ -264,7 +264,7 @@ public class DBHelper {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        client.post(null, url.toExternalForm(), entity, APPLICATION_JSON,
+        client.put(null, url.toExternalForm(), entity, APPLICATION_JSON,
                 new AsyncResponseHandlerAdapter<>(null, arh));
     }
 

@@ -14,28 +14,38 @@ public class AsyncResponseHandlerAdapter<B> extends AsyncHttpResponseHandler {
 
     AsyncResponseHandler<B> cc;
     Class bb;
+    Class listType;
 
 
     public AsyncResponseHandlerAdapter (Class bb, AsyncResponseHandler<B> cclass) {
         this.bb = bb;
         cc = cclass;
+        listType = null;
+    }
+
+    public AsyncResponseHandlerAdapter (Class bb, Class listtype, AsyncResponseHandler<B> cclass) {
+        this.bb = bb;
+        cc = cclass;
+        listType = listtype;
     }
 
     @Override
     public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-        if(bb == null) cc.onSuccess(null, statusCode, headers, response); //For the "empty response" case
+        if(bb == null) {
+            cc.onSuccess(null, statusCode, headers, response); //For the "empty response" case
+            return;
+        }
         B res = null;
         try {
-            res = DBHelper.mapper.readValue(response, DBHelper.mapper.constructType(bb));
-        } catch (IOException e) {
-            try {
+            if(List.class.isAssignableFrom(bb) && listType != null) {
                 res = DBHelper.mapper.readValue(response,
-                        DBHelper.mapper.getTypeFactory().constructCollectionType(List.class, bb));
+                        DBHelper.mapper.getTypeFactory().constructCollectionType(List.class, listType));
             }
-            catch (Exception e1){
+            else {
+                res = DBHelper.mapper.readValue(response, DBHelper.mapper.constructType(bb));
+            }
+        } catch (IOException e) {
                 e.printStackTrace();
-                e1.printStackTrace();
-            }
         }
         cc.onSuccess(res, statusCode, headers, response);
     }
