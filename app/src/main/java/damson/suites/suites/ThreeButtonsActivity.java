@@ -23,6 +23,7 @@ import layout.Calendar;
  */
 public class ThreeButtonsActivity extends AppCompatActivity {
     private CoordinatorLayout coordinatorLayout;
+    BottomBar mBottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,8 @@ public class ThreeButtonsActivity extends AppCompatActivity {
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.three_buttons_activity);
 
-        BottomBar mBottomBar = BottomBar.attach(this, savedInstanceState);
+        mBottomBar = BottomBar.attach(this, savedInstanceState);
+        mBottomBar.noTopOffset();
         mBottomBar.setFragmentItems(getSupportFragmentManager(), R.id.fragmentContainer,
                 new BottomBarFragment(GroceryBasket.newInstance(), R.drawable.grocerieslist, "Groceries"),
                 new BottomBarFragment(ChoresList.newInstance(), R.drawable.chores, "Chores"),
@@ -150,5 +152,14 @@ public class ThreeButtonsActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        // Necessary to restore the BottomBar's state, otherwise we would
+        // lose the current tab on orientation change.
+        mBottomBar.onSaveInstanceState(outState);
     }
 }
