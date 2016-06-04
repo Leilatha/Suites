@@ -1,161 +1,61 @@
 package damson.suites.suites;
 
-import android.content.Context;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ChoresEdit.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ChoresEdit#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class ChoresEdit extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String name;
-    private String description;
-
-    private OnFragmentInteractionListener mListener;
-
-    public ChoresEdit() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ChoresEdit.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ChoresEdit newInstance(String param1, String param2) {
-        ChoresEdit fragment = new ChoresEdit();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            name = getArguments().getString(ARG_PARAM1);
-            description = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chores_edit, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
-}
-
-/*
-package damson.suites.suites;
-
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.util.CircularArray;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import cz.msebera.android.httpclient.Header;
+
 public class ChoresEdit extends AppCompatActivity {
+
     private EditText name;
-    private EditText rotation;
-    private EditText price;
+    private EditText description;
+    private String prevName;
+    private String prevDescription;
+    private DBChoreView chore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_chores_edit);
 
-        //get fields from item we are editing
+        //get fields from item we're editing
         Intent i = getIntent();
-        GroceryItem item = (GroceryItem)i.getSerializableExtra("item");
-        name = (EditText) findViewById(R.id.Item_Text);
-        rotation = (EditText) findViewById(R.id.Quantity_Text);
-        price = (EditText) findViewById(R.id.Price_Text);
+        try {
+            chore = DBHelper.mapper.readValue(i.getStringExtra("item"), DBChoreView.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        //store previous information
-        String prevName = item.getItem();
-        String prevQuantity = item.getQuantity();
-        Double prevPrice = item.getPrice();
+        prevName = chore.getName();
+        prevDescription = chore.getDescription();
 
-        //fill fields with information
+        name = (EditText) findViewById(R.id.chores_list_edit_Chore_Text);
+        description = (EditText) findViewById(R.id.chores_list_edit_Description_text);
+
+        //fill fields
         name.setText(prevName);
-        rotation.setText(prevQuantity);
-        price.setText(Double.toString(prevPrice));
-
-        setContentView(R.layout.activity_grocery_basket_edit);
+        description.setText(prevDescription);
 
         //set button listeners
-        Button editButton = (Button)findViewById(R.id.Edit_Button);
-        Button deleteButton = (Button) findViewById(R.id.Delete_Button);
-        Button cancelButton = (Button) findViewById(R.id.Cancel_Button);
+        Button editButton = (Button)findViewById(R.id.chores_list_edit_Edit_button);
+        Button cancelButton = (Button)findViewById(R.id.chores_list_edit_Cancel_button);
+        Button deleteButton = (Button)findViewById(R.id.chores_list_edit_Delete_button);
+        Button randomizeButton = (Button)findViewById(R.id.chores_list_edit_Randomize_button);
+        Button doneButton = (Button)findViewById(R.id.chores_list_edit_mark_done);
         editButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 attemptEdit();
-            }
-        });
-        deleteButton.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                delete();
             }
         });
         cancelButton.setOnClickListener(new View.OnClickListener(){
@@ -163,18 +63,226 @@ public class ChoresEdit extends AppCompatActivity {
                 cancel();
             }
         });
+        deleteButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                delete();
+            }
+        });
+        randomizeButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                randomizeAndSave();
+            }
+        });
+        doneButton.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                markDone();
+            }
+        });
     }
 
-    private void attemptEdit() {
+    private void attemptEdit(){
+        //set errors to null
+        name.setError(null);
+        description.setError(null);
 
+        //store values at time of edit attempt
+        String newName = name.getText().toString();
+        String newDescript = description.getText().toString();
+
+        boolean cancel = false;
+        boolean nameEdit = false;
+        boolean descriptEdit = false;
+        View focusView = null;
+
+        //check if fields were edited
+        if(prevName.compareTo(newName) != 0){
+            nameEdit = true;
+        }
+        if(prevDescription.compareTo(newDescript) !=0){
+            descriptEdit = true;
+        }
+
+        //check if all fields were not edited
+        if((nameEdit||descriptEdit) == false){
+            cancel = true;
+            if(!nameEdit){
+                name.setError("You have not changed any fields. Please change a field or cancel editing");
+                focusView = name;
+            }
+            else if(!descriptEdit){
+                description.setError("You have not changed any fields. Please change a field or cancel editing");
+                focusView = description;
+            }
+        }
+
+        if(cancel){
+            focusView.requestFocus();
+        }
+        else{
+            DBHelper help = new DBHelper(User.user);
+            help.editChore(new DBChoreView(chore.getId(), newName, newDescript, chore.getCurrentTurn(), chore.getAssignees()),
+                    new AsyncResponseHandler<DBGenericResult>() {
+                        @Override
+                        public void onSuccess(DBGenericResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                            finish();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                            weFailed();
+                        }
+
+                        @Override
+                        public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+                            finish();
+                        }
+
+                        @Override
+                        public void onRetry() {
+                            retry();
+                        }
+                    });
+        }
     }
 
-    private void delete(){
+    private void weFailed(){
+        Snackbar.make(findViewById(R.id.chores_list_edit_coordinator), "Edit Item Fail", Snackbar.LENGTH_SHORT).show();
+    }
 
+    private void sendRandomize(DBChoreView choreView) {
+
+        DBHelper help = new DBHelper(User.user);
+        help.editChore(choreView,
+                new AsyncResponseHandler<DBGenericResult>() {
+                    @Override
+                    public void onSuccess(DBGenericResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                        weFailed();
+                    }
+
+                    @Override
+                    public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+                        finish();
+                    }
+
+                    @Override
+                    public void onRetry() {
+                        retry();
+                    }
+                });
+    }
+
+    private void retry() {
+        Snackbar.make(findViewById(R.id.chores_list_edit_coordinator),
+                "Could not connect. Retrying...", Snackbar.LENGTH_SHORT).show();
     }
 
     private void cancel(){
+        finish();
+    }
 
+    private void delete(){
+        DBHelper help = new DBHelper(User.user);
+        help.deleteChore(chore, new AsyncResponseHandler<DBGenericResult>() {
+                    @Override
+                    public void onSuccess(DBGenericResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                        weFailed();
+                    }
+
+                    @Override
+                    public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+                        finish();
+                    }
+                });
+    }
+
+    public void randomizeAndSave(){
+        List<User> assignees = chore.getAssignees();
+        User [] users = new User[assignees.size()];
+        for(int i = 0; i < assignees.size(); i++){
+            users[i] = assignees.get(i);
+        }
+
+        //set up random to return random indices
+        Random random = new Random();
+        int index = random.nextInt(users.length);
+        //stores indices already stored
+        ArrayList<Integer> found = new ArrayList<>(users.length);
+
+        CircularArray<User> rotation = new CircularArray<>(users.length);
+
+        //Loop to fill in rotation  //This could accidentally run for a long time
+        while(rotation.size() < users.length){
+            if(!found.contains(index)) {
+                rotation.addLast(users[index]);
+                found.add(new Integer(index));
+                index = random.nextInt(users.length);
+            }
+            else{
+                index = random.nextInt(users.length);
+            }
+        }
+
+        //put new rotation into assignees
+        for(int i = 0; i < rotation.size(); i++){
+            assignees.remove(i);
+            assignees.add(i, rotation.get(i));
+        }
+
+        //store values at time of edit attempt
+        String newName = name.getText().toString();
+        String newDescript = description.getText().toString();
+
+        sendRandomize(new DBChoreView(chore.getId(), newName, newDescript, 0, assignees));
+    }
+
+    private void markDone(){
+        DBHelper helper = new DBHelper(User.user);
+        helper.advanceChore(chore, new AsyncResponseHandler<DBGenericResult>() {
+            @Override
+            public void onSuccess(DBGenericResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+                finish();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+                weFailed();
+            }
+
+            @Override
+            public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+                weFailed();
+            }
+        });
+    }
+
+    private List<User> updateAssignees() {
+        DBHelper helper = new DBHelper(User.user);
+        helper.listUsersInASuite(Suite.suite.getId(), new AsyncResponseHandler<DBUserListResult>() {
+            @Override
+            public void onSuccess(DBUserListResult response, int statusCode, Header[] headers, byte[] errorResponse) {
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+
+            }
+
+            @Override
+            public void onLoginFailure(Header[] headers, byte[] errorResponse, Throwable e) {
+
+            }
+        });
+        return null;
     }
 }
- */

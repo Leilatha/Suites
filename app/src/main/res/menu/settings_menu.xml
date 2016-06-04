@@ -1,0 +1,23 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="damson.suites.suites.GroceryBasket">
+
+    <item
+        android:id="@+id/invite_user"
+        android:orderInCategory="101"
+        android:title="Invite Suite Member"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/leave_suite"
+        android:orderInCategory="102"
+        android:title="Leave Suite"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/logout"
+        android:orderInCategory="103"
+        android:title= "Logout"
+        app:showAsAction="never"/>
+
+</menu>
