@@ -22,8 +22,8 @@
 * testperson2@test.test:testpw
 * 
 ## These accounts have been pre created ##
-* ACC[A]: Email “a@a.a”, Password “a”, Name “aaaaaa”
-* ACC[B]: Email “b@b.b”, Password “b”, Name “bbbbbb”
-* ACC[C]: Email “c@c.c”, Password “c”, Name “cccccc”
-* ACC[D]: Email “d@d.d”, Password “d”, Name “dddddd”
+* ACC[A]: Email “a@a.aa”, Password “a”, Name “aaaaaa”
+* ACC[B]: Email “b@b.bb”, Password “b”, Name “bbbbbb”
+* ACC[C]: Email “c@c.cc”, Password “c”, Name “cccccc”
+* ACC[D]: Email “d@d.dd”, Password “d”, Name “dddddd”
 
