@@ -20,12 +20,22 @@ INSERT INTO Member (id, email, password, name) VALUES
 ,(-6, 'suite@make.er', '74f11276b5ca0087b0c419de0e1d802c81d184b9d1349a50c5e1de6507089d18', 'Suite Creator')
 ,(-7, 'suite@join.er', '74f11276b5ca0087b0c419de0e1d802c81d184b9d1349a50c5e1de6507089d18', 'Suite Joiner')
 ,(-8, 'groc@e.ry', '74f11276b5ca0087b0c419de0e1d802c81d184b9d1349a50c5e1de6507089d18', 'Gross Erie')
+,(-9, 'groc@del.ete', '74f11276b5ca0087b0c419de0e1d802c81d184b9d1349a50c5e1de6507089d18', 'Gross Erie')
+,(-10, 'chore@delet.er', '74f11276b5ca0087b0c419de0e1d802c81d184b9d1349a50c5e1de6507089d18', 'Chorebro')
+,(-11, 'chore@mark.er', '74f11276b5ca0087b0c419de0e1d802c81d184b9d1349a50c5e1de6507089d18', 'ab')
+,(-12, 'chore2@mark.er', '74f11276b5ca0087b0c419de0e1d802c81d184b9d1349a50c5e1de6507089d18', 'ba')
+,(-13, 'psa@view.er', '74f11276b5ca0087b0c419de0e1d802c81d184b9d1349a50c5e1de6507089d18', 'I see all')
+,(-14, 'mad@g.uy', '74f11276b5ca0087b0c419de0e1d802c81d184b9d1349a50c5e1de6507089d18', 'Sad Face')
 ;
 
 INSERT INTO Suite (id, name) VALUES
  (-1, 'C Suite')
 ,(-2, 'Test Suite')
 ,(-3, 'Test Suite Deux')
+,(-4, 'Test Suite Troi')
+,(-5, 'Chore Deletion Suite')
+,(-6, 'Chore Mark Suite')
+,(-7, 'PSA test Suite')
 ;
 
 INSERT INTO SuiteMembership (memberid, suiteid) VALUES
@@ -35,6 +45,16 @@ INSERT INTO SuiteMembership (memberid, suiteid) VALUES
 ,(-5, -2)
 
 ,(-8, -3)
+
+,(-9, -4)
+
+,(-10, -5)
+,(-14, -5)
+
+,(-11, -6)
+,(-12, -6)
+
+,(-13, -7)
 ;
 
 INSERT INTO Invitation (email, suiteid) VALUES
@@ -44,12 +64,24 @@ INSERT INTO Invitation (email, suiteid) VALUES
 INSERT INTO Grocery (suiteid, name, price, quantity) VALUES
  (-1, 'Anime Blurays', 69.99, 2)
 ,(-3, 'Anime Blurays', 69.99, 2)
+,(-4, 'Banana (1 ton)', 12.34, 1)
 ;
 
 INSERT INTO Chore (id, suiteid, name, description, currentturn) VALUES
  (-1, -1, 'Save the Queen', 'Be God', 0)
+,(-2, -2, 'Trash', 'Take the trash out.', 0)
+,(-3, -5, 'Bash', 'Take the bash out.', 0)
+,(-4, -6, 'ABBA', 'Switchy Switch.', 0)
 ;
 
 INSERT INTO ChoreAssignment (memberid, choreid, turn) VALUES
  (-3, -1, 0)
+,(-5, -2, 0)
+,(-10, -3, 0)
+,(-11, -4, 0)
+,(-12, -4, 1)
+;
+
+INSERT INTO PSA (suiteid, authorid, title, description, timestamp) VALUES
+ (-7, -13, '', 'Ironic Post', TIMESTAMP '2222-02-22 22:22:22')
 ;
