@@ -28,7 +28,7 @@
 ## These accounts should not be in a suite and are used for registration ##
 * testperson1@test.test:testpw
 * testperson2@test.test:testpw
-* 
+
 ## These accounts have been pre created ##
 * ACC[A]: Email “a@a.aa”, Password “a”, Name “aaaaaa”
 * ACC[B]: Email “b@b.bb”, Password “b”, Name “bbbbbb”
@@ -40,7 +40,11 @@
 * suite@join.er:passpass
 * groc@e.ry:passpass
 * groc@del.ete:passpass
-* 
+* chore@delet.er:passpass
+* chore@mark.er:passpass
+* chore2@mark.er:passpass
+* psa@view.er:passpass
+* mad@g.uy:passpass
 
 Contact Info: 
 Matthew Juandy - Project Manager
