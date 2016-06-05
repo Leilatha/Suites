@@ -5,11 +5,11 @@ DELETE FROM Grocery WHERE SuiteId < 0;
 
 DELETE FROM PSA WHERE SuiteId < 0;
 
+DELETE FROM Invitation WHERE SuiteId < 0;
 DELETE FROM SuiteMembership WHERE MemberId < 0 OR SuiteId < 0;
 DELETE FROM Suite WHERE Id < 0;
 DELETE FROM Member WHERE Id < 0;
 
-DELETE FROM Invitation WHERE SuiteId < 0;
 
 INSERT INTO Member (id, email, password, name) VALUES
  (-1, 'a@a.aa', 'ed02457b5c41d964dbd2f2a609d63fe1bb7528dbe55e1abf5b52c249cd735797', 'a')
@@ -17,11 +17,15 @@ INSERT INTO Member (id, email, password, name) VALUES
 ,(-3, 'c@c.cc', '8c0e24f73bf5fe793dc45e5f90b5a9682c0cb345f524ddef77ab2859b9352d52', 'c')
 ,(-4, 'd@d.dd', 'c02d8e6211ef7dc5af42085cbb323a122b76905ac098467ea1f85465ec14429d', 'd')
 ,(-5, 'premade@pre.made', '6641bb064e4c38e91b46be7932479fae15abca7df6605834d0f60c3725c41bdd', 'Pre Made')
+,(-6, 'suite@make.er', '74f11276b5ca0087b0c419de0e1d802c81d184b9d1349a50c5e1de6507089d18', 'Suite Creator')
+,(-7, 'suite@join.er', '74f11276b5ca0087b0c419de0e1d802c81d184b9d1349a50c5e1de6507089d18', 'Suite Joiner')
+,(-8, 'groc@e.ry', '74f11276b5ca0087b0c419de0e1d802c81d184b9d1349a50c5e1de6507089d18', 'Gross Erie')
 ;
 
 INSERT INTO Suite (id, name) VALUES
  (-1, 'C Suite')
 ,(-2, 'Test Suite')
+,(-3, 'Test Suite Deux')
 ;
 
 INSERT INTO SuiteMembership (memberid, suiteid) VALUES
@@ -29,10 +33,17 @@ INSERT INTO SuiteMembership (memberid, suiteid) VALUES
 ,(-4, -1)
 
 ,(-5, -2)
+
+,(-8, -3)
+;
+
+INSERT INTO Invitation (email, suiteid) VALUES
+ ('suite@join.er', -2)
 ;
 
 INSERT INTO Grocery (suiteid, name, price, quantity) VALUES
  (-1, 'Anime Blurays', 69.99, 2)
+,(-3, 'Anime Blurays', 69.99, 2)
 ;
 
 INSERT INTO Chore (id, suiteid, name, description, currentturn) VALUES
