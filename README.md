@@ -14,8 +14,16 @@
 * In your workspace, clone project.
     * **git clone git@github.com:Leilatha/Suites.git
 
+## 3. Known Bugs ##
+* In chores, if a user is assigned to a chore, and leaves the suite, they will not disappear from the chore they 
+* were previously assigned to. And afterwards when the chore is marked as done they will still be in the rotation of
+* people who can be assigned to the chore. 
+* 
+* Similarly in chores if a chore is created, and new members are added to the suite, the list of people will not update
+* for the old chore, leaving the original members in the rotation without the newer members. 
 
-## 3. Accounts ##
+
+## 4. Accounts ##
 * USER: PASS
 ## These accounts should not be in a suite and are used for registration ##
 * testperson1@test.test:testpw
@@ -26,4 +34,17 @@
 * ACC[B]: Email “b@b.bb”, Password “b”, Name “bbbbbb”
 * ACC[C]: Email “c@c.cc”, Password “c”, Name “cccccc”
 * ACC[D]: Email “d@d.dd”, Password “d”, Name “dddddd”
+* USER:PASSWORD
+* premade@pre.made:passtheword
+* suite@make.er:passpass
+* suite@join.er:passpass
+* groc@e.ry:passpass
+* groc@del.ete:passpass
+* 
+
+Contact Info: 
+Matthew Juandy - Project Manager
+      - Phone: (707)-849-4863
+Andy Liao - System Architect
+      - Phone: (925) 783-3369
 
