@@ -3,7 +3,7 @@
 # **Setting Up for the Project** #
 ## 1. Android Device ##
 
-* Follow this link to download suites.apk https://drive.google.com/open?id=0B3Dk1TKV93dlM0x2WW5VUEE5LU0 
+* Follow this link to download suites.apk https://drive.google.com/drive/folders/0B3AwbOO1FP9qUzlGeDdLNW8xU0k
 *   on an Android device with minimum requirement Android 4.4.4
 * Set phone to allow installation of apps from unknown sources, this is usually in the settings menu of the phone
 * Launch the suites app. 
