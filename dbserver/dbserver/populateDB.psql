@@ -1,0 +1,40 @@
+DELETE FROM ChoreAssignment WHERE MemberId < 0;
+DELETE FROM Chore WHERE SuiteId < 0;
+
+DELETE FROM Grocery WHERE SuiteId < 0;
+
+DELETE FROM PSA WHERE SuiteId < 0;
+
+DELETE FROM SuiteMembership WHERE MemberId < 0 OR SuiteId < 0;
+DELETE FROM Suite WHERE Id < 0;
+DELETE FROM Member WHERE Id < 0;
+
+DELETE FROM Invitation WHERE SuiteId < 0;
+
+INSERT INTO Member (id, email, password, name) VALUES
+ (-1, 'a@a.a', 'ed02457b5c41d964dbd2f2a609d63fe1bb7528dbe55e1abf5b52c249cd735797', 'a')
+,(-2, 'b@b.b', '4625fd63b0e96fc0d656ae7381605e48d4a0f63a319fc743adf22688613883c7', 'b')
+,(-3, 'c@c.c', '8c0e24f73bf5fe793dc45e5f90b5a9682c0cb345f524ddef77ab2859b9352d52', 'c')
+,(-4, 'd@d.d', 'c02d8e6211ef7dc5af42085cbb323a122b76905ac098467ea1f85465ec14429d', 'd')
+;
+
+INSERT INTO Suite (id, name) VALUES
+ (-1, 'C Suite')
+;
+
+INSERT INTO SuiteMembership (memberid, suiteid) VALUES
+ (-3, -1)
+,(-4, -1)
+;
+
+INSERT INTO Grocery (suiteid, name, price, quantity) VALUES
+ (-1, 'Anime Blurays', 69.99, 2)
+;
+
+INSERT INTO Chore (id, suiteid, name, description, currentturn) VALUES
+ (-1, -1, 'Save the Queen', 'Be God', 0)
+;
+
+INSERT INTO ChoreAssignment (memberid, choreid, turn) VALUES
+ (-3, -1, 0)
+;
