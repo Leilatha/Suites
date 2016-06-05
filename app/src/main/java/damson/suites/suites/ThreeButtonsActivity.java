@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -81,6 +82,12 @@ public class ThreeButtonsActivity extends AppCompatActivity {
         // Use custom typeface that's located at the "/src/main/assets" directory. If using with
         // custom text appearance, set the text appearance first.
         //bottomBar.setTypeFace("MyFont.ttf");
+
+        mBottomBar.mapColorForTab(0, ContextCompat.getColor(this, R.color.colorAccent));
+        mBottomBar.mapColorForTab(1, 0xFF5D4037);
+        mBottomBar.mapColorForTab(2, "#7B1FA2");
+        mBottomBar.mapColorForTab(3, "#FF5252");
+        mBottomBar.mapColorForTab(4, "#FF9800");
 
 
     }
