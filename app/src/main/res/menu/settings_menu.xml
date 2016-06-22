@@ -4,6 +4,12 @@
     tools:context="damson.suites.suites.GroceryBasket">
 
     <item
+        android:id="@+id/settings"
+        android:orderInCategory="100"
+        android:title="Settings"
+        app:showAsAction="never"/>
+
+    <item
         android:id="@+id/invite_user"
         android:orderInCategory="101"
         android:title="Invite Suite Member"

@@ -103,6 +103,10 @@ public class ThreeButtonsActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()){
+            case R.id.settings:
+                Intent p = new Intent(getApplicationContext(), EditCredentials.class);
+                startActivity(p);
+                break;
             case R.id.invite_user:
                 Intent i = new Intent(this, InviteUser.class);
                 startActivity(i);

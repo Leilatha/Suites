@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import cz.msebera.android.httpclient.Header;
 
 public class EditCredentials extends AppCompatActivity {
@@ -22,8 +25,8 @@ public class EditCredentials extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_credentials);
-        Toolbar toolBar = (Toolbar) findViewById(R.id.intro_toolbar);
-        setSupportActionBar(toolBar);
+        /*Toolbar toolBar = (Toolbar) findViewById(R.id.intro_toolbar);
+        setSupportActionBar(toolBar); */
 
         new_name = (EditText) findViewById(R.id.text_name_change);
         new_email = (EditText) findViewById(R.id.text_email_change);
@@ -97,13 +100,35 @@ public class EditCredentials extends AppCompatActivity {
             cancel = true;
         }
 
-        if(cancel){
+        if(pass1.length() < 6){
+            new_pass_1.setError("Password must be at least 6 characters");
+            focusView = new_pass_1;
+            cancel=true;
+        }
+
+        else if(User.user.getPassword() == pass1){
+            new_pass_1.setError("New password must be different");
+            focusView = new_pass_1;
+            cancel=true;
+        }
+        else if(!pass1.equals(pass2)){
+            Log.d("hello", "Pass1 equals " + pass1 + "Pass2 equals" + pass2);
+            new_pass_2.setError("Passwords must be the same");
+            focusView = new_pass_2;
+            cancel = true;
+        }
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
             focusView.requestFocus();
         }
-        else if(pass1 == pass2){
-            // Upload item to grocery basket
+
+        //successful password change
+        else{
+            // Change passwords
+            Log.d("hello", "Attempting password change");
             DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
-            helper.editAccount(User.user.getEmail(), User.user.getPassword(), User.user.getName(), new AsyncResponseHandler<DBGenericResult>() {
+            helper.editAccount(User.user.getEmail(), pass2, User.user.getName(), new AsyncResponseHandler<DBGenericResult>() {
                 @Override
                 public void onSuccess(DBGenericResult response, int statusCode, Header[] headers, byte[] errorResponse) {
                     Snackbar mySnackbar = Snackbar.make(findViewById(R.id.edit_credentials), "Password successfully changed", Snackbar.LENGTH_SHORT);
@@ -113,10 +138,10 @@ public class EditCredentials extends AppCompatActivity {
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                    Snackbar mySnackbar = Snackbar.make(findViewById(R.id.grocery_basket_add_coordinator),
+                    Snackbar mySnackbar = Snackbar.make(findViewById(R.id.edit_credentials),
                             "Couldn't find account", Snackbar.LENGTH_SHORT);
                     mySnackbar.show();
-                    Log.e("GroceryBasketAdd", "Not in suite.");
+                    Log.e("EditCredentials", "Not in suite.");
                 }
 
                 @Override
@@ -126,8 +151,19 @@ public class EditCredentials extends AppCompatActivity {
             });
             //get the information from Leon on how to add to database
         }
+
     }
 
+    //TODO: MAKE THIS A PUBLIC FUNCTION IN DBHELPER
+    private boolean isEmailValid(String email) {
+        //TODO: Email Validation
+        Pattern pattern;
+        Matcher matcher;
+
+        pattern = Pattern.compile(LoginActivity.EMAIL_PATTERN);
+        matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
     private void attemptEmailChange() {
         //reset errors
         new_email.setError(null);
@@ -145,6 +181,12 @@ public class EditCredentials extends AppCompatActivity {
         boolean cancel = false;
         View focusView = null;
 
+        if(!isEmailValid(newEmail)){
+            new_email.setError("Email is not valid");
+            focusView = new_email;
+            cancel = true;
+
+        }
         //Check for valid item name
         //Assumes user puts in a name. Error only if empty
         if(TextUtils.isEmpty(newEmail)) {
@@ -153,10 +195,15 @@ public class EditCredentials extends AppCompatActivity {
             cancel = true;
         }
 
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        }
         else {
 
             DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
-            helper.editAccount(User.user.getEmail(), User.user.getPassword(), User.user.getName(), new AsyncResponseHandler<DBGenericResult>() {
+            helper.editAccount(newEmail, User.user.getPassword(), User.user.getName(), new AsyncResponseHandler<DBGenericResult>() {
                 @Override
                 public void onSuccess(DBGenericResult response, int statusCode, Header[] headers, byte[] errorResponse) {
                     Snackbar mySnackbar = Snackbar.make(findViewById(R.id.edit_credentials), "Email successfully changed", Snackbar.LENGTH_SHORT);
@@ -207,10 +254,15 @@ public class EditCredentials extends AppCompatActivity {
             cancel = true;
         }
 
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        }
         else {
 
             DBHelper helper = new DBHelper(User.user.getEmail(), User.user.getPassword());
-            helper.editAccount(User.user.getEmail(), User.user.getPassword(), User.user.getName(), new AsyncResponseHandler<DBGenericResult>() {
+            helper.editAccount(User.user.getEmail(), User.user.getPassword(), newName, new AsyncResponseHandler<DBGenericResult>() {
                 @Override
                 public void onSuccess(DBGenericResult response, int statusCode, Header[] headers, byte[] errorResponse) {
                     Snackbar mySnackbar = Snackbar.make(findViewById(R.id.edit_credentials), "Email successfully changed", Snackbar.LENGTH_SHORT);
@@ -220,7 +272,7 @@ public class EditCredentials extends AppCompatActivity {
 
                 @Override
                 public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-                    Snackbar mySnackbar = Snackbar.make(findViewById(R.id.grocery_basket_add_coordinator),
+                    Snackbar mySnackbar = Snackbar.make(findViewById(R.id.edit_credentials),
                             "Couldn't find account", Snackbar.LENGTH_SHORT);
                     mySnackbar.show();
                     Log.e("GroceryBasketAdd", "Not in suite.");
